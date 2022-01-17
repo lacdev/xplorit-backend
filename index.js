@@ -12,3 +12,7 @@ dbConnect(process.env)
     })
   })
   .catch((error) => console.log(error))
+
+app.get('/test', (req, res) =>
+  res.send('Hello from the server. This is a test and should be ignored.')
+)
