@@ -11,10 +11,10 @@ const updatePlaceById = async (id, body) =>
 
 const getLikesFromPlaceById = async (id) => await Place.findById(id)
 
-const PostLikeToPlaceById = async (id, like) =>
+const postLikeToPlaceById = async (id, like) =>
   await Place.findByIdAndUpdate(id, like)
 
-const deleteLikeFromPlaceById = async (id) => await Place.findById(id)
+const deleteLikeFromPlaceById = async (id) => await Place.findByIdAndDelete(id)
 
 const getAllReviewsFromPlaceById = async (id) => await Place.findById(id)
 
@@ -24,7 +24,8 @@ const postReviewFromPlaceById = async (id, review) =>
 const updateReviewFromPlaceById = async (id, body) =>
   await Place.findByIdAndUpdate(id, body)
 
-const deleteReviewFromPlaceById = async (id) => await Place.findById(id)
+const deleteReviewFromPlaceById = async (id) =>
+  await Place.findByIdAndDelete(id)
 
 export {
   getAllPlaces,
@@ -32,7 +33,7 @@ export {
   getPlaceById,
   updatePlaceById,
   getLikesFromPlaceById,
-  PostLikeToPlaceById,
+  postLikeToPlaceById,
   deleteLikeFromPlaceById,
   getAllReviewsFromPlaceById,
   postReviewFromPlaceById,
