@@ -1,19 +1,5 @@
 import { Route } from 'models/route.model'
-
-const getAllRoutes = async () => await Route.find()
-
-const createRoute = async (route) => await Route.create(route)
-
-const getSingleRoute = async (id) => await Route.findById(id)
-
-const updateRoute = async (id, body) => await Route.findByIdAndUpdate(id, body)
-
-const getLikesFromRoute = async (id) => await Route.findById(id)
-
-const postLikeToRoute = async (id, like) =>
-  await Route.findByIdAndUpdate(id, like)
-
-const deleteLikeFromRoute = async (id) => await Route.findByIdAndDelete(id)
+import { Place } from 'models/place.model'
 
 const getAllReviewsFromRoute = async (id) => await Route.findById(id)
 
@@ -24,16 +10,22 @@ const updateReviewFromRoute = async (id, body) =>
 
 const deleteReviewFromRoute = async (id) => await Route.findByIdAndDelete(id)
 
+const getAllReviewsFromPlace = async (id) => await Place.findById(id)
+
+const postReviewToPlace = async (id, review) => await Place.findById(id, review)
+
+const updateReviewFromPlace = async (id, body) =>
+  await Place.findByIdAndUpdate(id, body)
+
+const deleteReviewFromPlace = async (id) => await Place.findByIdAndDelete(id)
+
 export {
-  getAllRoutes,
-  createRoute,
-  getSingleRoute,
-  updateRoute,
-  getLikesFromRoute,
-  postLikeToRoute,
-  deleteLikeFromRoute,
   getAllReviewsFromRoute,
   postReviewToRoute,
   updateReviewFromRoute,
   deleteReviewFromRoute,
+  getAllReviewsFromPlace,
+  postReviewToPlace,
+  updateReviewFromPlace,
+  deleteReviewFromPlace,
 }

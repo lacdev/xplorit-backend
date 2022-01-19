@@ -2,21 +2,21 @@ import { User } from 'models/user.model'
 
 const getAllUsers = async () => await User.find()
 
-const getUserById = async (id) => await User.findById(id)
+const getSingleUser = async (id) => await User.findById(id)
 
-const getLikesByUserId = async (id) => await User.findById(id)
+const getLikesMadeByUser = async (id) => await User.findById(id)
 
-const getReviewsByUserId = async (id) => await User.findById(id)
+const getReviewsMadeByUser = async (id) => await User.findById(id)
 
-const getPlacesCreatedByUserId = async (id) => await User.findById(id)
+const getPlacesCreatedByUser = async (id) => await User.findById(id)
 
-const getRoutesCreatedByUserId = async (id) => await User.findById(id)
+const getRoutesCreatedByUser = async (id) => await User.findById(id)
 
 export {
-  getUserById,
+  getSingleUser,
   getAllUsers,
-  getLikesByUserId,
-  getReviewsByUserId,
-  getPlacesCreatedByUserId,
-  getRoutesCreatedByUserId,
+  getLikesMadeByUser,
+  getReviewsMadeByUser,
+  getPlacesCreatedByUser,
+  getRoutesCreatedByUser,
 }
