@@ -4,7 +4,7 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
-      minlength: 8,
+      minlength: 4,
       maxlength: 16,
       required: true,
       unique: true,
@@ -19,7 +19,6 @@ const userSchema = new Schema(
       minlength: 8,
       maxlength: 20,
       required: true,
-      unique: true,
     },
     avatar: {
       type: String,
