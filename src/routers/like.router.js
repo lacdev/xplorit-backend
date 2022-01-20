@@ -4,13 +4,13 @@ import * as likeController from 'controllers/like.controller'
 const router = express.Router()
 
 //Likes in places routers
-router.get('/places/:id/likes', likeController.getLikesInPlace)
-router.post('/places/:id/likes', likeController.saveLikeInPlace)
-router.delete('/places/:id/likes/:id', likeController.deleteLikeInPlace)
+router.get('/:id/likes', likeController.getLikesInPlace)
+router.post('/:id/likes', likeController.saveLikeInPlace)
+router.delete('/:id/likes/:id', likeController.deleteLikeInPlace)
 
 //Likes in routes routers
-router.get('routes/:id/likes', likeController.getLikesInRoute)
-router.post('routes/:id/likes', likeController.saveLikeInRoute)
-router.delete('routes/:id/likes/:id', likeController.deleteLikeInRoute)
+router.get('/:id/likes', likeController.getLikesInRoute)
+router.post('/:id/likes', likeController.saveLikeInRoute)
+router.delete('/:id/likes/:id', likeController.deleteLikeInRoute)
 
 export default router
