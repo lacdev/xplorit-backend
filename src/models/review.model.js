@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose'
+import mongoose from 'mongoose'
 
-const ReviewSchema = new Schema(
+const ReviewSchema = new mongoose.Schema(
   {
     comment: {
       type: String,
@@ -14,23 +14,23 @@ const ReviewSchema = new Schema(
       required: true,
     },
     user: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
       unique: true,
     },
     place: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Place',
     },
     route: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Route',
     },
   },
   { timestamps: true }
 )
 
-const Review = model('review', ReviewSchema)
+const Review = mongoose.model('review', ReviewSchema)
 
-export default Review
+export { Review }

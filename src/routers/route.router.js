@@ -1,5 +1,5 @@
 import * as express from 'express'
-import * as routesController from 'controllers/route.controller'
+import * as routesController from '../controllers/route.controller.js'
 
 const router = express.Router()
 
@@ -10,4 +10,4 @@ router.post('/', routesController.saveRoute)
 router.patch('/:id', routesController.updateRoute)
 router.delete('/:id', routesController.deleteRoute)
 
-export default router
+export { router as RoutesRouter }

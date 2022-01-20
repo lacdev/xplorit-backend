@@ -1,4 +1,4 @@
-import * as place from 'usecases/place.usecase'
+import * as place from '../usecases/place.usecase.js'
 
 const getPlaces = async (req, res) => {
   try {

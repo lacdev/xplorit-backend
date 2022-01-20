@@ -1,4 +1,4 @@
-import { Place } from 'models/place.model'
+import { Place } from '../models/place.model.js'
 
 const getAllPlaces = async () => await Place.find()
 

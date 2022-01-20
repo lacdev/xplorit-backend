@@ -1,6 +1,6 @@
 import express from 'express'
-import * as userController from 'controllers/user.controller'
-import * as opsController from 'controllers/userops.controller'
+import * as userController from '../controllers/user.controller.js'
+import * as opsController from '../controllers/userops.controller.js'
 
 const router = express.Router()
 
@@ -17,4 +17,4 @@ router.get('/:id/reviews', opsController.getReviewsByUser)
 router.get('/:id/places', opsController.getPlacesByUser)
 router.get('/:id/routes', opsController.getRoutesByUser)
 
-export { router }
+export { router as UserRouter }

@@ -1,19 +1,19 @@
-import { Schema, model } from 'mongoose'
+import mongoose from 'mongoose'
 
-const LikeSchema = new Schema(
+const LikeSchema = new mongoose.Schema(
   {
     like: {
       type: Number,
       max: 1,
     },
     userId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
   },
   { timestamps: true }
 )
 
-const Like = model('like', LikeSchema)
+const Like = mongoose.model('like', LikeSchema)
 
-export default Like
+export { Like }

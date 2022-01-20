@@ -1,5 +1,5 @@
 import * as express from 'express'
-import * as likeController from 'controllers/like.controller'
+import * as likeController from '../controllers/like.controller.js'
 
 const router = express.Router()
 
@@ -13,4 +13,4 @@ router.get('/:id/likes', likeController.getLikesInRoute)
 router.post('/:id/likes', likeController.saveLikeInRoute)
 router.delete('/:id/likes/:id', likeController.deleteLikeInRoute)
 
-export default router
+export { router as LikesRouter }

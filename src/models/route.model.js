@@ -1,9 +1,9 @@
-import { Schema, model } from 'mongoose'
+import mongoose from 'mongoose'
 
-const RouteSchema = new Schema(
+const RouteSchema = new mongoose.Schema(
   {
     ownerId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       unique: true,
       required: true,
@@ -55,6 +55,6 @@ const RouteSchema = new Schema(
   { timestamps: true }
 )
 
-const Route = model('route', RouteSchema)
+const Route = mongoose.model('route', RouteSchema)
 
-export default Route
+export { Route }

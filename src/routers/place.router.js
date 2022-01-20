@@ -1,5 +1,5 @@
 import * as express from 'express'
-import * as placesController from 'controllers/place.controller'
+import * as placesController from '../controllers/place.controller.js'
 
 const router = express.Router()
 
@@ -10,4 +10,4 @@ router.post('/', placesController.savePlace)
 router.patch('/:id', placesController.updatePlace)
 router.delete('/:id', placesController.deletePlace)
 
-export default router
+export { router as PlaceRouter }
