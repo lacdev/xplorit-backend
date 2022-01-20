@@ -1,6 +1,6 @@
-import * as review from 'usecases/review.usecase'
-import * as place from 'usecases/place.usecase'
-import * as route from 'usecases/route.usecase'
+import * as review from '../usecases/review.usecase.js'
+import * as place from '../usecases/place.usecase.js'
+import * as route from '../usecases/route.usecase.js'
 
 const getReviewsInRoute = async (req, res) => {
   const { routeId } = req.params

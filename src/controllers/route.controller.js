@@ -1,4 +1,4 @@
-import * as route from 'usecases/route.usecase'
+import * as route from '../usecases/route.usecase.js'
 
 const getRoutes = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-import * as user from 'usecases/user.usecase'
+import * as user from '../usecases/user.usecase.js'
 
 const getUsers = async (req, res) => {
   try {

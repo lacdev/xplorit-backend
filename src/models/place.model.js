@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import mongoose from 'mongoose'
 
 const statesArray = [
   'Aguascalientes',
@@ -36,10 +36,10 @@ const statesArray = [
   'Zacatecas',
 ]
 
-const PlaceSchema = new Schema(
+const PlaceSchema = new mongoose.Schema(
   {
     ownerId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       unique: true,
       required: true,
@@ -111,6 +111,6 @@ const PlaceSchema = new Schema(
   { timestamps: true }
 )
 
-const Place = model('place', PlaceSchema)
+const Place = mongoose.model('place', PlaceSchema)
 
-export default Place
+export { Place }

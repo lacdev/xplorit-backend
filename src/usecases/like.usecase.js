@@ -1,5 +1,5 @@
-import { Route } from 'models/route.model'
-import { Place } from 'models/place.model'
+import { Route } from '../models/route.model.js'
+import { Place } from '../models/place.model.js'
 
 const getLikesFromRoute = async (id) => await Route.findById(id)
 

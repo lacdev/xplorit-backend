@@ -1,6 +1,6 @@
-import * as like from 'usecases/like.usecase'
-import * as place from 'usecases/place.usecase'
-import * as route from 'usecases/route.usecase'
+import * as like from '../usecases/like.usecase.js'
+import * as place from '../usecases/place.usecase.js'
+import * as route from '../usecases/route.usecase.js'
 
 const getLikesInRoute = async (req, res) => {
   const { routeId } = req.params
