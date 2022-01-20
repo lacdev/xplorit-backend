@@ -1,4 +1,4 @@
-import * as express from 'express'
+import express from 'express'
 import * as reviewsController from '../controllers/review.controller.js'
 
 const router = express.Router()
