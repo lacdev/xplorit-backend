@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
-require('dotenv').config()
+import dotenv from 'dotenv'
+import app from './src/lib/server.js'
+import dbConnect from './src/lib/db.js'
 
-const dbConnect = require('./src/lib/db')
-const app = require('./src/lib/server')
+dotenv.config()
 
 dbConnect(process.env)
   .then(() => {
