@@ -13,17 +13,17 @@ const ReviewSchema = new mongoose.Schema(
       max: 5,
       required: true,
     },
-    user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
       unique: true,
     },
-    place: {
+    placeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Place',
     },
-    route: {
+    routeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Route',
     },

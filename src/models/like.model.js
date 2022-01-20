@@ -10,6 +10,14 @@ const LikeSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    placeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Place',
+    },
+    routeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Route',
+    },
   },
   { timestamps: true }
 )
