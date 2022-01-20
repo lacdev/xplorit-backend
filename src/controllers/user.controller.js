@@ -18,6 +18,7 @@ const getUsers = async (req, res) => {
       error: {
         err,
         description: 'Could not get users.',
+        statusCode: 404,
       },
     })
   }
