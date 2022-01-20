@@ -23,7 +23,7 @@ const getUsers = async (req, res) => {
   }
 }
 
-const createUser = async (req, res) => {
+const saveUser = async (req, res) => {
   try {
     const { newUser } = req.body
 
@@ -134,4 +134,4 @@ const deleteUser = async (req, res) => {
   }
 }
 
-export { getUsers, getUser, updateUser, deleteUser, createUser }
+export { getUsers, getUser, updateUser, deleteUser, saveUser }
