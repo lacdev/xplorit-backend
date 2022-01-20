@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
-const express = require('express')
-const cors = require('cors')
-const morgan = require('morgan')
+import express from 'express'
+import cors from 'cors'
+import morgan from 'morgan'
+import { router as userRoutes } from 'routers/user.router'
 
 const app = express()
 
@@ -9,4 +10,6 @@ app.use(cors())
 app.use(express.json())
 app.use(morgan('combined'))
 
-module.exports = app
+app.use('/users', userRoutes)
+
+export default app

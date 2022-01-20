@@ -1,4 +1,4 @@
-import * as express from 'express'
+import express from 'express'
 import * as userController from 'controllers/user.controller'
 import * as opsController from 'controllers/userops.controller'
 
@@ -17,4 +17,4 @@ router.get('/:id/reviews', opsController.getReviewsByUser)
 router.get('/:id/places', opsController.getPlacesByUser)
 router.get('/:id/routes', opsController.getRoutesByUser)
 
-export default router
+export { router }
