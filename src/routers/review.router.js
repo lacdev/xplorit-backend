@@ -4,15 +4,27 @@ import * as reviewsController from '../controllers/review.controller.js'
 const router = express.Router()
 
 //Reviews in routes controllers
-router.get('/:id/reviews', reviewsController.getReviewsInRoute)
-router.post('/:id/reviews', reviewsController.saveReviewInRoute)
-router.patch('/:id/reviews/:id', reviewsController.updateReviewInRoute)
-router.delete('/:id/reviews/:id', reviewsController.deleteReviewInRoute)
+router.get('/:routeId/reviews', reviewsController.getReviewsInRoute)
+router.post('/:routeId/reviews', reviewsController.saveReviewInRoute)
+router.patch(
+  '/:routeId/reviews/:reviewId',
+  reviewsController.updateReviewInRoute
+)
+router.delete(
+  '/:routeId/reviews/:reviewId',
+  reviewsController.deleteReviewInRoute
+)
 
 //Reviews in places controllers
-router.get('/:id/reviews', reviewsController.getReviewsInPlace)
-router.post('/:id/reviews', reviewsController.saveReviewInPlace)
-router.patch('/:id/reviews/:id', reviewsController.updateReviewInPlace)
-router.delete('/:id/reviews/:id', reviewsController.deleteReviewInPlace)
+router.get('/:placeId/reviews', reviewsController.getReviewsInPlace)
+router.post('/:placeId/reviews', reviewsController.saveReviewInPlace)
+router.patch(
+  '/:placeId/reviews/:reviewId',
+  reviewsController.updateReviewInPlace
+)
+router.delete(
+  '/:placeId/reviews/:reviewId',
+  reviewsController.deleteReviewInPlace
+)
 
-export { router as ReviewRouter }
+export { router as ReviewsRouter }

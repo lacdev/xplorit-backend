@@ -17,4 +17,4 @@ router.get('/:id/reviews', opsController.getReviewsByUser)
 router.get('/:id/places', opsController.getPlacesByUser)
 router.get('/:id/routes', opsController.getRoutesByUser)
 
-export { router as UserRouter }
+export { router as UsersRouter }
