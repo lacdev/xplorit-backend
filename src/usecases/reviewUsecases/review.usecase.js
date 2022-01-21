@@ -1,5 +1,5 @@
-import { Route } from '../models/route.model.js'
-import { Place } from '../models/place.model.js'
+import { Route } from '../../models/route.model.js'
+import { Place } from '../../models/place.model.js'
 
 const getAllReviewsFromRoute = async (id) => await Route.findById(id)
 
