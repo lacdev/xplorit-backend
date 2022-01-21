@@ -6,15 +6,15 @@ const router = express.Router()
 
 //User controllers
 router.get('/', userController.getUsers)
-router.get('/:id', userController.getUser)
+router.get('/:userId', userController.getUser)
 router.post('/', userController.saveUser)
-router.patch('/:id', userController.updateUser)
-router.delete('/:id', userController.deleteUser)
+router.patch('/:userId', userController.updateUser)
+router.delete('/:userId', userController.deleteUser)
 
 //User Ops controllers
-router.get('/:id/likes', opsController.getLikesByUser)
-router.get('/:id/reviews', opsController.getReviewsByUser)
-router.get('/:id/places', opsController.getPlacesByUser)
-router.get('/:id/routes', opsController.getRoutesByUser)
+router.get('/:userId/likes', opsController.getLikesByUser)
+router.get('/:userId/reviews', opsController.getReviewsByUser)
+router.get('/:userId/places', opsController.getPlacesByUser)
+router.get('/:userId/routes', opsController.getRoutesByUser)
 
 export { router as UsersRouter }
