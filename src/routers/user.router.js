@@ -1,6 +1,6 @@
 import express from 'express'
-import * as userController from '../controllers/user.controller.js'
-import * as opsController from '../controllers/userops.controller.js'
+import * as userController from '../controllers/usersControllers/user.controller.js'
+import * as opsController from '../controllers/userOpsControllers/userops.controller.js'
 
 const router = express.Router()
 

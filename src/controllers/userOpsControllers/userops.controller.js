@@ -1,4 +1,4 @@
-import * as user from '../usecases/user.usecase.js'
+import * as user from '../../usecases/user.usecase.js'
 
 const getLikesByUser = async (req, res) => {
   const { id } = req.params

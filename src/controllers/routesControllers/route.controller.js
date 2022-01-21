@@ -1,14 +1,14 @@
-import * as place from '../usecases/place.usecase.js'
+import * as route from '../../usecases/route.usecase.js'
 
-const getPlaces = async (req, res) => {
+const getRoutes = async (req, res) => {
   try {
-    const allPlaces = await place.getAllPlaces()
+    const allRoutes = await route.getAllRoutes()
 
     res.json({
       message: 'success',
       payload: {
-        data: allPlaces,
-        description: 'Places found successfully',
+        data: allRoutes,
+        description: 'Routes found successfully',
         statusCode: 200,
       },
     })
@@ -18,24 +18,24 @@ const getPlaces = async (req, res) => {
       message: 'failure',
       error: {
         err,
-        description: 'Could not get places.',
+        description: 'Could not get routes.',
         statusCode: 404,
       },
     })
   }
 }
 
-const savePlace = async (req, res) => {
-  try {
-    const { newPlace } = req.body
+const saveRoute = async (req, res) => {
+  const { newRoute } = req.body
 
-    const savedPlace = await place.createSinglePlace(newPlace)
+  try {
+    const savedRoute = await route.createRoute(newRoute)
 
     res.json({
       message: 'success',
       payload: {
-        data: savedPlace,
-        description: 'Place created successfully',
+        data: savedRoute,
+        description: 'Route created successfully',
         statusCode: 200,
       },
     })
@@ -45,24 +45,24 @@ const savePlace = async (req, res) => {
       message: 'failure',
       error: {
         err,
-        description: 'Could not create place.',
+        description: 'Could not create route.',
         statusCode: 400,
       },
     })
   }
 }
 
-const getPlace = async (req, res) => {
+const getRoute = async (req, res) => {
   const { id } = req.params
 
   try {
-    const singlePlace = await place.getSinglePlace(id)
+    const singleRoute = await route.getSingleRoute(id)
 
     res.json({
       message: 'success',
       payload: {
-        data: singlePlace,
-        description: 'Place found',
+        data: singleRoute,
+        description: 'Route found',
         statusCode: 200,
       },
     })
@@ -72,25 +72,25 @@ const getPlace = async (req, res) => {
       message: 'failure',
       error: {
         err,
-        description: 'Place not found.',
+        description: 'Route not found.',
         statusCode: 404,
       },
     })
   }
 }
 
-const updatePlace = async (req, res) => {
+const updateRoute = async (req, res) => {
   try {
     const { id } = req.params
     const { body } = req.body
 
-    const updatedPlace = await place.updateSinglePlace(id, body)
+    const updatedRoute = await route.updateSingleRoute(id, body)
 
     res.json({
       message: 'success',
       payload: {
-        data: updatedPlace,
-        description: 'Updated place successfully',
+        data: updatedRoute,
+        description: 'Updated route successfully',
         statusCode: 200,
       },
     })
@@ -100,25 +100,25 @@ const updatePlace = async (req, res) => {
       message: 'failure',
       error: {
         err,
-        description: 'Place not found.',
+        description: 'Route not found.',
         statusCode: 404,
       },
     })
   }
 }
 
-const deletePlace = async (req, res) => {
+const deleteRoute = async (req, res) => {
   try {
     const { id } = req.params
 
-    const deletedPlace = await place.deleteSinglePlace(id)
+    const deletedRoute = await route.deleteSingleRoute(id)
 
-    if (deletedPlace) {
+    if (deletedRoute) {
       res.json({
         message: 'success',
         payload: {
           data: 'No content',
-          description: 'Deleted place successfully',
+          description: 'Deleted route successfully',
           statusCode: 204,
         },
       })
@@ -129,11 +129,11 @@ const deletePlace = async (req, res) => {
       message: 'failure',
       error: {
         err,
-        description: 'Place not found.',
+        description: 'Route not found.',
         statusCode: 404,
       },
     })
   }
 }
 
-export { getPlaces, savePlace, getPlace, updatePlace, deletePlace }
+export { getRoutes, saveRoute, getRoute, updateRoute, deleteRoute }

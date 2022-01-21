@@ -1,5 +1,5 @@
 import express from 'express'
-import * as placesController from '../controllers/place.controller.js'
+import * as placesController from '../controllers/placesControllers/place.controller.js'
 
 const router = express.Router()
 
