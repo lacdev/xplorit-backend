@@ -1,13 +1,17 @@
 import express from 'express'
-import * as routesController from '../controllers/routesControllers/route.controller.js'
+import { getRoutes } from '../controllers/routesControllers/getRoutes.js'
+import { getRoute } from '../controllers/routesControllers/getRoute.js'
+import { saveRoute } from '../controllers/routesControllers/saveRoute.js'
+import { updateRoute } from '../controllers/routesControllers/updateRoute.js'
+import { deleteRoute } from '../controllers/routesControllers/deleteRoute.js'
 
 const router = express.Router()
 
 //Routes controller
-router.get('/', routesController.getRoutes)
-router.get('/:routeId', routesController.getRoute)
-router.post('/', routesController.saveRoute)
-router.patch('/:routeId', routesController.updateRoute)
-router.delete('/:routeId', routesController.deleteRoute)
+router.get('/', getRoutes)
+router.get('/:routeId', getRoute)
+router.post('/', saveRoute)
+router.patch('/:routeId', updateRoute)
+router.delete('/:routeId', deleteRoute)
 
 export { router as RoutesRouter }
