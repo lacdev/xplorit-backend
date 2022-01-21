@@ -5,9 +5,9 @@ const router = express.Router()
 
 //Places controllers
 router.get('/', placesController.getPlaces)
-router.get('/:id', placesController.getPlace)
+router.get('/:placeId', placesController.getPlace)
 router.post('/', placesController.savePlace)
-router.patch('/:id', placesController.updatePlace)
-router.delete('/:id', placesController.deletePlace)
+router.patch('/:placeId', placesController.updatePlace)
+router.delete('/:placeId', placesController.deletePlace)
 
-export { router as PlaceRouter }
+export { router as PlacesRouter }

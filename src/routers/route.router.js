@@ -5,9 +5,9 @@ const router = express.Router()
 
 //Routes controller
 router.get('/', routesController.getRoutes)
-router.get('/:id', routesController.getRoute)
+router.get('/:routeId', routesController.getRoute)
 router.post('/', routesController.saveRoute)
-router.patch('/:id', routesController.updateRoute)
-router.delete('/:id', routesController.deleteRoute)
+router.patch('/:routeId', routesController.updateRoute)
+router.delete('/:routeId', routesController.deleteRoute)
 
 export { router as RoutesRouter }
