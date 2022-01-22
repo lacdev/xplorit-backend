@@ -5,11 +5,13 @@ import dbConnect from './src/lib/db.js'
 
 dotenv.config()
 
+const port = process.env.PORT || 8080
+
 dbConnect(process.env)
   .then(() => {
     console.log('DB Connected')
-    app.listen(process.env.PORT, () => {
-      console.log(`Server is up and running`)
+    app.listen(port, () => {
+      console.log(`Server is up and listening on ${port}`)
     })
   })
   .catch((error) => console.log(error))
