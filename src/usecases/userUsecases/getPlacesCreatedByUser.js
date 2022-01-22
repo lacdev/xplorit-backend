@@ -1,5 +1,4 @@
-import { User } from 'models/user.model'
-import { Place } from 'models/place.model'
+import { User } from '../../models/user.model.js'
 
 const getPlacesCreatedByUser = async (id) => await User.findById(id)
 

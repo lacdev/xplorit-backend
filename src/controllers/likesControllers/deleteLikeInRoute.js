@@ -1,10 +1,13 @@
+import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { deleteLikeFromRoute } from '../../usecases/likeUsecases/deleteLikeFromRoute.js'
+
 const deleteLikeInRoute = async (req, res) => {
   try {
-    const { id } = req.params
+    const { routeId, likeId } = req.params
 
-    const foundRoute = await route.getSingleRoute(id)
+    const foundRoute = await getSingleRoute(routeId)
 
-    const deletedLike = await like.deleteLikeFromRoute(foundRoute._id)
+    const deletedLike = await deleteLikeFromRoute(foundRoute._id, likeId)
 
     if (deletedLike) {
       res.json({

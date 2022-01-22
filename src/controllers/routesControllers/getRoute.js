@@ -1,8 +1,10 @@
+import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+
 const getRoute = async (req, res) => {
-  const { id } = req.params
+  const { routeId } = req.params
 
   try {
-    const singleRoute = await route.getSingleRoute(id)
+    const singleRoute = await getSingleRoute(routeId)
 
     res.json({
       message: 'success',

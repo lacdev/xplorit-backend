@@ -1,8 +1,13 @@
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { getLikesMadeByUser } from '../../usecases/userUsecases/getLikesMadeByUser.js'
+
 const getLikesByUser = async (req, res) => {
-  const { id } = req.params
+  const { userId } = req.params
 
   try {
-    const likesByUser = user.getLikesMadeByUser(id)
+    const foundUser = await getSingleUser(userId)
+
+    const likesByUser = getLikesMadeByUser(foundUser._id)
 
     res.json({
       message: 'success',

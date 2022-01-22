@@ -1,10 +1,13 @@
+import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
+import { deleteReviewFromPlace } from '../../usecases/reviewUsecases/deleteReviewFromPlace.js'
+
 const deleteReviewInPlace = async (req, res) => {
-  const { placeId } = req.params
+  const { placeId, reviewId } = req.params
 
   try {
-    const foundPlace = await place.getSinglePlace(placeId)
+    const foundPlace = await getSinglePlace(placeId)
 
-    const deletedReview = await review.deleteReviewInRoute(foundPlace._id)
+    const deletedReview = await deleteReviewFromPlace(foundPlace._id, reviewId)
 
     if (deletedReview) {
       res.json({

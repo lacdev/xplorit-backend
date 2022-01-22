@@ -1,8 +1,12 @@
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { getPlacesCreatedByUser } from '../../usecases/userUsecases/getPlacesCreatedByUser.js'
+
 const getPlacesByUser = async (req, res) => {
-  const { id } = req.params
+  const { userId } = req.params
 
   try {
-    const placesByUser = user.getPlacesCreatedByUser(id)
+    const foundUser = await getSingleUser(userId)
+    const placesByUser = getPlacesCreatedByUser(foundUser._id)
 
     res.json({
       message: 'success',

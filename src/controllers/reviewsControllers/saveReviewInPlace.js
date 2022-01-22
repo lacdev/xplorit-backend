@@ -1,14 +1,14 @@
+import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
+import { postReviewToPlace } from '../../usecases/reviewUsecases/postReviewToPlace.js'
+
 const saveReviewInPlace = async (req, res) => {
   const { placeId } = req.params
   const { newReview } = req.body
 
   try {
-    const foundPlace = await place.getSinglePlace(placeId)
+    const foundPlace = await getSinglePlace(placeId)
 
-    const savedReview = await review.postReviewToPlace(
-      foundPlace._id,
-      newReview
-    )
+    const savedReview = await postReviewToPlace(foundPlace._id, newReview)
 
     res.json({
       message: 'success',

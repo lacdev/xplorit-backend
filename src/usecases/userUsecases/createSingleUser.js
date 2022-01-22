@@ -1,4 +1,4 @@
-import { User } from 'models/user.model'
+import { User } from '../../models/user.model.js'
 
 const createSingleUser = async (user) => await User.create(user)
 

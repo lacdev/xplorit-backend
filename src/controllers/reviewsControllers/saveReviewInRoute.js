@@ -1,14 +1,14 @@
+import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { postReviewToRoute } from '../../usecases/reviewUsecases/postReviewToRoute.js'
+
 const saveReviewInRoute = async (req, res) => {
   const { routeId } = req.params
   const { newReview } = req.body
 
   try {
-    const foundRoute = await route.getSingleRoute(routeId)
+    const foundRoute = await getSingleRoute(routeId)
 
-    const savedReview = await review.postReviewToRoute(
-      foundRoute._id,
-      newReview
-    )
+    const savedReview = await postReviewToRoute(foundRoute._id, newReview)
 
     res.json({
       message: 'success',

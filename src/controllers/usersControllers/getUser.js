@@ -1,13 +1,15 @@
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+
 const getUser = async (req, res) => {
-  const { id } = req.params
+  const { userId } = req.params
 
   try {
-    const singleUser = await user.getSingleUser(id)
+    const foundUser = await getSingleUser(userId)
 
     res.json({
       message: 'success',
       payload: {
-        data: singleUser,
+        data: foundUser,
         description: 'User found',
         statusCode: 200,
       },

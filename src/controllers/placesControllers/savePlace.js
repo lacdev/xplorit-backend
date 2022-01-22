@@ -1,8 +1,10 @@
+import { createSinglePlace } from '../../usecases/placeUsecases/createSinglePlace.js'
+
 const savePlace = async (req, res) => {
   try {
     const { newPlace } = req.body
 
-    const savedPlace = await place.createSinglePlace(newPlace)
+    const savedPlace = await createSinglePlace(newPlace)
 
     res.json({
       message: 'success',

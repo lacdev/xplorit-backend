@@ -1,5 +1,4 @@
-import User from 'models/user.model'
-import Route from 'models/route.model'
+import { User } from '../../models/user.model.js'
 
 const getRoutesCreatedByUser = async (id) => await User.findById(id)
 

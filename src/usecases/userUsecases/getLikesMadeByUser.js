@@ -1,5 +1,4 @@
-import { User } from 'models/user.model'
-import { Like } from 'models/like.model'
+import { User } from '../../models/user.model.js'
 
 const getLikesMadeByUser = async (id) => await User.findById(id)
 
