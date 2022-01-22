@@ -1,8 +1,13 @@
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { deleteSingleUser } from '../../usecases/userUsecases/deleteSingleUser.js'
+
 const deleteUser = async (req, res) => {
   try {
-    const { id } = req.params
+    const { userId } = req.params
 
-    const deletedUser = await user.deleteSingleUser(id)
+    const foundUser = await getSingleUser(userId)
+
+    const deletedUser = await deleteSingleUser(foundUser._id)
 
     if (deletedUser) {
       res.json({

@@ -1,10 +1,13 @@
+import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
+import { updateReviewFromPlace } from '../../usecases/reviewUsecases/updateReviewFromPlace.js'
+
 const updateReviewInPlace = async (req, res) => {
   const { placeId } = req.params
   const { updatedContent } = req.body
   try {
-    const foundPlace = await route.getSingleRoute(placeId)
+    const foundPlace = await getSinglePlace(placeId)
 
-    const updatedReview = await review.updateReviewFromPlace(
+    const updatedReview = await updateReviewFromPlace(
       foundPlace._id,
       updatedContent
     )

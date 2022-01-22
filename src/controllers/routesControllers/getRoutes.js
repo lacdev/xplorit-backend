@@ -1,6 +1,8 @@
+import { getAllRoutes } from '../../usecases/routeUsecases/getAllRoutes.js'
+
 const getRoutes = async (req, res) => {
   try {
-    const allRoutes = await route.getAllRoutes()
+    const allRoutes = await getAllRoutes()
 
     res.json({
       message: 'success',

@@ -1,12 +1,13 @@
+import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { getAllReviewsFromRoute } from '../../usecases/reviewUsecases/getAllReviewsFromRoute.js'
+
 const getReviewsInRoute = async (req, res) => {
   const { routeId } = req.params
 
   try {
-    const foundRoute = await route.getSingleRoute(routeId)
+    const foundRoute = await getSingleRoute(routeId)
 
-    const allReviewsInRoute = await review.getAllReviewsFromRoute(
-      foundRoute._id
-    )
+    const allReviewsInRoute = await getAllReviewsFromRoute(foundRoute._id)
 
     res.json({
       message: 'success',

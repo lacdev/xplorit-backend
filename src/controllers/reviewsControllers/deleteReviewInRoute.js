@@ -1,10 +1,13 @@
+import { deleteReviewFromRoute } from '../../usecases/reviewUsecases/deleteReviewFromRoute.js'
+import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+
 const deleteReviewInRoute = async (req, res) => {
-  const { id } = req.params
+  const { routeId, reviewId } = req.params
 
   try {
-    const foundRoute = await route.getSingleRoute(id)
+    const foundRoute = await getSingleRoute(routeId)
 
-    const deletedReview = await review.deleteReviewInRoute(foundRoute._id)
+    const deletedReview = await deleteReviewFromRoute(foundRoute._id, reviewId)
 
     if (deletedReview) {
       res.json({

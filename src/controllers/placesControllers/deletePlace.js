@@ -1,8 +1,10 @@
+import { deleteSinglePlace } from '../../usecases/placeUsecases/deleteSinglePlace.js'
+
 const deletePlace = async (req, res) => {
   try {
     const { id } = req.params
 
-    const deletedPlace = await place.deleteSinglePlace(id)
+    const deletedPlace = await deleteSinglePlace(id)
 
     if (deletedPlace) {
       res.json({

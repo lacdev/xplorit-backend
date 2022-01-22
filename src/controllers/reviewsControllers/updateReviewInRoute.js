@@ -1,10 +1,13 @@
+import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { updateReviewFromRoute } from '../../usecases/reviewUsecases/updateReviewFromRoute.js'
+
 const updateReviewInRoute = async (req, res) => {
   const { routeId } = req.params
   const { updatedContent } = req.body
   try {
-    const foundRoute = await route.getSingleRoute(routeId)
+    const foundRoute = await getSingleRoute(routeId)
 
-    const updatedReview = await review.updateReviewFromRoute(
+    const updatedReview = await updateReviewFromRoute(
       foundRoute._id,
       updatedContent
     )

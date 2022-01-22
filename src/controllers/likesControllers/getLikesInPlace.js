@@ -1,10 +1,13 @@
+import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
+import { getLikesFromPlace } from '../../usecases/likeUsecases/getLikesFromPlace.js'
+
 const getLikesInPlace = async (req, res) => {
   const { placeId } = req.params
 
   try {
-    const foundPlace = await route.getSingleRoute(placeId)
+    const foundPlace = await getSinglePlace(placeId)
 
-    const allLikesInPlace = await like.getLikesFromPlace(foundPlace._id)
+    const allLikesInPlace = await getLikesFromPlace(foundPlace._id)
 
     res.json({
       message: 'success',

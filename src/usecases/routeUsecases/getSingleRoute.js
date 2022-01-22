@@ -1,4 +1,4 @@
-import Route from 'models/route.model'
+import { Route } from '../../models/route.model.js'
 
 const getSingleRoute = async (id) => await Route.findById(id)
 

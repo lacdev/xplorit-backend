@@ -1,9 +1,11 @@
+import { updateSinglePlace } from '../../usecases/placeUsecases/updateSinglePlace.js'
+
 const updatePlace = async (req, res) => {
   try {
     const { id } = req.params
     const { body } = req.body
 
-    const updatedPlace = await place.updateSinglePlace(id, body)
+    const updatedPlace = await updateSinglePlace(id, body)
 
     res.json({
       message: 'success',

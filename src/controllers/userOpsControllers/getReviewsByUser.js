@@ -1,8 +1,13 @@
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { getReviewsMadeByUser } from '../../usecases/userUsecases/getReviewsMadeByUser.js'
+
 const getReviewsByUser = async (req, res) => {
-  const { id } = req.params
+  const { userId } = req.params
 
   try {
-    const reviewsByUser = user.getReviewsMadeByUser(id)
+    const foundUser = await getSingleUser(userId)
+
+    const reviewsByUser = getReviewsMadeByUser(foundUser._id)
 
     res.json({
       message: 'success',

@@ -1,12 +1,13 @@
+import { getAllReviewsFromPlace } from '../../usecases/reviewUsecases/getAllReviewsFromPlace.js'
+import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
+
 const getReviewsInPlace = async (req, res) => {
   const { placeId } = req.params
 
   try {
-    const foundPlace = await place.getSinglePlace(placeId)
+    const foundPlace = await getSinglePlace(placeId)
 
-    const allReviewsInPlace = await review.getAllReviewsFromPlace(
-      foundPlace._id
-    )
+    const allReviewsInPlace = await getAllReviewsFromPlace(foundPlace._id)
 
     res.json({
       message: 'success',

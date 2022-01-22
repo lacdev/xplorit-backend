@@ -1,5 +1,4 @@
-import { Like } from 'models/like.model'
-import { Place } from 'models/place.model'
+import { Place } from '../../models/place.model.js'
 
 const getLikesFromPlace = async (id) => await Place.findById(id)
 

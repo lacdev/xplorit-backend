@@ -1,8 +1,10 @@
+import { deleteSingleRoute } from '../../usecases/routeUsecases/deleteSingleRoute.js'
+
 const deleteRoute = async (req, res) => {
   try {
-    const { id } = req.params
+    const { routeId } = req.params
 
-    const deletedRoute = await route.deleteSingleRoute(id)
+    const deletedRoute = await deleteSingleRoute(routeId)
 
     if (deletedRoute) {
       res.json({

@@ -1,8 +1,10 @@
+import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
+
 const getPlace = async (req, res) => {
   const { id } = req.params
 
   try {
-    const singlePlace = await place.getSinglePlace(id)
+    const singlePlace = await getSinglePlace(id)
 
     res.json({
       message: 'success',

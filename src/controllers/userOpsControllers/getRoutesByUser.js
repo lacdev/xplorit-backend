@@ -1,8 +1,13 @@
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { getRoutesCreatedByUser } from '../../usecases/userUsecases/getRoutesCreatedByUser.js'
+
 const getRoutesByUser = async (req, res) => {
-  const { id } = req.params
+  const { userId } = req.params
 
   try {
-    const routesByUser = user.getRoutesCreatedByUser(id)
+    const foundUser = await getSingleUser(userId)
+
+    const routesByUser = getRoutesCreatedByUser(foundUser._id)
 
     res.json({
       message: 'success',

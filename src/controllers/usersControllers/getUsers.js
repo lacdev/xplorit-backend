@@ -1,6 +1,8 @@
+import { getAllUsers } from '../../usecases/userUsecases/getAllUsers.js'
+
 const getUsers = async (req, res) => {
   try {
-    const allUsers = user.getAllUsers()
+    const allUsers = getAllUsers()
 
     res.json({
       message: 'success',

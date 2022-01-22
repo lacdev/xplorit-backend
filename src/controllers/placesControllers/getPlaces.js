@@ -1,6 +1,8 @@
+import { getAllPlaces } from '../../usecases/placeUsecases/getAllPlaces.js'
+
 const getPlaces = async (req, res) => {
   try {
-    const allPlaces = await place.getAllPlaces()
+    const allPlaces = await getAllPlaces()
 
     res.json({
       message: 'success',
