@@ -2,7 +2,7 @@ import { getAllUsers } from '../../usecases/userUsecases/getAllUsers.js'
 
 const getUsers = async (req, res) => {
   try {
-    const allUsers = getAllUsers()
+    const allUsers = await getAllUsers()
 
     res.json({
       message: 'success',
