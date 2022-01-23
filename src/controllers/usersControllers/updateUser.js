@@ -1,9 +1,11 @@
+import { updateSingleUser } from '../../usecases/userUsecases/updateSingleUser.js'
+
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params
     const { body } = req.body
 
-    const updatedUser = await user.updateSingleUser(id, body)
+    const updatedUser = await updateSingleUser(id, body)
 
     res.json({
       message: 'success',
