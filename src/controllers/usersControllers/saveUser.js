@@ -1,4 +1,5 @@
 import { createSingleUser } from '../../usecases/userUsecases/createSingleUser.js'
+import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
 import { hashPassword } from '../../lib/bcrypt.js'
 import { ApiError } from '../../errors/ApiError.js'
 
@@ -20,6 +21,21 @@ const saveUser = async (req, res, next) => {
       next(ApiError.badRequest('username is required and must be non blank'))
       return
     }
+
+    const userNameExists = await searchForUserBeforeCreation({
+      username: username,
+      email: email,
+    })
+
+    if (userNameExists) {
+      next(ApiError.badRequest('Username or email already registered.'))
+    }
+
+    // const emailExists = await searchForUserBeforeCreation({ email: email })
+
+    // if (emailExists) {
+    //   next(ApiError.badRequest('Email already registered.'))
+    // }
 
     const hashedPassword = await hashPassword(password)
 
