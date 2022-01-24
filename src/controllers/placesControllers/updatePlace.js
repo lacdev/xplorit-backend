@@ -1,4 +1,5 @@
 import { updateSinglePlace } from '../../usecases/placeUsecases/updateSinglePlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const updatePlace = async (req, res) => {
   try {

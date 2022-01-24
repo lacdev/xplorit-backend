@@ -1,5 +1,6 @@
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { postReviewToRoute } from '../../usecases/reviewUsecases/postReviewToRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const saveReviewInRoute = async (req, res) => {
   const { routeId } = req.params

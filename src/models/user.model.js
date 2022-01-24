@@ -30,6 +30,8 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+userSchema.path('email').set((value) => value.toLowerCase())
+
 const User = mongoose.model('user', userSchema)
 
 export { User }

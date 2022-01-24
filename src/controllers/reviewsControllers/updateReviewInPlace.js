@@ -1,5 +1,6 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { updateReviewFromPlace } from '../../usecases/reviewUsecases/updateReviewFromPlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const updateReviewInPlace = async (req, res) => {
   const { placeId } = req.params

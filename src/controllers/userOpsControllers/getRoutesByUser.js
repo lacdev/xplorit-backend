@@ -1,5 +1,6 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getRoutesCreatedByUser } from '../../usecases/userUsecases/getRoutesCreatedByUser.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getRoutesByUser = async (req, res) => {
   const { userId } = req.params

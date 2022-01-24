@@ -1,5 +1,6 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { getLikesFromPlace } from '../../usecases/likeUsecases/getLikesFromPlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getLikesInPlace = async (req, res) => {
   const { placeId } = req.params

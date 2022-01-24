@@ -1,5 +1,6 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getReviewsMadeByUser } from '../../usecases/userUsecases/getReviewsMadeByUser.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getReviewsByUser = async (req, res) => {
   const { userId } = req.params

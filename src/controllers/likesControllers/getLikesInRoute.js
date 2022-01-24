@@ -1,5 +1,6 @@
 import { getLikesFromRoute } from '../../usecases/likeUsecases/getLikesFromRoute.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getLikesInRoute = async (req, res) => {
   const { routeId } = req.params

@@ -1,4 +1,5 @@
 import { getAllUsers } from '../../usecases/userUsecases/getAllUsers.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getUsers = async (req, res) => {
   try {

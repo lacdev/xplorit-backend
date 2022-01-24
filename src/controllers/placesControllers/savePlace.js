@@ -1,4 +1,5 @@
 import { createSinglePlace } from '../../usecases/placeUsecases/createSinglePlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const savePlace = async (req, res) => {
   try {

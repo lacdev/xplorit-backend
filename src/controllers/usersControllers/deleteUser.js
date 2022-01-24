@@ -1,5 +1,6 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { deleteSingleUser } from '../../usecases/userUsecases/deleteSingleUser.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const deleteUser = async (req, res) => {
   try {
