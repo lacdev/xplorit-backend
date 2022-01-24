@@ -1,4 +1,5 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getPlace = async (req, res) => {
   const { id } = req.params

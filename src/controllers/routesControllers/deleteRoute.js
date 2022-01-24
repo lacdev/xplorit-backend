@@ -1,4 +1,5 @@
 import { deleteSingleRoute } from '../../usecases/routeUsecases/deleteSingleRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const deleteRoute = async (req, res) => {
   try {

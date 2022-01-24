@@ -1,5 +1,6 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getPlacesCreatedByUser } from '../../usecases/userUsecases/getPlacesCreatedByUser.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getPlacesByUser = async (req, res) => {
   const { userId } = req.params

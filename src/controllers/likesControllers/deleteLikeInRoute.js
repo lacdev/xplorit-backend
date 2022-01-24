@@ -1,5 +1,6 @@
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { deleteLikeFromRoute } from '../../usecases/likeUsecases/deleteLikeFromRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const deleteLikeInRoute = async (req, res) => {
   try {

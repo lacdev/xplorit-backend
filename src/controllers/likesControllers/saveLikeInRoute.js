@@ -1,5 +1,6 @@
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { postLikeToRoute } from '../../usecases/likeUsecases/postLikeToRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const saveLikeInRoute = async (req, res) => {
   const { routeId } = req.params

@@ -1,5 +1,6 @@
 import { deleteReviewFromRoute } from '../../usecases/reviewUsecases/deleteReviewFromRoute.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const deleteReviewInRoute = async (req, res) => {
   const { routeId, reviewId } = req.params

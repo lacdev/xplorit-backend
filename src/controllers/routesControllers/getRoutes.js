@@ -1,4 +1,5 @@
 import { getAllRoutes } from '../../usecases/routeUsecases/getAllRoutes.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getRoutes = async (req, res) => {
   try {

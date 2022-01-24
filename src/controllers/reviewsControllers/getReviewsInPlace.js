@@ -1,5 +1,6 @@
 import { getAllReviewsFromPlace } from '../../usecases/reviewUsecases/getAllReviewsFromPlace.js'
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getReviewsInPlace = async (req, res) => {
   const { placeId } = req.params

@@ -1,5 +1,6 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { deleteLikeFromPlace } from '../../usecases/likeUsecases/deleteLikeFromPlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const deleteLikeInPlace = async (req, res) => {
   try {

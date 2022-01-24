@@ -1,4 +1,5 @@
 import { createRoute } from '../../usecases/routeUsecases/createRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const saveRoute = async (req, res) => {
   const { newRoute } = req.body

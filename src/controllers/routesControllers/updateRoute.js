@@ -1,5 +1,6 @@
 import { updateSingleRoute } from '../../usecases/routeUsecases/updateSingleRoute.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const updateRoute = async (req, res) => {
   try {

@@ -1,5 +1,6 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { deleteReviewFromPlace } from '../../usecases/reviewUsecases/deleteReviewFromPlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const deleteReviewInPlace = async (req, res) => {
   const { placeId, reviewId } = req.params

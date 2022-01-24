@@ -1,6 +1,7 @@
 import { updateSingleUser } from '../../usecases/userUsecases/updateSingleUser.js'
 import { hashPassword } from '../../lib/bcrypt.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const updateUser = async (req, res) => {
   try {

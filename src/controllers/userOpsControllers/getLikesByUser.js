@@ -1,5 +1,6 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getLikesMadeByUser } from '../../usecases/userUsecases/getLikesMadeByUser.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getLikesByUser = async (req, res) => {
   const { userId } = req.params

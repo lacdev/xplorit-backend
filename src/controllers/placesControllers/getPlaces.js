@@ -1,4 +1,5 @@
 import { getAllPlaces } from '../../usecases/placeUsecases/getAllPlaces.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getPlaces = async (req, res) => {
   try {

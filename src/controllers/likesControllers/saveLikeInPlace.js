@@ -1,5 +1,6 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { postLikeToPlace } from '../../usecases/likeUsecases/postLikeToPlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const saveLikeInPlace = async (req, res) => {
   const { placeId } = req.params

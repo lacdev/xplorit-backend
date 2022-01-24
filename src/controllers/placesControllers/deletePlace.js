@@ -1,4 +1,5 @@
 import { deleteSinglePlace } from '../../usecases/placeUsecases/deleteSinglePlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const deletePlace = async (req, res) => {
   try {

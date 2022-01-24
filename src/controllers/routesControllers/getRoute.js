@@ -1,4 +1,5 @@
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getRoute = async (req, res) => {
   const { routeId } = req.params

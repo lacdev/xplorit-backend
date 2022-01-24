@@ -1,26 +1,32 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { ApiError } from '../../errors/ApiError.js'
+import { isEmpty } from '../../utils/checkForEmpyObject.js'
 
-const getUser = async (req, res) => {
-  const { userId } = req.params
-
+const getUser = async (req, res, next) => {
   try {
-    const user = await getSingleUser(userId)
+    const { userId } = req.params
+
+    if (!userId) {
+      next(ApiError.badRequest('user ID is required.'))
+      return
+    }
+
+    const foundUser = await getSingleUser(userId)
+
+    if (isEmpty(foundUser)) {
+      next(ApiError.notFound('User not found.'))
+      console.log(foundUser)
+    }
 
     res.json({
       message: 'success',
       description: 'User found',
       statusCode: 200,
-      user,
+      foundUser,
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        description: 'User not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 
