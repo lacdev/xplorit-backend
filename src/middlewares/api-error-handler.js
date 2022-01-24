@@ -2,8 +2,7 @@
 import { ApiError } from '../errors/ApiError.js'
 
 const ApiErrorHandler = (err, req, res, next) => {
-  //Don't console log in production because
-  //it is not async
+  //Don't console log in production because it is not async
   console.error(err)
 
   if (err instanceof ApiError) {
