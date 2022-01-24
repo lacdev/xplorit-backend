@@ -26,7 +26,7 @@ app.use('/places', LikesRouter)
 
 // Health endpoint
 app.get('/', (req, res) => {
-  res.end('server is running')
+  res.end('Server is up and running.')
 })
 
 export default app
