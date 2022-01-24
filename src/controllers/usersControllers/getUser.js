@@ -4,15 +4,13 @@ const getUser = async (req, res) => {
   const { userId } = req.params
 
   try {
-    const foundUser = await getSingleUser(userId)
+    const user = await getSingleUser(userId)
 
     res.json({
       message: 'success',
-      payload: {
-        data: foundUser,
-        description: 'User found',
-        statusCode: 200,
-      },
+      description: 'User found',
+      statusCode: 200,
+      user,
     })
   } catch (err) {
     console.error(err)

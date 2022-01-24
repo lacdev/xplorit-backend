@@ -1,23 +1,25 @@
 {
-  "name": "testing-practice",
+  "name": "xplorit-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node and Express REST API for a Travel themed client.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "start": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "grmnmtz",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
+    "connect-timeout": "^1.9.0",
     "cors": "^2.8.5",
     "dotenv": "^13.0.1",
     "express": "^4.17.2",
     "express-validator": "^6.14.0",
     "helmet": "^5.0.1",
+    "http-status-codes": "^2.2.0",
     "mongoose": "^6.1.6",
     "mongoose-paginate-v2": "^1.5.0",
     "morgan": "^1.10.0",

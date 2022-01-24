@@ -5,18 +5,17 @@ const getUsers = async (req, res) => {
     const allUsers = await getAllUsers()
 
     res.json({
-      message: 'success',
       payload: {
-        data: allUsers,
+        message: 'success',
         statusCode: 200,
+        data: allUsers,
       },
     })
   } catch (err) {
     console.error(err)
     res.json({
-      message: 'failure',
       error: {
-        err,
+        message: 'failure',
         description: 'Could not get users.',
         statusCode: 404,
       },

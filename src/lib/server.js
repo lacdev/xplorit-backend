@@ -8,8 +8,10 @@ import { RoutesRouter } from '../routers/route.router.js'
 import { ReviewsRouter } from '../routers/review.router.js'
 import { PlacesRouter } from '../routers/place.router.js'
 import { LikesRouter } from '../routers/like.router.js'
+import { ApiErrorHandler } from '../middlewares/api-error-handler.js'
 
 const app = express()
+
 app.use(cors())
 app.use(helmet())
 app.use(express.json())
@@ -28,5 +30,7 @@ app.use('/v1/places', LikesRouter)
 app.get('/', (req, res) => {
   res.end('Server is up and running.')
 })
+
+app.use(ApiErrorHandler)
 
 export default app
