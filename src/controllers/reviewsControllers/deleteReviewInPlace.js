@@ -3,6 +3,7 @@ import { deleteReviewFromPlace } from '../../usecases/reviewUsecases/deleteRevie
 
 const deleteReviewInPlace = async (req, res) => {
   const { placeId, reviewId } = req.params
+  console.log(placeId, reviewId)
 
   try {
     const foundPlace = await getSinglePlace(placeId)

@@ -11,7 +11,7 @@ dbConnect(process.env)
   .then(() => {
     console.log('DB Connected')
     app.listen(port, () => {
-      console.log(`Server is up and listening on ${port}`)
+      console.log(`Server is up and listening on port: ${port}`)
     })
   })
   .catch((error) => console.log(error))
