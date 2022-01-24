@@ -2,6 +2,7 @@ import { createSingleUser } from '../../usecases/userUsecases/createSingleUser.j
 import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
 import { hashPassword } from '../../lib/bcrypt.js'
 import { ApiError } from '../../errors/ApiError.js'
+import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import validator from 'express-validator'
 
 const { check, validationResult } = validator
@@ -55,12 +56,12 @@ const saveUser = async (req, res, next) => {
 
     const emailExists = await searchForUserBeforeCreation({ email: email })
 
-    if (userNameExists.length !== 0) {
+    if (!isEmptyArray(userNameExists)) {
       next(ApiError.badRequest('Username already registered.'))
       return
     }
 
-    if (emailExists.length !== 0) {
+    if (!isEmptyArray(emailExists)) {
       next(ApiError.badRequest('Email already registered.'))
       return
     }

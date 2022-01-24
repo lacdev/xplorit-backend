@@ -1,6 +1,6 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { ApiError } from '../../errors/ApiError.js'
-import { isEmpty } from '../../utils/checkForEmpyObject.js'
+import { isEmptyObject } from '../../utils/checkForEmpyObject.js'
 
 const getUser = async (req, res, next) => {
   try {
@@ -13,7 +13,7 @@ const getUser = async (req, res, next) => {
 
     const foundUser = await getSingleUser(userId)
 
-    if (isEmpty(foundUser)) {
+    if (isEmptyObject(foundUser)) {
       next(ApiError.notFound('User not found.'))
       console.log(foundUser)
     }

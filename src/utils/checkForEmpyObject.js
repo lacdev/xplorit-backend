@@ -1,3 +1,3 @@
-const isEmpty = (myObject) => Object.keys(myObject).length === 0
+const isEmptyObject = (myObject) => Object.keys(myObject).length === 0
 
-export { isEmpty }
+export { isEmptyObject }
