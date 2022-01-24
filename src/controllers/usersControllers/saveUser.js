@@ -3,9 +3,7 @@ import { hashPassword } from '../../lib/bcrypt.js'
 
 const saveUser = async (req, res) => {
   try {
-    const newUser = req.body
-
-    const { username, password, email } = newUser
+    const { username, password, email } = req.body
 
     const hashedPass = await hashPassword(password)
 
@@ -15,21 +13,20 @@ const saveUser = async (req, res) => {
       email,
     })
 
-    res.json({
-      message: 'success',
-      payload: {
-        data: savedUser,
+    if (savedUser) {
+      res.json({
+        success: true,
         description: 'User created successfully',
-        statusCode: 200,
-      },
-    })
+        statusCode: 201,
+      })
+    }
   } catch (err) {
     console.error(err)
     res.json({
       message: 'failure',
       error: {
         err,
-        description: 'Could not create user.',
+        description: 'Bad Request',
         statusCode: 400,
       },
     })
