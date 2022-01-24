@@ -7,12 +7,10 @@ const getUser = async (req, res) => {
     const foundUser = await getSingleUser(userId)
 
     res.json({
+      data: foundUser,
       message: 'success',
-      payload: {
-        data: foundUser,
-        description: 'User found',
-        statusCode: 200,
-      },
+      description: 'User found',
+      statusCode: 200,
     })
   } catch (err) {
     console.error(err)
