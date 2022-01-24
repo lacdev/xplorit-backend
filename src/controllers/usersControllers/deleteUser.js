@@ -5,9 +5,27 @@ const deleteUser = async (req, res) => {
   try {
     const { userId } = req.params
 
+    if (!userId) {
+      res.json({
+        message: 'failure',
+        statusCode: 400,
+        description: 'Please provide a valid user ID',
+      })
+    }
+
     const foundUser = await getSingleUser(userId)
 
-    const deletedUser = await deleteSingleUser(foundUser._id)
+    if (!foundUser) {
+      res.json({
+        message: 'failure',
+        statusCode: 404,
+        description: 'User not found.',
+      })
+    }
+
+    const { _id } = foundUser
+
+    const deletedUser = await deleteSingleUser(_id)
 
     if (deletedUser) {
       res.json({
@@ -24,7 +42,6 @@ const deleteUser = async (req, res) => {
     res.json({
       message: 'failure',
       error: {
-        err,
         description: 'User not found.',
         statusCode: 404,
       },

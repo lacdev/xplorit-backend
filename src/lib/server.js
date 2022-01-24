@@ -16,13 +16,13 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('combined'))
 
-app.use('/users', UsersRouter)
-app.use('/routes', RoutesRouter)
-app.use('/routes', ReviewsRouter)
-app.use('/places', ReviewsRouter)
-app.use('/places', PlacesRouter)
-app.use('/routes', LikesRouter)
-app.use('/places', LikesRouter)
+app.use('/v1/users', UsersRouter)
+app.use('/v1/routes', RoutesRouter)
+app.use('/v1/routes', ReviewsRouter)
+app.use('/v1/places', ReviewsRouter)
+app.use('/v1/places', PlacesRouter)
+app.use('/v1/routes', LikesRouter)
+app.use('/v1/places', LikesRouter)
 
 // Health endpoint
 app.get('/', (req, res) => {

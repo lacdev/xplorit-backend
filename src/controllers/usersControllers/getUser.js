@@ -19,7 +19,6 @@ const getUser = async (req, res) => {
     res.json({
       message: 'failure',
       error: {
-        err,
         description: 'User not found.',
         statusCode: 404,
       },
