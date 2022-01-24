@@ -5,11 +5,11 @@ const saveUser = async (req, res) => {
   try {
     const { username, password, email } = req.body
 
-    const hashedPass = await hashPassword(password)
+    const hashedPassword = await hashPassword(password)
 
     const savedUser = await createSingleUser({
       username,
-      password: hashedPass,
+      password: hashedPassword,
       email,
     })
 
@@ -25,7 +25,6 @@ const saveUser = async (req, res) => {
     res.json({
       message: 'failure',
       error: {
-        err,
         description: 'Bad Request',
         statusCode: 400,
       },

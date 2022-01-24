@@ -23,7 +23,8 @@ const deleteUser = async (req, res) => {
       })
     }
 
-    const { _id } = foundUser
+    const [user] = foundUser
+    const { _id } = user
 
     const deletedUser = await deleteSingleUser(_id)
 
