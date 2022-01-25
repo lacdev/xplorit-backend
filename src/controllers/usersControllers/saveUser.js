@@ -11,6 +11,8 @@ const saveUser = async (req, res, next) => {
   try {
     const { username, password, email } = req.body
 
+    //Validation on request body. Information needs to provided.
+
     if (!email) {
       next(ApiError.badRequest('email is required and must be filled.'))
       return
@@ -26,21 +28,31 @@ const saveUser = async (req, res, next) => {
       return
     }
 
-    //Sanitization and validator chains on user registration.
+    //Sanitization and validator chains on user registration requested information from body.
 
-    const userEmailChain = check('email').isEmail().normalizeEmail().run(req)
-    const userPasswordChain = check('password').isLength({ min: 8 }).run(req)
+    const userEmailChain = check('email')
+      .isEmail()
+      .withMessage('Email is not a valid email.')
+      .normalizeEmail()
+      .run(req)
+    const userPasswordChain = check('password')
+      .isLength({ min: 8 })
+      .withMessage('Password needs to be at least 8 Characters.')
+      .run(req)
     const usernameChain = check('username')
       .not()
       .isEmpty()
+      .custom((value) => !/\s/.test(value))
+      .withMessage('No spaces are allowed in the username')
       .trim()
       .escape()
       .run(req)
 
-    //Express validators array
+    //Async Express validators array validation
+
+    await usernameChain
     await userEmailChain
     await userPasswordChain
-    await usernameChain
 
     const result = validationResult(req)
     if (!result.isEmpty()) {
@@ -49,6 +61,8 @@ const saveUser = async (req, res, next) => {
       )
       return
     }
+
+    //Async Validation whether or not a username or an email exists already in the database.
 
     const userNameExists = await searchForUserBeforeCreation({
       username: username,
@@ -65,6 +79,8 @@ const saveUser = async (req, res, next) => {
       next(ApiError.badRequest('Email already registered.'))
       return
     }
+
+    //Hash password and finally save a new user in the database.
 
     const hashedPassword = await hashPassword(password)
 
