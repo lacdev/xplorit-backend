@@ -1,13 +1,12 @@
 import { createSingleUser } from '../../usecases/userUsecases/createSingleUser.js'
 import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
-import { hashPassword } from '../../lib/bcrypt.js'
 import { ApiError } from '../../errors/ApiError.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import validator from 'express-validator'
 
 const { check, validationResult } = validator
 
-const saveUser = async (req, res, next) => {
+const validateUserSignup = async (err, req, res, next) => {
   try {
     const { username, password, email } = req.body
 
@@ -43,6 +42,7 @@ const saveUser = async (req, res, next) => {
     await usernameChain
 
     const result = validationResult(req)
+
     if (!result.isEmpty()) {
       next(
         ApiError.badRequest({ message: 'Bad Request', errors: result.array() })

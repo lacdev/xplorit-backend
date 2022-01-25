@@ -12,6 +12,7 @@ import { ApiErrorHandler } from '../middlewares/api-error-handler.js'
 
 const app = express()
 
+//Middlewares
 app.use(cors())
 app.use(helmet())
 app.use(express.json())
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
   res.end('Server is up and running.')
 })
 
+//Error Middleware
 app.use(ApiErrorHandler)
 
 export default app
