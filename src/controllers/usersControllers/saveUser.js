@@ -9,7 +9,7 @@ const { check, validationResult } = validator
 
 const saveUser = async (req, res, next) => {
   try {
-    const { username, password, email } = req.body
+    const { username, password, email, avatar, coverPhoto } = req.body
 
     //Validation on request body. Information needs to provided.
 
@@ -35,10 +35,12 @@ const saveUser = async (req, res, next) => {
       .withMessage('Email is not a valid email.')
       .normalizeEmail()
       .run(req)
+
     const userPasswordChain = check('password')
       .isLength({ min: 8 })
       .withMessage('Password needs to be at least 8 Characters.')
       .run(req)
+
     const usernameChain = check('username')
       .not()
       .isEmpty()
@@ -48,13 +50,20 @@ const saveUser = async (req, res, next) => {
       .escape()
       .run(req)
 
+    const avatarChain = check('avatar').trim().escape().run(req)
+
+    const coverPhotoChain = check('coverPhoto').trim().escape().run(req)
+
     //Async Express validators array validation
 
     await usernameChain
     await userEmailChain
     await userPasswordChain
+    await avatarChain
+    await coverPhotoChain
 
     const result = validationResult(req)
+
     if (!result.isEmpty()) {
       next(
         ApiError.badRequest({ message: 'Bad Request', errors: result.array() })
@@ -88,6 +97,8 @@ const saveUser = async (req, res, next) => {
       username,
       password: hashedPassword,
       email,
+      avatar,
+      coverPhoto,
     })
 
     if (savedUser) {
