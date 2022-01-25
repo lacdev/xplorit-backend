@@ -15,7 +15,7 @@ const getUser = async (req, res, next) => {
 
     if (isEmptyObject(foundUser)) {
       next(ApiError.notFound('User not found.'))
-      console.log(foundUser)
+      return
     }
 
     res.json({
