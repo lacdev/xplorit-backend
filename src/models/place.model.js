@@ -42,7 +42,7 @@ const PlaceSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       unique: true,
-      required: true,
+     
     },
     name: {
       type: String,
@@ -51,7 +51,7 @@ const PlaceSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
+      
       minlength: 50,
     },
     address: {
@@ -65,17 +65,17 @@ const PlaceSchema = new mongoose.Schema(
       },
       state: {
         type: String,
-        required: true,
+        
         enum: statesArray,
       },
       zipcode: {
         type: Number,
-        required: true,
+        
       },
     },
     tags: {
       type: Array,
-      required: true,
+    
       validate: {
         validator: function (array) {
           return array.every(
@@ -86,19 +86,19 @@ const PlaceSchema = new mongoose.Schema(
     },
     scheduleStart: {
       type: Date,
-      required: true,
+      
     },
     scheduleFinish: {
       type: Date,
-      required: true,
+      
     },
     ubication: {
-      lat: { type: Number, max: 1, required: true },
-      long: { type: Number, max: 1, required: true },
+      lat: { type: Number, max: 1,  },
+      long: { type: Number, max: 1,  },
     },
     images: {
       type: Array,
-      required: true,
+      
       validate: {
         validator: function (array) {
           return array.every(

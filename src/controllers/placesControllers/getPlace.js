@@ -1,11 +1,13 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { ApiError } from '../../errors/ApiError.js'
 
-const getPlace = async (req, res) => {
-  const { id } = req.params
-
+const getPlace = async (req, res, next) => {
+  
   try {
-    const singlePlace = await getSinglePlace(id)
+    
+    const { placeId, name, address, city, ownerId } = req.params
+
+    const singlePlace = await getSinglePlace(placeId, name, address, city, ownerId)
 
     res.json({
       message: 'success',
@@ -27,5 +29,7 @@ const getPlace = async (req, res) => {
     })
   }
 }
+
+
 
 export { getPlace }
