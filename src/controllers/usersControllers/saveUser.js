@@ -50,9 +50,19 @@ const saveUser = async (req, res, next) => {
       .escape()
       .run(req)
 
-    const avatarChain = check('avatar').trim().escape().run(req)
+    const avatarChain = check('avatar')
+      .isURL()
+      .withMessage('Please provide a valid avatar URL')
+      .trim()
+      .escape()
+      .run(req)
 
-    const coverPhotoChain = check('coverPhoto').trim().escape().run(req)
+    const coverPhotoChain = check('coverPhoto')
+      .isURL()
+      .withMessage('Please provide a valid cover photo URL')
+      .trim()
+      .escape()
+      .run(req)
 
     //Async Express validators array validation
 
