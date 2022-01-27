@@ -1,9 +1,15 @@
 import { createSinglePlace } from '../../usecases/placeUsecases/createSinglePlace.js'
-import { ApiError } from '../../errors/ApiError.js'
+// import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+// import { ApiError } from '../../errors/ApiError.js'
 
-const savePlace = async (req, res) => {
+const savePlace = async (req, res, next) => {
   try {
     const { newPlace } = req.body
+
+    //Extraeme el key userId de mi object req.body y luego el resto de los key/values
+    //spread operator ponlos ahi en el resto del objeto.
+
+    // const foundUser = getSingleUser(userId)
 
     const savedPlace = await createSinglePlace(newPlace)
 
@@ -17,14 +23,7 @@ const savePlace = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not create place.',
-        statusCode: 400,
-      },
-    })
+    next({})
   }
 }
 

@@ -1,5 +1,17 @@
 import mongoose from 'mongoose'
 
+const tagsArray = [
+  'Aire Libre',
+  'Nocturno',
+  'Familiar',
+  'Drinks',
+  'Comida',
+  'Mar',
+  'Playa',
+  'Fin de semana',
+  'Pueblos magicos',
+]
+
 const statesArray = [
   'Aguascalientes',
   'Baja California',
@@ -46,6 +58,7 @@ const PlaceSchema = new mongoose.Schema(
     },
     name: {
       type: String,
+      maxlength: 300,
       unique: true,
       required: true,
     },
@@ -76,6 +89,7 @@ const PlaceSchema = new mongoose.Schema(
     tags: {
       type: Array,
       required: true,
+      // enum: tagsArray,
       validate: {
         validator: function (array) {
           return array.every(
