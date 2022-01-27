@@ -4,7 +4,9 @@ import { createSinglePlace } from '../../usecases/placeUsecases/createSinglePlac
 
 const savePlace = async (req, res, next) => {
   try {
-    const { newPlace } = req.body
+    const newPlace = req.body
+
+    console.log(newPlace)
 
     //Extraeme el key userId de mi object req.body y luego el resto de los key/values
     //spread operator ponlos ahi en el resto del objeto.

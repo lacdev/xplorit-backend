@@ -41,49 +41,48 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const addressChain = check('address')
       .exists({ checkNull: true, checkFalsy: true })
-      .isObject()
+
+      .not()
+      .isEmpty()
       .withMessage('Address must be an object.')
       .run(req)
 
-    //   {street, city, state, zipcode}
     const streetChain = check('address.street')
       .exists({ checkNull: true, checkFalsy: true })
-      .isString()
-      .withMessage('Street must be a valid string.')
-      .isLength({ max: 200 })
-      .withMessage('Street name too big.')
+
+      .not()
+      .isEmpty()
+      .withMessage('please provide a street')
       .run(req)
 
     const cityChain = check('address.city')
       .exists({ checkNull: true, checkFalsy: true })
-      .isString()
-      .withMessage('City must be a valid string.')
-      .isLength({ max: 50 })
-      .withMessage('Street name too big.')
+
+      .not()
+      .isEmpty()
+      .withMessage('please provide a city')
       .run(req)
 
     const stateChain = check('address.state')
       .exists({ checkNull: true, checkFalsy: true })
-      .isString()
-      .withMessage('State must be a valid string.')
-      .isLength({ max: 50 })
-      .withMessage('State name too big.')
+
+      .not()
+      .isEmpty()
+      .withMessage('please provide a state')
       .run(req)
 
-    const zipCodeChain = check('address.state')
+    const zipCodeChain = check('address.zipcode')
       .exists({ checkNull: true, checkFalsy: true })
+
+      .not()
+      .isEmpty()
       .isNumeric()
       .withMessage('Zipcode must be a valid number.')
-      .isLength({ max: 5 })
-      .withMessage('Zipcode is not valid.')
       .run(req)
 
     const tagsChain = body('tags')
-      .exists({ checkNull: true, checkFalsy: true })
       .isArray()
       .withMessage('Tags must be an array.')
-      //   .isLength({ max: 4 })
-      //   .withMessage('Tags items max must be 4.')
       .run(req)
 
     const scheduleStartChain = body('scheduleStart')
@@ -98,20 +97,18 @@ const validatePlaceCreation = async (req, res, next) => {
       .withMessage('Schedule finish is not a valid date.')
       .run(req)
 
-    const ubicationChain = check('ubication')
-      .exists({ checkNull: true, checkFalsy: true })
-      .isObject()
-      .withMessage('Ubication must be an object.')
-      .run(req)
-
     const latitudeChain = check('ubication.lat')
-      .exists({ checkNull: true, checkFalsy: true })
+      .not()
+      .isEmpty()
+      .withMessage('please provide a latitude')
       .isNumeric()
       .withMessage('Latitude is not valid.')
       .run(req)
 
     const longitudeChain = check('ubication.long')
-      .exists({ checkNull: true, checkFalsy: true })
+      .not()
+      .isEmpty()
+      .withMessage('please provide a longitude')
       .isNumeric()
       .withMessage('Longitude is not valid.')
       .run(req)
@@ -120,8 +117,6 @@ const validatePlaceCreation = async (req, res, next) => {
       .exists({ checkNull: true, checkFalsy: true })
       .isArray()
       .withMessage('Images must be an array.')
-      //   .isLength({ max: 6 })
-      //   .withMessage('Images items max must be 6.')
       .run(req)
 
     await ownerIdChain
@@ -135,7 +130,6 @@ const validatePlaceCreation = async (req, res, next) => {
     await tagsChain
     await scheduleStartChain
     await scheduleFinishChain
-    await ubicationChain
     await latitudeChain
     await longitudeChain
     await imagesChain
@@ -161,7 +155,7 @@ const validatePlaceCreation = async (req, res, next) => {
     next()
   } catch (error) {
     console.error(error)
-    next(ApiError.internalError('Something went wrong.'))
+    next({})
   }
 }
 

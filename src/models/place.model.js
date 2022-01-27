@@ -1,17 +1,5 @@
 import mongoose from 'mongoose'
 
-const tagsArray = [
-  'Aire Libre',
-  'Nocturno',
-  'Familiar',
-  'Drinks',
-  'Comida',
-  'Mar',
-  'Playa',
-  'Fin de semana',
-  'Pueblos magicos',
-]
-
 const statesArray = [
   'Aguascalientes',
   'Baja California',
@@ -53,8 +41,6 @@ const PlaceSchema = new mongoose.Schema(
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      unique: true,
-      required: true,
     },
     name: {
       type: String,
@@ -89,14 +75,6 @@ const PlaceSchema = new mongoose.Schema(
     tags: {
       type: Array,
       required: true,
-      // enum: tagsArray,
-      validate: {
-        validator: function (array) {
-          return array.every(
-            (tag) => typeof tag === 'string' && array.length <= 4
-          )
-        },
-      },
     },
     scheduleStart: {
       type: Date,
@@ -107,8 +85,8 @@ const PlaceSchema = new mongoose.Schema(
       required: true,
     },
     ubication: {
-      lat: { type: Number, max: 1, required: true },
-      long: { type: Number, max: 1, required: true },
+      lat: { type: Number, required: true },
+      long: { type: Number, required: true },
     },
     images: {
       type: Array,
