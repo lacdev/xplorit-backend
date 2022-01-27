@@ -4,7 +4,7 @@ import validator from 'express-validator'
 import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
-const { check, body, validationResult } = validator
+const { body, validationResult } = validator
 
 const validateUserSignup = async (req, res, next) => {
   try {

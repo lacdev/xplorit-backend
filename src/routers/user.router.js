@@ -9,12 +9,13 @@ import { getReviewsByUser } from '../controllers/userOpsControllers/getReviewsBy
 import { getPlacesByUser } from '../controllers/userOpsControllers/getPlacesByUser.js'
 import { getRoutesByUser } from '../controllers/userOpsControllers/getRoutesByUser.js'
 import { validateUserSignup } from '../validators/usersValidators/saveUserValidation.js'
+import { validateGetUser } from '../validators/usersValidators/getUserValidation.js'
 
 const router = express.Router()
 
 //User controllers
 router.get('/', getUsers)
-router.get('/:userId', getUser)
+router.get('/:userId', validateGetUser, getUser)
 router.post('/', validateUserSignup, saveUser)
 router.patch('/:userId', updateUser)
 router.delete('/:userId', deleteUser)

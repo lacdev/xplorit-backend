@@ -6,11 +6,6 @@ const getUser = async (req, res, next) => {
   try {
     const { userId } = req.params
 
-    if (!userId) {
-      next(ApiError.badRequest('user ID is required.'))
-      return
-    }
-
     const foundUser = await getSingleUser(userId)
 
     if (isEmptyObject(foundUser)) {
