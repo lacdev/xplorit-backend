@@ -4,47 +4,41 @@ import validator from 'express-validator'
 import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
-const { check, validationResult } = validator
+const { check, body, validationResult } = validator
 
 const validateUserSignup = async (req, res, next) => {
   try {
-    const { username, password, email, avatar, coverPhoto } = req.body
+    const { username, email } = req.body
 
     //Validation on request body. Information needs to provided.
-
-    if (!email) {
-      next(ApiError.badRequest('email is required and must be filled.'))
-      return
-    }
-
-    if (!password) {
-      next(ApiError.badRequest('password is required and must be filled.'))
-      return
-    }
-
-    if (!username) {
-      next(ApiError.badRequest('username is required and must be filled.'))
-      return
-    }
-
     //Sanitization and validator chains on user registration requested information from body.
 
-    const userEmailChain = check('email')
+    const userEmailChain = body('email')
+      .exists({ checkFalsy: true, checkNull: true })
+      .withMessage('Email is required and must be filled.')
       .isEmail()
       .withMessage('Email is not a valid email.')
       .normalizeEmail()
       .run(req)
 
-    const userPasswordChain = check('password')
+    const userPasswordChain = body('password')
+      .exists({ checkFalsy: true, checkNull: true })
+      .withMessage(
+        'Password is required and must be at least 8 characters and should contain a number.'
+      )
       .not()
       .isEmpty()
       .isLength({ min: 8 })
-      .withMessage('Password needs to be at least 8 Characters.')
+      .withMessage(
+        'Password needs to be at least 8 Characters and should contain at least 1 number.'
+      )
       .matches(/\d/)
       .withMessage('must contain a number')
       .run(req)
 
-    const usernameChain = check('username')
+    const usernameChain = body('username')
+      .exists({ checkFalsy: true, checkNull: true })
+      .withMessage('Username is required and must be at least 4 characters.')
       .not()
       .isEmpty()
       .custom((value) => !/\s/.test(value))
@@ -53,7 +47,7 @@ const validateUserSignup = async (req, res, next) => {
       .escape()
       .run(req)
 
-    const avatarChain = check('avatar')
+    const avatarChain = body('avatar')
       .optional()
       .isURL()
       .withMessage('Please provide a valid avatar URL')
@@ -61,7 +55,7 @@ const validateUserSignup = async (req, res, next) => {
       .escape()
       .run(req)
 
-    const coverPhotoChain = check('coverPhoto')
+    const coverPhotoChain = body('coverPhoto')
       .optional()
       .isURL()
       .withMessage('Please provide a valid cover photo URL')
