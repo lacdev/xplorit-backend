@@ -2,10 +2,10 @@ import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { ApiError } from '../../errors/ApiError.js'
 
 const getPlace = async (req, res) => {
-  const { id } = req.params
+  const { placeId } = req.params
 
   try {
-    const singlePlace = await getSinglePlace(id)
+    const singlePlace = await getSinglePlace(placeId)
 
     res.json({
       message: 'success',
