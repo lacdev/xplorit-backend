@@ -12,6 +12,10 @@ import { validateUserSignup } from '../validators/usersValidators/saveUserValida
 import { validateUserRetrieve } from '../validators/usersValidators/getUserValidation.js'
 import { validateUserUpdate } from '../validators/usersValidators/updateUserValidation.js'
 import { validateUserDeletion } from '../validators/usersValidators/deleteUserValidatio.js'
+import { validateUserLikes } from '../validators/userOpsValidators/getLikesFromUserValidation.js'
+import { validateUserReviews } from '../validators/userOpsValidators/getReviewsFromUserValidation.js'
+import { validateUserPlaces } from '../validators/userOpsValidators/getPlacesFromUserValidation.js'
+import { validateUserRoutes } from '../validators/userOpsValidators/getRoutesFromUserValidation.js'
 
 const router = express.Router()
 
@@ -23,9 +27,9 @@ router.patch('/:userId', validateUserUpdate, updateUser)
 router.delete('/:userId', validateUserDeletion, deleteUser)
 
 //User Ops controllers
-router.get('/:userId/likes', getLikesByUser)
-router.get('/:userId/reviews', getReviewsByUser)
-router.get('/:userId/places', getPlacesByUser)
-router.get('/:userId/routes', getRoutesByUser)
+router.get('/:userId/likes', validateUserLikes, getLikesByUser)
+router.get('/:userId/reviews', validateUserReviews, getReviewsByUser)
+router.get('/:userId/places', validateUserPlaces, getPlacesByUser)
+router.get('/:userId/routes', validateUserRoutes, getRoutesByUser)
 
 export { router as UsersRouter }

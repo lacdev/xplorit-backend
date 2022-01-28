@@ -1,9 +1,13 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
+import { isEmptyObject } from '../../utils/checkForEmpyObject.js'
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 const { param, validationResult } = validator
 
 const validateUserRetrieve = async (req, res, next) => {
   try {
+    const { userId } = req.params
+
     const userIDChain = param('userId')
       .exists()
       .withMessage('Please provide a user ID.')
@@ -19,6 +23,13 @@ const validateUserRetrieve = async (req, res, next) => {
       next(
         ApiError.badRequest({ message: 'Bad Request', errors: result.array() })
       )
+      return
+    }
+
+    const foundUser = await getSingleUser(userId)
+
+    if (isEmptyObject(foundUser)) {
+      next(ApiError.notFound('User not found.'))
       return
     }
 
