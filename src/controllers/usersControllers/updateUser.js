@@ -1,43 +1,16 @@
 import { updateSingleUser } from '../../usecases/userUsecases/updateSingleUser.js'
 import { hashPassword } from '../../lib/bcrypt.js'
-import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 
 const updateUser = async (req, res, next) => {
   try {
     const { userId } = req.params
-
-    if (!userId) {
-      res.json({
-        message: 'failure',
-        error: {
-          description: 'User ID not provided',
-          statusCode: 400,
-        },
-      })
-
-      return
-    }
-
-    const foundUser = await getSingleUser(userId)
-
-    if (!foundUser) {
-      res.json({
-        message: 'failure',
-        error: {
-          description: 'User not found.',
-          statusCode: 404,
-        },
-      })
-
-      return
-    }
-
-    const { username, password } = req.body
+    const { avatar, coverPhoto, password } = req.body
 
     const hashedPass = await hashPassword(password)
 
     const updatedUser = await updateSingleUser(userId, {
-      username,
+      avatar,
+      coverPhoto,
       password: hashedPass,
     })
 

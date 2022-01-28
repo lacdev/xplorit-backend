@@ -2,7 +2,7 @@ import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 const { param, validationResult } = validator
 
-const validateGetUser = async (req, res, next) => {
+const validateUserRetrieve = async (req, res, next) => {
   try {
     const userIDChain = param('userId')
       .exists()
@@ -30,4 +30,4 @@ const validateGetUser = async (req, res, next) => {
   }
 }
 
-export { validateGetUser }
+export { validateUserRetrieve }
