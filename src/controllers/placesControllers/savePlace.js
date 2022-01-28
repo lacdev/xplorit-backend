@@ -1,23 +1,16 @@
 import { createSinglePlace } from '../../usecases/placeUsecases/createSinglePlace.js'
-import { ApiError } from '../../errors/ApiError.js'
-import validator from 'express-validator'
 
-const savePlace = async (req, res) => {
+const savePlace = async (req, res, next) => {
   try {
-    const { ownerId, name, description, address, city, state, zipcode, tags, scheduleStart, scheduleFinish, ubication, images } = req.body
+    const newPlace = req.body
 
-    const savedPlace = await createSinglePlace({
-      ownerId,
-      name,
-      description,
-      address, city,
-      state,
-      zipcode,
-      tags,
-      scheduleStart,
-      scheduleFinish,
-      ubication,
-      images
+    const savedPlace = await createSinglePlace(newPlace)
+    console.log(savedPlace)
+
+    res.json({
+      message: 'success',
+      statusCode: 200,
+      description: 'Place created successfully',
     })
 
     if (savedPlace) {
@@ -32,14 +25,7 @@ const savePlace = async (req, res) => {
     }
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not create place.',
-        statusCode: 400,
-      },
-    })
+    next({})
   }
 }
 

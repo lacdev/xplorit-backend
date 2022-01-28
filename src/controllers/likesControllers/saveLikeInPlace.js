@@ -1,8 +1,7 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { postLikeToPlace } from '../../usecases/likeUsecases/postLikeToPlace.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const saveLikeInPlace = async (req, res) => {
+const saveLikeInPlace = async (req, res, next) => {
   const { placeId } = req.params
   const { newLike } = req.body
 
@@ -21,14 +20,7 @@ const saveLikeInPlace = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not save like.',
-        statusCode: 400,
-      },
-    })
+    next({})
   }
 }
 

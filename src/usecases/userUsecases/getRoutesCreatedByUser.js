@@ -1,5 +1,10 @@
 import { User } from '../../models/user.model.js'
 
-const getRoutesCreatedByUser = async (id) => await User.findById(id)
-
+const getRoutesCreatedByUser = async (id) => {
+  try {
+    return await User.findById(id)
+  } catch (error) {
+    console.error(error)
+  }
+}
 export { getRoutesCreatedByUser }

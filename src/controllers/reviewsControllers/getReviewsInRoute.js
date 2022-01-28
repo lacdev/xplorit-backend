@@ -1,8 +1,7 @@
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { getAllReviewsFromRoute } from '../../usecases/reviewUsecases/getAllReviewsFromRoute.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getReviewsInRoute = async (req, res) => {
+const getReviewsInRoute = async (req, res, next) => {
   const { routeId } = req.params
 
   try {
@@ -21,14 +20,7 @@ const getReviewsInRoute = async (req, res) => {
   } catch (err) {
     console.log(err)
 
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not get reviews.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

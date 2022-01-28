@@ -1,8 +1,7 @@
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { updateReviewFromRoute } from '../../usecases/reviewUsecases/updateReviewFromRoute.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const updateReviewInRoute = async (req, res) => {
+const updateReviewInRoute = async (req, res, next) => {
   const { routeId } = req.params
   const { updatedContent } = req.body
   try {
@@ -23,14 +22,7 @@ const updateReviewInRoute = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Route not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

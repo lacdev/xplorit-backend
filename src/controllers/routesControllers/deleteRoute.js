@@ -1,7 +1,6 @@
 import { deleteSingleRoute } from '../../usecases/routeUsecases/deleteSingleRoute.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const deleteRoute = async (req, res) => {
+const deleteRoute = async (req, res, next) => {
   try {
     const { routeId } = req.params
 
@@ -19,14 +18,7 @@ const deleteRoute = async (req, res) => {
     }
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Route not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

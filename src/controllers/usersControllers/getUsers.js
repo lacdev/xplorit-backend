@@ -1,7 +1,6 @@
 import { getAllUsers } from '../../usecases/userUsecases/getAllUsers.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getUsers = async (req, res) => {
+const getUsers = async (req, res, next) => {
   try {
     const allUsers = await getAllUsers()
 
@@ -14,13 +13,7 @@ const getUsers = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      error: {
-        message: 'failure',
-        description: 'Could not get users.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

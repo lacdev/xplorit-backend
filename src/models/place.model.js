@@ -41,11 +41,10 @@ const PlaceSchema = new mongoose.Schema(
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      unique: true,
-     
     },
     name: {
       type: String,
+      maxlength: 300,
       unique: true,
       required: true,
     },
@@ -75,14 +74,7 @@ const PlaceSchema = new mongoose.Schema(
     },
     tags: {
       type: Array,
-    
-      validate: {
-        validator: function (array) {
-          return array.every(
-            (tag) => typeof tag === 'string' && array.length <= 4
-          )
-        },
-      },
+      required: true,
     },
     scheduleStart: {
       type: Date,
@@ -93,8 +85,8 @@ const PlaceSchema = new mongoose.Schema(
       
     },
     ubication: {
-      lat: { type: Number  },
-      long: { type: Number },
+      lat: { type: Number, required: true },
+      long: { type: Number, required: true },
     },
     images: {
       type: Array,

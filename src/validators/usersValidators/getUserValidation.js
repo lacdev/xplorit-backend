@@ -26,7 +26,7 @@ const validateGetUser = async (req, res, next) => {
   } catch (err) {
     console.error(err)
 
-    next(ApiError.badRequest('No valid request for to query a specific user.'))
+    next(ApiError.badRequest('No valid request to query a specific user.'))
   }
 }
 

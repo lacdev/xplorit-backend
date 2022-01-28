@@ -1,8 +1,7 @@
 import { getLikesFromRoute } from '../../usecases/likeUsecases/getLikesFromRoute.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getLikesInRoute = async (req, res) => {
+const getLikesInRoute = async (req, res, next) => {
   const { routeId } = req.params
 
   try {
@@ -20,15 +19,7 @@ const getLikesInRoute = async (req, res) => {
     })
   } catch (err) {
     console.log(err)
-
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not get likes.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

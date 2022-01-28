@@ -1,8 +1,7 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { deleteSingleUser } from '../../usecases/userUsecases/deleteSingleUser.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req, res, next) => {
   try {
     const { userId } = req.params
 
@@ -41,13 +40,7 @@ const deleteUser = async (req, res) => {
     }
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        description: 'User not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

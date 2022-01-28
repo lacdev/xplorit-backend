@@ -1,8 +1,7 @@
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { postReviewToRoute } from '../../usecases/reviewUsecases/postReviewToRoute.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const saveReviewInRoute = async (req, res) => {
+const saveReviewInRoute = async (req, res, next) => {
   const { routeId } = req.params
   const { newReview } = req.body
 
@@ -21,14 +20,7 @@ const saveReviewInRoute = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not save review.',
-        statusCode: 400,
-      },
-    })
+    next({})
   }
 }
 
