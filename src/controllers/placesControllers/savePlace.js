@@ -2,20 +2,22 @@ import { createSinglePlace } from '../../usecases/placeUsecases/createSinglePlac
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 
-
-
-
-
-
 const savePlace = async (req, res) => {
   try {
-    const { name, address, ownerID, city } = req.body
+    const { ownerId, name, description, address, city, state, zipcode, tags, scheduleStart, scheduleFinish, ubication, images } = req.body
 
     const savedPlace = await createSinglePlace({
+      ownerId,
       name,
-      address,
-      ownerID,
-      city,
+      description,
+      address, city,
+      state,
+      zipcode,
+      tags,
+      scheduleStart,
+      scheduleFinish,
+      ubication,
+      images
     })
 
     if (savedPlace) {

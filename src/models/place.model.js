@@ -93,8 +93,8 @@ const PlaceSchema = new mongoose.Schema(
       
     },
     ubication: {
-      lat: { type: Number, max: 1,  },
-      long: { type: Number, max: 1,  },
+      lat: { type: Number  },
+      long: { type: Number },
     },
     images: {
       type: Array,
