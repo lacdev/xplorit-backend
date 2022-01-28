@@ -1,9 +1,8 @@
 import { updateSingleUser } from '../../usecases/userUsecases/updateSingleUser.js'
 import { hashPassword } from '../../lib/bcrypt.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
   try {
     const { userId } = req.params
 
@@ -51,13 +50,7 @@ const updateUser = async (req, res) => {
     }
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        description: 'User not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

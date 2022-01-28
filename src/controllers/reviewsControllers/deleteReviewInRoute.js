@@ -1,8 +1,7 @@
 import { deleteReviewFromRoute } from '../../usecases/reviewUsecases/deleteReviewFromRoute.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const deleteReviewInRoute = async (req, res) => {
+const deleteReviewInRoute = async (req, res, next) => {
   const { routeId, reviewId } = req.params
 
   try {
@@ -22,14 +21,7 @@ const deleteReviewInRoute = async (req, res) => {
     }
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Route not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

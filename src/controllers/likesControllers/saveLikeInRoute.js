@@ -1,8 +1,7 @@
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { postLikeToRoute } from '../../usecases/likeUsecases/postLikeToRoute.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const saveLikeInRoute = async (req, res) => {
+const saveLikeInRoute = async (req, res, next) => {
   const { routeId } = req.params
   const { newLike } = req.body
 
@@ -11,24 +10,16 @@ const saveLikeInRoute = async (req, res) => {
 
     const savedLike = await postLikeToRoute(foundRoute._id, newLike)
 
-    res.json({
-      message: 'success',
-      payload: {
-        data: savedLike,
-        description: 'Like created successfully',
+    if (savedLike) {
+      res.json({
+        message: 'success',
         statusCode: 200,
-      },
-    })
+        description: 'Liked route successfully',
+      })
+    }
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not save like.',
-        statusCode: 400,
-      },
-    })
+    next({})
   }
 }
 

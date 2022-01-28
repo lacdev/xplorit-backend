@@ -1,7 +1,6 @@
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getRoute = async (req, res) => {
+const getRoute = async (req, res, next) => {
   const { routeId } = req.params
 
   try {
@@ -17,14 +16,7 @@ const getRoute = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Route not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

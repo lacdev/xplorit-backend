@@ -1,7 +1,6 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getPlace = async (req, res) => {
+const getPlace = async (req, res, next) => {
   const { placeId } = req.params
 
   try {
@@ -17,14 +16,7 @@ const getPlace = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Place not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

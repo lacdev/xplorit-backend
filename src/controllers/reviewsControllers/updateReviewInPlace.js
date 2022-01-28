@@ -1,8 +1,7 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { updateReviewFromPlace } from '../../usecases/reviewUsecases/updateReviewFromPlace.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const updateReviewInPlace = async (req, res) => {
+const updateReviewInPlace = async (req, res, next) => {
   const { placeId } = req.params
   const { updatedContent } = req.body
   try {
@@ -23,14 +22,7 @@ const updateReviewInPlace = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Place not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

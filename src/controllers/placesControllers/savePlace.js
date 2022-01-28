@@ -1,30 +1,20 @@
 import { createSinglePlace } from '../../usecases/placeUsecases/createSinglePlace.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const savePlace = async (req, res) => {
+const savePlace = async (req, res, next) => {
   try {
-    const { newPlace } = req.body
+    const newPlace = req.body
 
     const savedPlace = await createSinglePlace(newPlace)
+    console.log(savedPlace)
 
     res.json({
       message: 'success',
-      payload: {
-        data: savedPlace,
-        description: 'Place created successfully',
-        statusCode: 200,
-      },
+      statusCode: 200,
+      description: 'Place created successfully',
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not create place.',
-        statusCode: 400,
-      },
-    })
+    next({})
   }
 }
 

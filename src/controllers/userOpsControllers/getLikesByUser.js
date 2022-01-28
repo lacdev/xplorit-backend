@@ -1,8 +1,7 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getLikesMadeByUser } from '../../usecases/userUsecases/getLikesMadeByUser.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getLikesByUser = async (req, res) => {
+const getLikesByUser = async (req, res, next) => {
   const { userId } = req.params
 
   try {
@@ -19,14 +18,7 @@ const getLikesByUser = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'User not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 
