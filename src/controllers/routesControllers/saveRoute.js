@@ -6,14 +6,14 @@ const saveRoute = async (req, res, next) => {
   try {
     const savedRoute = await createRoute(newRoute)
 
-    res.json({
-      message: 'success',
-      payload: {
-        data: savedRoute,
+    if (savedRoute) {
+      res.json({
+        message: 'success',
         description: 'Route created successfully',
         statusCode: 200,
-      },
-    })
+        data: savedRoute,
+      })
+    }
   } catch (err) {
     console.error(err)
     next({})
