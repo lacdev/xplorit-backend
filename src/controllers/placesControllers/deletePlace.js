@@ -1,7 +1,6 @@
 import { deleteSinglePlace } from '../../usecases/placeUsecases/deleteSinglePlace.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const deletePlace = async (req, res) => {
+const deletePlace = async (req, res, next) => {
   try {
     const { id } = req.params
 
@@ -19,14 +18,7 @@ const deletePlace = async (req, res) => {
     }
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Place not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

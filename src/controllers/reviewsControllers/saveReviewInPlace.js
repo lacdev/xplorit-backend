@@ -1,8 +1,7 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { postReviewToPlace } from '../../usecases/reviewUsecases/postReviewToPlace.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const saveReviewInPlace = async (req, res) => {
+const saveReviewInPlace = async (req, res, next) => {
   const { placeId } = req.params
   const { newReview } = req.body
 
@@ -21,14 +20,7 @@ const saveReviewInPlace = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not save review.',
-        statusCode: 400,
-      },
-    })
+    next({})
   }
 }
 

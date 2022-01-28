@@ -1,31 +1,22 @@
 import { updateSinglePlace } from '../../usecases/placeUsecases/updateSinglePlace.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const updatePlace = async (req, res) => {
+const updatePlace = async (req, res, next) => {
   try {
-    const { id } = req.params
-    const { body } = req.body
+    const { placeId } = req.params
+    const body = req.body
 
-    const updatedPlace = await updateSinglePlace(id, body)
+    const updatedPlace = await updateSinglePlace(placeId, body)
 
-    res.json({
-      message: 'success',
-      payload: {
-        data: updatedPlace,
-        description: 'Updated place successfully',
+    if (updatedPlace) {
+      res.json({
+        message: 'success',
         statusCode: 200,
-      },
-    })
+        description: 'Place updated successfully',
+      })
+    }
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Place not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

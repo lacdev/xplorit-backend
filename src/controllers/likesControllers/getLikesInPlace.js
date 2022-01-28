@@ -1,8 +1,7 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { getLikesFromPlace } from '../../usecases/likeUsecases/getLikesFromPlace.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getLikesInPlace = async (req, res) => {
+const getLikesInPlace = async (req, res, next) => {
   const { placeId } = req.params
 
   try {
@@ -21,14 +20,7 @@ const getLikesInPlace = async (req, res) => {
   } catch (err) {
     console.log(err)
 
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not get likes.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

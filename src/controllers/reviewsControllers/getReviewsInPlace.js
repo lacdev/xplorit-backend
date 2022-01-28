@@ -1,8 +1,7 @@
 import { getAllReviewsFromPlace } from '../../usecases/reviewUsecases/getAllReviewsFromPlace.js'
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getReviewsInPlace = async (req, res) => {
+const getReviewsInPlace = async (req, res, next) => {
   const { placeId } = req.params
 
   try {
@@ -21,14 +20,7 @@ const getReviewsInPlace = async (req, res) => {
   } catch (err) {
     console.log(err)
 
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not get reviews.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

@@ -1,8 +1,7 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { deleteReviewFromPlace } from '../../usecases/reviewUsecases/deleteReviewFromPlace.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const deleteReviewInPlace = async (req, res) => {
+const deleteReviewInPlace = async (req, res, next) => {
   const { placeId, reviewId } = req.params
   console.log(placeId, reviewId)
 
@@ -23,14 +22,7 @@ const deleteReviewInPlace = async (req, res) => {
     }
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Route not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

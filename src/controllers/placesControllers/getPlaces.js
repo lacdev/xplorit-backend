@@ -1,7 +1,6 @@
 import { getAllPlaces } from '../../usecases/placeUsecases/getAllPlaces.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getPlaces = async (req, res) => {
+const getPlaces = async (req, res, next) => {
   try {
     const allPlaces = await getAllPlaces()
 
@@ -15,14 +14,7 @@ const getPlaces = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not get places.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

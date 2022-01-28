@@ -1,7 +1,6 @@
 import { createRoute } from '../../usecases/routeUsecases/createRoute.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const saveRoute = async (req, res) => {
+const saveRoute = async (req, res, next) => {
   const { newRoute } = req.body
 
   try {
@@ -17,14 +16,7 @@ const saveRoute = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not create route.',
-        statusCode: 400,
-      },
-    })
+    next({})
   }
 }
 

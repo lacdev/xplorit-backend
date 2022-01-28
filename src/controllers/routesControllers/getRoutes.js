@@ -1,7 +1,6 @@
 import { getAllRoutes } from '../../usecases/routeUsecases/getAllRoutes.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getRoutes = async (req, res) => {
+const getRoutes = async (req, res, next) => {
   try {
     const allRoutes = await getAllRoutes()
 
@@ -15,14 +14,7 @@ const getRoutes = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Could not get routes.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

@@ -1,8 +1,7 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { deleteLikeFromPlace } from '../../usecases/likeUsecases/deleteLikeFromPlace.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const deleteLikeInPlace = async (req, res) => {
+const deleteLikeInPlace = async (req, res, next) => {
   try {
     const { placeId, likeId } = req.params
 
@@ -38,14 +37,7 @@ const deleteLikeInPlace = async (req, res) => {
     }
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'Place not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

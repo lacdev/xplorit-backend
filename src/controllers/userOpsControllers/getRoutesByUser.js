@@ -1,8 +1,7 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getRoutesCreatedByUser } from '../../usecases/userUsecases/getRoutesCreatedByUser.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getRoutesByUser = async (req, res) => {
+const getRoutesByUser = async (req, res, next) => {
   const { userId } = req.params
 
   try {
@@ -19,14 +18,7 @@ const getRoutesByUser = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'User not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

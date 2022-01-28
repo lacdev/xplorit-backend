@@ -1,8 +1,7 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getPlacesCreatedByUser } from '../../usecases/userUsecases/getPlacesCreatedByUser.js'
-import { ApiError } from '../../errors/ApiError.js'
 
-const getPlacesByUser = async (req, res) => {
+const getPlacesByUser = async (req, res, next) => {
   const { userId } = req.params
 
   try {
@@ -18,14 +17,7 @@ const getPlacesByUser = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    res.json({
-      message: 'failure',
-      error: {
-        err,
-        description: 'User not found.',
-        statusCode: 404,
-      },
-    })
+    next({})
   }
 }
 

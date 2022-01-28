@@ -10,7 +10,6 @@ const validateUserSignup = async (req, res, next) => {
   try {
     const { username, email } = req.body
 
-    //Validation on request body. Information needs to provided.
     //Sanitization and validator chains on user registration requested information from body.
 
     const userEmailChain = body('email')
