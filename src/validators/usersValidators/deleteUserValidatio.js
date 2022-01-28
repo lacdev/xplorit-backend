@@ -1,9 +1,12 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { isEmptyObject } from '../../utils/checkForEmpyObject.js'
 const { param, validationResult } = validator
 
 const validateUserDeletion = async (req, res, next) => {
   try {
+    const { userId } = req.params
     const userIDChain = param('userId')
       .exists()
       .withMessage('Please provide a user ID.')
@@ -22,10 +25,16 @@ const validateUserDeletion = async (req, res, next) => {
       return
     }
 
+    const foundUser = await getSingleUser(userId)
+
+    if (isEmptyObject(foundUser)) {
+      next(ApiError.notFound('User not found.'))
+      return
+    }
+
     next()
   } catch (err) {
     console.error(err)
-
     next(ApiError.badRequest('No valid request to query a specific user.'))
   }
 }
