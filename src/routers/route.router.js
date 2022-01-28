@@ -5,6 +5,7 @@ import { saveRoute } from '../controllers/routesControllers/saveRoute.js'
 import { updateRoute } from '../controllers/routesControllers/updateRoute.js'
 import { deleteRoute } from '../controllers/routesControllers/deleteRoute.js'
 import { validateRouteCreation } from '../validators/routesValidators/saveRouteValidation.js'
+import { validateRouteUpdate } from '../validators/routesValidators/updateRouteValidation.js'
 
 const router = express.Router()
 
@@ -12,7 +13,7 @@ const router = express.Router()
 router.get('/', getRoutes)
 router.get('/:routeId', getRoute)
 router.post('/', validateRouteCreation, saveRoute)
-router.patch('/:routeId', updateRoute)
+router.patch('/:routeId', validateRouteUpdate, updateRoute)
 router.delete('/:routeId', deleteRoute)
 
 export { router as RoutesRouter }
