@@ -11,7 +11,7 @@ const router = express.Router()
 //Places controllers
 router.get('/', getPlaces)
 router.get('/:placeId', getPlace)
-router.post('/', validatePlaceCreation, savePlace)
+router.post('/', savePlace)
 router.patch('/:placeId', updatePlace)
 router.delete('/:placeId', deletePlace)
 
