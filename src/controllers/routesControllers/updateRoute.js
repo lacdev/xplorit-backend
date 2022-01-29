@@ -13,14 +13,14 @@ const updateRoute = async (req, res, next) => {
       updatedContentForRoute
     )
 
-    res.json({
-      message: 'success',
-      payload: {
-        data: updatedRoute,
+    if (updatedRoute) {
+      res.json({
+        message: 'success',
         description: 'Updated route successfully',
         statusCode: 200,
-      },
-    })
+        data: updatedRoute,
+      })
+    }
   } catch (err) {
     console.error(err)
     next({})
