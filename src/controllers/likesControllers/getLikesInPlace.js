@@ -7,8 +7,13 @@ const getLikesInPlace = async (req, res, next) => {
   try {
     const foundPlace = await getSinglePlace(placeId)
 
-    const allLikesInPlace = await getLikesFromPlace(foundPlace._id)
+    const getId = foundPlace.map((data) => {
+      const objectId = data._id 
+      return objectId })
+    const idPlace = getId[0]
 
+    const allLikesInPlace = await getLikesFromPlace(idPlace)
+ 
     res.json({
       message: 'success',
       payload: {
