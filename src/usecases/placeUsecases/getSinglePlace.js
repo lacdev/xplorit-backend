@@ -2,10 +2,10 @@ import { Place } from '../../models/place.model.js'
 
 const getSinglePlace = async (id) => {
 
-  try {
-    
+  try { 
+    console.log("getSinglePlaceId: " +id)
     return await Place.find({_id: id})
-    .select('_id name ')
+    .select('name')
 
   } catch (error) {
     console.error(error)

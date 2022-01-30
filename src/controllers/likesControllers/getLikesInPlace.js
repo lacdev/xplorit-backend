@@ -5,7 +5,10 @@ const getLikesInPlace = async (req, res, next) => {
   const { placeId } = req.params
 
   try {
+    
     const foundPlace = await getSinglePlace(placeId)
+    console.log(foundPlace)
+
 
     const getId = foundPlace.map((data) => {
       const objectId = data._id 
@@ -13,10 +16,12 @@ const getLikesInPlace = async (req, res, next) => {
     const idPlace = getId[0]
 
     const allLikesInPlace = await getLikesFromPlace(idPlace)
-   
+      
     const totalLikesInPlace = allLikesInPlace.length <= 0 ? 0 : allLikesInPlace.reduce((accum, current) => {
       return accum + current.like
     },0)
+
+
    
     res.json({
       message: 'success',

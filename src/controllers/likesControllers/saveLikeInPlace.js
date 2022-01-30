@@ -7,13 +7,14 @@ const saveLikeInPlace = async (req, res, next) => {
   const { userId  } = req.body
 
   try {
+
     const foundPlace = await getSinglePlace(placeId)
     
     const getId = foundPlace.map((data) => {
       const objectId = data._id 
       return objectId })
     const idPlace = getId[0]
-
+    
     const foundUser = await getSingleUser(userId)
     const foundUserId = foundUser[0]._id
 

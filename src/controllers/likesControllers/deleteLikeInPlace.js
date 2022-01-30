@@ -2,28 +2,24 @@ import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { deleteLikeFromPlace } from '../../usecases/likeUsecases/deleteLikeFromPlace.js'
 
 const deleteLikeInPlace = async (req, res, next) => {
+  const { placeId } = req.params
+  const { likeId  } = req.params
   try {
-    const { placeId, likeId } = req.params
-
-    if (!placeId || !likeId)
-      res.json({
-        message: 'Place or Like not found.',
-        status: 400,
-      })
-
-    //http:www.xploritapi.com/v1/places/placeId/likes/likeId
-
+    
+    console.log("placeId: " +placeId)
     const foundPlace = await getSinglePlace(placeId)
+    console.log("foundPlace: " +foundPlace)
 
-    if (!foundPlace) throw new Error() //no se encontro el lugar
+    const getId = foundPlace.map((data) => {
+      const objectId = data._id 
+      return objectId })
+    const idPlace = getId[0] 
 
-    // foundplace = {objeto de place encontrado en MongoDB}
+    //const allLikesInPlace = await getLikesFromPlace(idPlace)
 
-    const { _id } = foundPlace
 
-    const deletedLike = await deleteLikeFromPlace(_id, likeId)
+    const deletedLike = await deleteLikeFromPlace(likeId)
 
-    if (!deletedLike) throw new Error() //no se encontro el like
 
     if (deletedLike) {
       res.json({
