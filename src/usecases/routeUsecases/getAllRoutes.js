@@ -2,7 +2,7 @@ import { Route } from '../../models/route.model.js'
 
 const getAllRoutes = async () => {
   try {
-    return await Route.find()
+    return await Route.find({})
   } catch (error) {
     console.error(error)
   }

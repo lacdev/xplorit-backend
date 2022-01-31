@@ -4,6 +4,7 @@ const LikeSchema = new mongoose.Schema(
   {
     like: {
       type: Number,
+      min: 1,
       max: 1,
     },
     userId: {

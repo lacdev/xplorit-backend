@@ -1,7 +1,7 @@
 import { createRoute } from '../../usecases/routeUsecases/createRoute.js'
 
 const saveRoute = async (req, res, next) => {
-  const { newRoute } = req.body
+  const newRoute = req.body
 
   try {
     const savedRoute = await createRoute(newRoute)
@@ -11,7 +11,6 @@ const saveRoute = async (req, res, next) => {
         message: 'success',
         description: 'Route created successfully',
         statusCode: 200,
-        data: savedRoute,
       })
     }
   } catch (err) {

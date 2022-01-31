@@ -6,7 +6,11 @@ const { body, check, validationResult } = validator
 
 const validateRouteCreation = async (req, res, next) => {
   try {
-    const { ownerId } = req.body
+    const newRoute = req.body
+
+    const { ownerId } = newRoute
+    console.log('owner', ownerId)
+    console.log('new Route:', newRoute)
 
     const ownerIdChain = body('ownerId')
       .exists({ checkNull: true, checkFalsy: true })
@@ -23,8 +27,6 @@ const validateRouteCreation = async (req, res, next) => {
       .isString()
       .withMessage('Name must be a string.')
       .isLength({ max: 300 })
-      .trim()
-      .escape()
       .run(req)
 
     const descriptionChain = body('description')
@@ -34,9 +36,7 @@ const validateRouteCreation = async (req, res, next) => {
       .withMessage('Please provide a description for the place.')
       .isString()
       .withMessage('Name must be a string.')
-      .isLength({ max: 2000 })
-      .trim()
-      .escape()
+      .isLength({ max: 300 })
       .run(req)
 
     const tagsChain = body('tags')
@@ -71,14 +71,16 @@ const validateRouteCreation = async (req, res, next) => {
       .withMessage('Images must be an array.')
       .run(req)
 
-    await ownerIdChain
-    await nameChain
-    await descriptionChain
-    await tagsChain
-    await fullRouteChain
-    await latitudeChain
-    await longitudeChain
-    await imagesChain
+    await Promise.all([
+      ownerIdChain,
+      nameChain,
+      descriptionChain,
+      tagsChain,
+      fullRouteChain,
+      latitudeChain,
+      longitudeChain,
+      imagesChain,
+    ])
 
     const result = validationResult(req)
 
