@@ -7,12 +7,9 @@ const getRoute = async (req, res, next) => {
     const singleRoute = await getSingleRoute(routeId)
 
     res.json({
-      message: 'success',
-      payload: {
-        data: singleRoute,
-        description: 'Route found',
-        statusCode: 200,
-      },
+      description: 'Route found',
+      statusCode: 200,
+      data: singleRoute,
     })
   } catch (err) {
     console.error(err)

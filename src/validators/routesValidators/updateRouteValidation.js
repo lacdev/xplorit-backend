@@ -39,16 +39,13 @@ const validateRouteUpdate = async (req, res, next) => {
       .escape()
       .run(req)
 
-    const imagesChain = body('images')
-      .exists({ checkNull: true, checkFalsy: true })
-      .isArray()
-      .withMessage('Images must be an array.')
-      .run(req)
+    // const imagesChain = body('images')
+    //   .exists({ checkNull: true, checkFalsy: true })
+    //   .isArray()
+    //   .withMessage('Images must be an array.')
+    //   .run(req)
 
-    await placeIDChain
-    await nameChain
-    await descriptionChain
-    await imagesChain
+    await Promise.all([placeIDChain, nameChain, descriptionChain])
 
     const result = validationResult(req)
 
