@@ -11,7 +11,7 @@ const router = express.Router()
 
 //Likes in places routers
 router.get('/:placeId/likes', getLikesInPlace)
-router.post('/:placeId/likes', validateLikeToSave, saveLikeInPlace)
+router.post('/:placeId/likes',validateLikeToSave, saveLikeInPlace)
 router.delete('/:placeId/likes/:likeId', deleteLikeInPlace)
 
 //Likes in routes routers

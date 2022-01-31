@@ -14,7 +14,8 @@ const getLikesInPlace = async (req, res, next) => {
     const idPlace = getId[0]
 
     const allLikesInPlace = await getLikesFromPlace(idPlace)
-
+      console.log(allLikesInPlace)
+      
     const totalLikesInPlace = allLikesInPlace.length <= 0 ? 0 : allLikesInPlace.reduce((accum, current) => {
       return accum + current.like
     },0)

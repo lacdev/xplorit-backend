@@ -1,6 +1,9 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
+import { getLikesFromPlace } from '../../usecases/likeUsecases/getLikesFromPlace.js'
+import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
+import { ApiError } from '../../errors/ApiError.js'
 import { postLikeToPlace } from '../../usecases/likeUsecases/postLikeToPlace.js'
-import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+
 
 const saveLikeInPlace = async (req, res, next) => {
   const { placeId } = req.params
@@ -9,16 +12,23 @@ const saveLikeInPlace = async (req, res, next) => {
   try {
 
     const foundPlace = await getSinglePlace(placeId)
-    
+  
     const getId = foundPlace.map((data) => {
       const objectId = data._id 
       return objectId })
     const idPlace = getId[0]
-    
-    const foundUser = await getSingleUser(userId)
-    const foundUserId = foundUser[0]._id
 
-    const savedLike = await postLikeToPlace(foundUserId, idPlace)
+    const allLikesInPlace = await getLikesFromPlace(idPlace)
+      
+    const totalLikesInPlace = allLikesInPlace.filter((place) => place.userId === userId)
+    console.log("data: " + totalLikesInPlace)
+
+    if (!isEmptyArray(totalLikesInPlace)) {
+      next(ApiError.badRequest('Username already registered.'))
+      return
+    }
+    
+    const savedLike = await postLikeToPlace(userId, idPlace)
 
     res.json({
       message: 'success',
