@@ -16,7 +16,6 @@
     "aws-sdk": "^2.1066.0",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
-    "cloudinary": "^1.28.1",
     "connect-timeout": "^1.9.0",
     "cors": "^2.8.5",
     "dotenv": "^13.0.1",

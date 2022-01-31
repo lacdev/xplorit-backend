@@ -1,23 +1,29 @@
-import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { postReviewToRoute } from '../../usecases/reviewUsecases/postReviewToRoute.js'
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 
 const saveReviewInRoute = async (req, res, next) => {
   const { routeId } = req.params
-  const { newReview } = req.body
+  const newReview = req.body
+  const { userId } = newReview
 
   try {
-    const foundRoute = await getSingleRoute(routeId)
+    const foundUser = await getSingleUser(userId)
 
-    const savedReview = await postReviewToRoute(foundRoute._id, newReview)
+    console.log('User found:', foundUser)
+    console.log('Place Id found:', routeId)
 
-    res.json({
-      message: 'success',
-      payload: {
-        data: savedReview,
-        description: 'Review created successfully',
+    // newReview.avatar = foundUser.avatar
+    // newReview.username = foundUser.username
+    newReview.routeId = routeId
+
+    const savedReview = await postReviewToRoute(newReview)
+
+    if (savedReview) {
+      res.json({
+        description: 'Review created in the route successfully',
         statusCode: 200,
-      },
-    })
+      })
+    }
   } catch (err) {
     console.error(err)
     next({})

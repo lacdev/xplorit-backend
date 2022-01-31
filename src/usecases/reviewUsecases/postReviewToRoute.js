@@ -1,8 +1,8 @@
-import { Route } from '../../models/route.model.js'
+import { Review } from '../../models/review.model.js'
 
-const postReviewToRoute = async (id, review) => {
+const postReviewToRoute = async (review) => {
   try {
-    return await Route.findById(id, review)
+    return await Review.create(review)
   } catch (error) {
     console.error(error)
   }
