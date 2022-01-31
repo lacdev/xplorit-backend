@@ -41,7 +41,6 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const addressChain = check('address')
       .exists({ checkNull: true, checkFalsy: true })
-
       .not()
       .isEmpty()
       .withMessage('Address must be an object.')
@@ -49,7 +48,6 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const streetChain = check('address.street')
       .exists({ checkNull: true, checkFalsy: true })
-
       .not()
       .isEmpty()
       .withMessage('please provide a street')
@@ -57,7 +55,6 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const cityChain = check('address.city')
       .exists({ checkNull: true, checkFalsy: true })
-
       .not()
       .isEmpty()
       .withMessage('please provide a city')
@@ -65,7 +62,6 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const stateChain = check('address.state')
       .exists({ checkNull: true, checkFalsy: true })
-
       .not()
       .isEmpty()
       .withMessage('please provide a state')
@@ -73,7 +69,6 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const zipCodeChain = check('address.zipcode')
       .exists({ checkNull: true, checkFalsy: true })
-
       .not()
       .isEmpty()
       .isNumeric()
@@ -119,20 +114,22 @@ const validatePlaceCreation = async (req, res, next) => {
       .withMessage('Images must be an array.')
       .run(req)
 
-    await ownerIdChain
-    await nameChain
-    await descriptionChain
-    await addressChain
-    await streetChain
-    await cityChain
-    await stateChain
-    await zipCodeChain
-    await tagsChain
-    await scheduleStartChain
-    await scheduleFinishChain
-    await latitudeChain
-    await longitudeChain
-    await imagesChain
+    await Promise.all([
+      ownerIdChain,
+      nameChain,
+      descriptionChain,
+      addressChain,
+      streetChain,
+      cityChain,
+      stateChain,
+      zipCodeChain,
+      tagsChain,
+      scheduleStartChain,
+      scheduleFinishChain,
+      latitudeChain,
+      longitudeChain,
+      imagesChain,
+    ])
 
     const result = validationResult(req)
 
