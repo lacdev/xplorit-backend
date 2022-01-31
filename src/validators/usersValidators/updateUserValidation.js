@@ -46,10 +46,12 @@ const validateUserUpdate = async (req, res, next) => {
       .escape()
       .run(req)
 
-    await userIDChain
-    await passwordChain
-    await avatarChain
-    await coverPhotoChain
+    await Promise.all([
+      userIDChain,
+      passwordChain,
+      avatarChain,
+      coverPhotoChain,
+    ])
 
     const result = validationResult(req)
 

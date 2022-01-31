@@ -114,20 +114,22 @@ const validatePlaceCreation = async (req, res, next) => {
       .withMessage('Images must be an array.')
       .run(req)
 
-    await ownerIdChain
-    await nameChain
-    await descriptionChain
-    await addressChain
-    await streetChain
-    await cityChain
-    await stateChain
-    await zipCodeChain
-    await tagsChain
-    await scheduleStartChain
-    await scheduleFinishChain
-    await latitudeChain
-    await longitudeChain
-    await imagesChain
+    await Promise.all([
+      ownerIdChain,
+      nameChain,
+      descriptionChain,
+      addressChain,
+      streetChain,
+      cityChain,
+      stateChain,
+      zipCodeChain,
+      tagsChain,
+      scheduleStartChain,
+      scheduleFinishChain,
+      latitudeChain,
+      longitudeChain,
+      imagesChain,
+    ])
 
     const result = validationResult(req)
 
