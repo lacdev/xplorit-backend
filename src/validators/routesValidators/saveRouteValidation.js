@@ -71,14 +71,16 @@ const validateRouteCreation = async (req, res, next) => {
       .withMessage('Images must be an array.')
       .run(req)
 
-    await ownerIdChain
-    await nameChain
-    await descriptionChain
-    await tagsChain
-    await fullRouteChain
-    await latitudeChain
-    await longitudeChain
-    await imagesChain
+    await Promise.all([
+      ownerIdChain,
+      nameChain,
+      descriptionChain,
+      tagsChain,
+      fullRouteChain,
+      latitudeChain,
+      longitudeChain,
+      imagesChain,
+    ])
 
     const result = validationResult(req)
 
