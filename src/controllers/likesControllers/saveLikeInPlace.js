@@ -12,19 +12,22 @@ const saveLikeInPlace = async (req, res, next) => {
   try {
 
     const foundPlace = await getSinglePlace(placeId)
+     
+    if(isEmptyArray(foundPlace)) {
+      next(ApiError.notFound('Place not found')) 
+      return
+    }
   
     const getId = foundPlace.map((data) => {
       const objectId = data._id 
       return objectId })
     const idPlace = getId[0]
-
     const allLikesInPlace = await getLikesFromPlace(idPlace)
-      
-    const totalLikesInPlace = allLikesInPlace.filter((place) => place.userId === userId)
-    console.log("data: " + totalLikesInPlace)
-
+   
+    const totalLikesInPlace = allLikesInPlace.filter((like) => like.userId == userId)
+    
     if (!isEmptyArray(totalLikesInPlace)) {
-      next(ApiError.badRequest('Username already registered.'))
+      next(ApiError.badRequest('Error: user only can post 1 like for place.'))
       return
     }
     

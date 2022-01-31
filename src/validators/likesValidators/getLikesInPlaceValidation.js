@@ -26,7 +26,6 @@ const validatePlaceRetrieve = async (req, res, next) => {
         return
     }
 
-   
 
     if (isEmptyObject(allLikesInPlace)) {
        next(ApiError.notFound('Like not found')) 

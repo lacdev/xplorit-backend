@@ -1,23 +1,36 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { deleteLikeFromPlace } from '../../usecases/likeUsecases/deleteLikeFromPlace.js'
+import { getLikesFromPlace } from '../../usecases/likeUsecases/getLikesFromPlace.js'
+import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
+import { ApiError } from '../../errors/ApiError.js'
+
 
 const deleteLikeInPlace = async (req, res, next) => {
   const { placeId } = req.params
   const { likeId  } = req.params
   try {
-    
-    console.log("placeId: " +placeId)
     const foundPlace = await getSinglePlace(placeId)
-    console.log("foundPlace: " +foundPlace)
+    
+    if(isEmptyArray(foundPlace)) {
+      next(ApiError.notFound('Place not found')) 
+      return
+    }
 
     const getId = foundPlace.map((data) => {
       const objectId = data._id 
       return objectId })
-    const idPlace = getId[0] 
+    const idPlace = getId[0]
 
-    //const allLikesInPlace = await getLikesFromPlace(idPlace)
+    const allLikesInPlace = await getLikesFromPlace(idPlace)
+    console.log("data: " + allLikesInPlace)
+      
+    const totalLikesInPlace = allLikesInPlace.filter((like) => like._id == likeId)
+    console.log("data2: " + totalLikesInPlace)
 
-
+    if (isEmptyArray(totalLikesInPlace)) {
+      next(ApiError.badRequest('Error: No like found to delete.'))
+      return
+    }
     const deletedLike = await deleteLikeFromPlace(likeId)
 
 
