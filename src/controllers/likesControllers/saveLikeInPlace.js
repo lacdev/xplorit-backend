@@ -10,14 +10,9 @@ const saveLikeInPlace = async (req, res, next) => {
   const { userId  } = req.body
 
   try {
-
-    const foundPlace = await getSinglePlace(placeId)
-     
-    if(isEmptyArray(foundPlace)) {
-      next(ApiError.notFound('Place not found')) 
-      return
-    }
   
+    const foundPlace = await getSinglePlace(placeId)
+
     const getId = foundPlace.map((data) => {
       const objectId = data._id 
       return objectId })

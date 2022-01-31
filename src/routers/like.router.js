@@ -6,11 +6,12 @@ import { getLikesInRoute } from '../controllers/likesControllers/getLikesInRoute
 import { saveLikeInRoute } from '../controllers/likesControllers/saveLikeInRoute.js'
 import { deleteLikeInRoute } from '../controllers/likesControllers/deleteLikeInRoute.js'
 import { validatePlaceRetrieve } from '../validators/likesValidators/getLikesInPlaceValidation.js'
+import { validateLikeToSave } from '../validators/likesValidators/saveLikeInPlaceValidation.js'
 const router = express.Router()
 
 //Likes in places routers
 router.get('/:placeId/likes',validatePlaceRetrieve, getLikesInPlace)
-router.post('/:placeId/likes', saveLikeInPlace)
+router.post('/:placeId/likes',validateLikeToSave, saveLikeInPlace)
 router.delete('/:placeId/likes/:likeId', deleteLikeInPlace)
 
 //Likes in routes routers
