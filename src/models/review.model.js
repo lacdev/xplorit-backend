@@ -17,6 +17,13 @@ const ReviewSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+    },
+    avatar: {
+      type: String,
+      unique: true,
+    },
+    username: {
+      type: String,
       unique: true,
     },
     placeId: {

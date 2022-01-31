@@ -4,7 +4,7 @@ import { isEmptyObject } from '../../utils/checkForEmpyObject.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 const { param, validationResult } = validator
 
-const validateUserRetrieve = async (req, res, next) => {
+const validateGetUser = async (req, res, next) => {
   try {
     const { userId } = req.params
     const userIDChain = param('userId')
@@ -40,4 +40,4 @@ const validateUserRetrieve = async (req, res, next) => {
   }
 }
 
-export { validateUserRetrieve }
+export { validateGetUser }

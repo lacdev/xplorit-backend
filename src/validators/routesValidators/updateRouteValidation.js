@@ -8,7 +8,7 @@ const validateRouteUpdate = async (req, res, next) => {
   try {
     const { routeId } = req.params
 
-    const placeIDChain = param('placeId')
+    const routeIdChain = param('routeId')
       .exists()
       .withMessage('Please provide a user ID.')
       .isMongoId()
@@ -19,7 +19,7 @@ const validateRouteUpdate = async (req, res, next) => {
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
-      .withMessage('Please provide a name for the place.')
+      .withMessage('Please provide a name for the route.')
       .isString()
       .withMessage('Name must be a string.')
       .isLength({ max: 300 })
@@ -31,7 +31,7 @@ const validateRouteUpdate = async (req, res, next) => {
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
-      .withMessage('Please provide a description for the place.')
+      .withMessage('Please provide a description for the route.')
       .isString()
       .withMessage('Name must be a string.')
       .isLength({ max: 2000 })
@@ -39,16 +39,13 @@ const validateRouteUpdate = async (req, res, next) => {
       .escape()
       .run(req)
 
-    const imagesChain = body('images')
-      .exists({ checkNull: true, checkFalsy: true })
-      .isArray()
-      .withMessage('Images must be an array.')
-      .run(req)
+    // const imagesChain = body('images')
+    //   .exists({ checkNull: true, checkFalsy: true })
+    //   .isArray()
+    //   .withMessage('Images must be an array.')
+    //   .run(req)
 
-    await placeIDChain
-    await nameChain
-    await descriptionChain
-    await imagesChain
+    await Promise.all([routeIdChain, nameChain, descriptionChain])
 
     const result = validationResult(req)
 
@@ -69,7 +66,7 @@ const validateRouteUpdate = async (req, res, next) => {
   } catch (err) {
     console.error(err)
 
-    next(ApiError.badRequest('No valid request to query a specific user.'))
+    next(ApiError.badRequest('No valid request to query a specific route.'))
   }
 }
 

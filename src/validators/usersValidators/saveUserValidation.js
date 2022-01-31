@@ -64,11 +64,13 @@ const validateUserSignup = async (req, res, next) => {
 
     //Async Express validators array validation
 
-    await usernameChain
-    await userEmailChain
-    await userPasswordChain
-    await avatarChain
-    await coverPhotoChain
+    await Promise.all([
+      usernameChain,
+      userEmailChain,
+      userPasswordChain,
+      avatarChain,
+      coverPhotoChain,
+    ])
 
     const result = validationResult(req)
 

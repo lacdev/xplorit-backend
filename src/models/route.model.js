@@ -16,40 +16,19 @@ const RouteSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
-      minlength: 50,
+      minlength: 10,
     },
     tags: {
       type: Array,
       required: true,
-      validate: {
-        validator: function (array) {
-          return array.every(
-            (tag) => typeof tag === 'string' && array.length <= 4
-          )
-        },
-      },
     },
     fullRoute: {
       type: Array,
       required: true,
-      validate: {
-        validator: function (array) {
-          return array.every(
-            (ubication) => typeof ubication === 'object' && array.length <= 10
-          )
-        },
-      },
     },
     images: {
       type: Array,
       required: true,
-      validate: {
-        validator: function (array) {
-          return array.every(
-            (image) => typeof image === 'string' && array.length <= 6
-          )
-        },
-      },
     },
   },
   { timestamps: true }
