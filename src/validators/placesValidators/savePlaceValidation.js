@@ -41,7 +41,6 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const addressChain = check('address')
       .exists({ checkNull: true, checkFalsy: true })
-
       .not()
       .isEmpty()
       .withMessage('Address must be an object.')
@@ -49,7 +48,6 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const streetChain = check('address.street')
       .exists({ checkNull: true, checkFalsy: true })
-
       .not()
       .isEmpty()
       .withMessage('please provide a street')
@@ -57,7 +55,6 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const cityChain = check('address.city')
       .exists({ checkNull: true, checkFalsy: true })
-
       .not()
       .isEmpty()
       .withMessage('please provide a city')
@@ -65,7 +62,6 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const stateChain = check('address.state')
       .exists({ checkNull: true, checkFalsy: true })
-
       .not()
       .isEmpty()
       .withMessage('please provide a state')
@@ -73,7 +69,6 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const zipCodeChain = check('address.zipcode')
       .exists({ checkNull: true, checkFalsy: true })
-
       .not()
       .isEmpty()
       .isNumeric()

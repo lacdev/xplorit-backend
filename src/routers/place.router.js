@@ -5,11 +5,12 @@ import { savePlace } from '../controllers/placesControllers/savePlace.js'
 import { updatePlace } from '../controllers/placesControllers/updatePlace.js'
 import { deletePlace } from '../controllers/placesControllers/deletePlace.js'
 import { validatePlaceCreation } from '../validators/placesValidators/savePlaceValidation.js'
+import { validateGetPlaceQuery } from '../validators/placesValidators/getPlaceQueryValidator.js'
 
 const router = express.Router()
 
 //Places controllers
-router.get('/', getPlaces)
+router.get('/', validateGetPlaceQuery, getPlaces)
 router.get('/:placeId', getPlace)
 router.post('/', validatePlaceCreation, savePlace)
 router.patch('/:placeId', updatePlace)

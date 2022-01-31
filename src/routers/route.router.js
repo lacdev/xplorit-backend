@@ -6,6 +6,7 @@ import { updateRoute } from '../controllers/routesControllers/updateRoute.js'
 import { deleteRoute } from '../controllers/routesControllers/deleteRoute.js'
 import { validateRouteCreation } from '../validators/routesValidators/saveRouteValidation.js'
 import { validateRouteUpdate } from '../validators/routesValidators/updateRouteValidation.js'
+// import { validateGetRouteQuery } from '../validators/routesValidators/getRouteQueryValidator.js'
 
 const router = express.Router()
 
