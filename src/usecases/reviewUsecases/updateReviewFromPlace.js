@@ -1,8 +1,8 @@
-import { Place } from '../../models/place.model.js'
+import { Review } from '../../models/review.model.js'
 
 const updateReviewFromPlace = async (id, body) => {
   try {
-    return await Place.findByIdAndUpdate(id, body)
+    return await Review.findByIdAndUpdate(id, body)
   } catch (error) {
     console.error(error)
   }
