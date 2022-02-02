@@ -67,10 +67,10 @@ const validateReviewUpdateInRoute = async (req, res, next) => {
       return
     }
 
-    const placeExists = await getSingleRoute(routeId)
+    const routeExists = await getSingleRoute(routeId)
 
-    if (isEmptyArray(placeExists)) {
-      next(ApiError.badRequest('Place not found.'))
+    if (isEmptyArray(routeExists)) {
+      next(ApiError.badRequest('Route not found.'))
       return
     }
 

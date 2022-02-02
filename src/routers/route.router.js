@@ -18,7 +18,7 @@ import { saveLikeInRoute } from '../controllers/likesControllers/saveLikeInRoute
 import { deleteLikeInRoute } from '../controllers/likesControllers/deleteLikeInRoute.js'
 import { validateGetReviewsFromRoute } from '../validators/reviewsValidators/getReviewsInRouteValidation.js'
 import { validateReviewUpdateInRoute } from '../validators/reviewsValidators/updateReviewInRouteValidation.js'
-
+import { validateReviewDeleteInRoute } from '../validators/reviewsValidators/deleteReviewInRouteValidation.js'
 // import { validateGetRouteQuery } from '../validators/routesValidators/getRouteQueryValidator.js'
 
 const router = express.Router()
@@ -38,7 +38,11 @@ router.patch(
   validateReviewUpdateInRoute,
   updateReviewInRoute
 )
-router.delete('/:routeId/reviews/:reviewId', deleteReviewInRoute)
+router.delete(
+  '/:routeId/reviews/:reviewId',
+  validateReviewDeleteInRoute,
+  deleteReviewInRoute
+)
 
 //Likes in routes controllers
 router.get('/:routeId/likes', getLikesInRoute)

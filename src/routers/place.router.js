@@ -18,6 +18,7 @@ import { saveLikeInPlace } from '../controllers/likesControllers/saveLikeInPlace
 import { deleteLikeInPlace } from '../controllers/likesControllers/deleteLikeInPlace.js'
 import { validateGetReviewsFromPlace } from '../validators/reviewsValidators/getReviewsInPlaceValidation.js'
 import { validateReviewUpdateInPlace } from '../validators/reviewsValidators/updateReviewInPlaceValidation.js'
+import { validateReviewDeleteInPlace } from '../validators/reviewsValidators/deleteReviewInPlaceValidation.js'
 // import { validateGetPlaceQuery } from '../validators/placesValidators/getPlaceQueryValidator.js'
 
 const router = express.Router()
@@ -37,7 +38,11 @@ router.patch(
   validateReviewUpdateInPlace,
   updateReviewInPlace
 )
-router.delete('/:placeId/reviews/:reviewId', deleteReviewInPlace)
+router.delete(
+  '/:placeId/reviews/:reviewId',
+  validateReviewDeleteInPlace,
+  deleteReviewInPlace
+)
 
 //Likes in places controllers
 router.get('/:placeId/likes', getLikesInPlace)
