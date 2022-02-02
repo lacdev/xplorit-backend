@@ -4,7 +4,6 @@ const postLikeToPlace = async (userId, idPlace) => {
   try {
    
     const newLike = new Like ({
-      like : 1,
       userId : userId,
       placeId : idPlace
     })

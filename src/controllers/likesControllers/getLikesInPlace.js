@@ -3,6 +3,7 @@ import { getLikesFromPlace } from '../../usecases/likeUsecases/getLikesFromPlace
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { ApiError } from '../../errors/ApiError.js'
 
+
 const getLikesInPlace = async (req, res, next) => {
   const { placeId } = req.params
 
@@ -16,18 +17,8 @@ const getLikesInPlace = async (req, res, next) => {
       return
     }
     
-  
-    const getId = foundPlace.map((data) => {
-      const objectId = data._id 
-      return objectId })
-    const idPlace = getId[0]
-
-    const allLikesInPlace = await getLikesFromPlace(idPlace)
+    const allLikesInPlace = await getLikesFromPlace(foundPlace.placeId)
       
-    const totalLikesInPlace = allLikesInPlace.length <= 0 ? 0 : allLikesInPlace.reduce((accum, current) => {
-      return accum + current.like
-    },0)
-
     if(isEmptyArray(allLikesInPlace)) {
       next(ApiError.notFound('Like not found')) 
       return
@@ -36,7 +27,7 @@ const getLikesInPlace = async (req, res, next) => {
     res.json({
       message: 'success',
       payload: {
-        data: totalLikesInPlace,
+        data: allLikesInPlace,
         description: 'Likes found successfully',
         statusCode: 200,
       },

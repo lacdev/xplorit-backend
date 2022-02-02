@@ -36,7 +36,7 @@ const validateLikeToSave = async (req, res, next) => {
         }
 
         const validatePlace = await getSinglePlace (placeId)
-
+      
         if (isEmptyArray(validatePlace)) {
             next (ApiError.badRequest('No place found to post Like.'))
         }
@@ -47,7 +47,9 @@ const validateLikeToSave = async (req, res, next) => {
             next(ApiError.badRequest('like not found.'))
             return
           }
-        
+      
+       
+
         next()
     }   catch (err){
         console.error(err)
