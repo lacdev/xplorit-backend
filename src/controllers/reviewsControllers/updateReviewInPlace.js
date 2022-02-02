@@ -1,25 +1,17 @@
-import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { updateReviewFromPlace } from '../../usecases/reviewUsecases/updateReviewFromPlace.js'
 
 const updateReviewInPlace = async (req, res, next) => {
-  const { placeId } = req.params
-  const { updatedContent } = req.body
+  const { reviewId } = req.params
+  const updatedContent = req.body
   try {
-    const foundPlace = await getSinglePlace(placeId)
+    const updatedReview = await updateReviewFromPlace(reviewId, updatedContent)
 
-    const updatedReview = await updateReviewFromPlace(
-      foundPlace._id,
-      updatedContent
-    )
-
-    res.json({
-      message: 'success',
-      payload: {
-        data: updatedReview,
-        description: 'Updated review successfully',
+    if (updatedReview) {
+      res.json({
+        message: 'Review updated successfully',
         statusCode: 200,
-      },
-    })
+      })
+    }
   } catch (err) {
     console.error(err)
     next({})

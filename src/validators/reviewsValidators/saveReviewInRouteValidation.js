@@ -4,6 +4,7 @@ const { param, body, validationResult } = validator
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { getAllReviewsFromRoute } from '../../usecases/reviewUsecases/getAllReviewsFromRoute.js'
 
 const validateSaveReviewInRoute = async (req, res, next) => {
   try {
@@ -67,6 +68,19 @@ const validateSaveReviewInRoute = async (req, res, next) => {
       next(ApiError.badRequest('User not found.'))
       return
     }
+
+    const reviewExists = await getAllReviewsFromRoute({
+      userId: userId,
+      routeId: routeId,
+    })
+
+    console.log('The review exists? :', reviewExists)
+
+    if (!isEmptyArray(reviewExists)) {
+      next(ApiError.badRequest('You can only post one review per route.'))
+      return
+    }
+
     next()
   } catch (e) {
     console.error(e)

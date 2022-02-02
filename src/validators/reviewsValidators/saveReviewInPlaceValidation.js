@@ -4,15 +4,13 @@ const { param, body, validationResult } = validator
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { getAllReviewsFromPlace } from '../../usecases/reviewUsecases/getAllReviewsFromPlace.js'
 
 const validateSaveReviewInPlace = async (req, res, next) => {
   try {
     const { placeId } = req.params
     const review = req.body
     const { userId } = review
-
-    console.log('placeId:', placeId)
-    console.log('userId:', userId)
 
     const placeIdChain = param('placeId')
       .exists()
@@ -68,6 +66,18 @@ const validateSaveReviewInPlace = async (req, res, next) => {
 
     if (isEmptyArray(userExists)) {
       next(ApiError.badRequest('User not found.'))
+      return
+    }
+
+    const reviewExists = await getAllReviewsFromPlace({
+      userId: userId,
+      placeId: placeId,
+    })
+
+    console.log('The review exists? :', reviewExists)
+
+    if (!isEmptyArray(reviewExists)) {
+      next(ApiError.badRequest('You can only post one review per place.'))
       return
     }
 

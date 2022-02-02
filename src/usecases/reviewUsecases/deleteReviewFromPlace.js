@@ -1,8 +1,8 @@
-import { Place } from '../../models/place.model.js'
+import { Review } from '../../models/review.model.js'
 
 const deleteReviewFromPlace = async (id) => {
   try {
-    return await Place.findByIdAndDelete(id)
+    return await Review.findByIdAndDelete(id)
   } catch (error) {
     console.error(error)
   }
