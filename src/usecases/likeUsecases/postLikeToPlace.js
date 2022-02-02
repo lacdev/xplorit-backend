@@ -1,11 +1,10 @@
 import { Like } from '../../models/like.model.js'
 
-const postLikeToPlace = async (userId, idPlace) => {
+const postLikeToPlace = async (userId, placeId) => {
   try {
-   
     const newLike = new Like ({
       userId : userId,
-      placeId : idPlace
+      placeId : placeId
     })
     
     return await Like.create( newLike)

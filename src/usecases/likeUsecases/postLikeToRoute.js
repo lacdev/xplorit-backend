@@ -1,8 +1,12 @@
-import { Route } from '../../models/route.model.js'
+import { Like } from '../../models/like.model.js'
 
-const postLikeToRoute = async (id, like) => {
+const postLikeToRoute = async (userId, routeId) => {
   try {
-    return await Route.findByIdAndUpdate(id, like)
+    const newLike = new Like ({
+      userId : userId,
+      routeId : routeId
+    })
+    return await Like.create(newLike)
   } catch (error) {
     console.error(error)
   }

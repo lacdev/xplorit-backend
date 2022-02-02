@@ -1,60 +1,66 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
-import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
-import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
-import { getLikesFromPlace } from '../../usecases/likeUsecases/getLikesFromPlace.js'
+
 const { body, validationResult } = validator
 
-const validateLikeToSave = async (req, res, next) => {
-    const {userId, placeId} = req.body
+const ValidateLikeInPlace = async (req, res, next) => {
     try {
-        const userIdChain = body('userId')
-            .exists()
-            .withMessage('Please provide a user ID.')
-            .isMongoId()
-            .withMessage('Please provide a valid ID.')
-            .run(req)
+        const { placeId } = req.params
+        const { userId } = req.body
+        console.log("aaa:", userId)
+  
+      //Sanitization and validator chains on user registration requested information from body.
+  
+      const placeIdChain = param('placeId')
+      .exists()
+      .withMessage('Please provide a place ID.')
+      .isMongoId()
+      .withMessage('Please provide a valid place ID.')
+      .run(req)
 
-        const placeIDChain = body('placeId')
-            .exists()
-            .withMessage('Please provide a valid placeId.')
-            .isMongoId()
-            .withMessage('Please prove a valid ID.')
-            .run(req)    
+      const userIdChain = body('userId')
+      .exists()
+      .withMessage('Please provide a user ID.')
+      .isMongoId()
+      .withMessage('Please provide a valid user ID.')
+      .run(req)
 
-        await userIdChain
-        await placeIDChain
+      await Promise.all([placeIdChain, userIdChain])
 
-        const result = validationResult(req)
-
-        if (!result.isEmpty()) {
+      
+      const result = validationResult(req)
+  
+      if (!result.isEmpty()) {
         next(
           ApiError.badRequest({ message: 'Bad Request', errors: result.array() })
         )
         return
-        }
+      }
+  
+      const placeExists = await getSinglePlace({ _id: placeId })
+      console.log("placeExists: " + placeExists)
 
-        const validatePlace = await getSinglePlace (placeId)
-      
-        if (isEmptyArray(validatePlace)) {
-            next (ApiError.badRequest('No place found to post Like.'))
-        }
+      if (isEmptyArray(placeExists)) {
+        next(ApiError.badRequest('Place not found.'))
+        return
+      }
 
-        const validateLike = await getLikesFromPlace({_id: userId})
+      const userExists = await getSingleUser(userId)
+      console.log("user: ", userExists)
 
-        if (!isEmptyArray(validateLike)) {
-            next(ApiError.badRequest('like not found.'))
-            return
-          }
-      
-       
+      if (isEmptyArray(userExists)) {
+        next(ApiError.badRequest('User not found.'))
+        return
+      }
 
-        next()
-    }   catch (err){
-        console.error(err)
-        next(ApiError.badRequest('No valid request to query a specific like'))
+     
+
+      next()
+    } catch (err) {
+      console.error(err)
+      next(ApiError.badRequest(err))
     }
-}
-
-export { validateLikeToSave }
+  }
+  
+  export { ValidateLikeInPlace }
