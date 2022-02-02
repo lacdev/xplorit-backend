@@ -1,5 +1,4 @@
 import { Like } from '../../models/like.model.js'
-// import { ApiError } from '../../errors/ApiError.js'
 
 const deleteLikeFromPlace = async (id) => {
   try {

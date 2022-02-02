@@ -28,7 +28,7 @@ const ValidateLikeInPlace = async (req, res, next) => {
 
       await Promise.all([placeIdChain, userIdChain])
 
-      
+      //Validation on request results
       const result = validationResult(req)
   
       if (!result.isEmpty()) {
@@ -37,7 +37,8 @@ const ValidateLikeInPlace = async (req, res, next) => {
         )
         return
       }
-  
+
+      //Place exists validation
       const placeExists = await getSinglePlace({ _id: placeId })
       console.log("placeExists: " + placeExists)
 
@@ -45,16 +46,21 @@ const ValidateLikeInPlace = async (req, res, next) => {
         next(ApiError.badRequest('Place not found.'))
         return
       }
+      
+      //Unique like exists validation
+      const totalLikesInPlace = placeExists.filter((like) =>{(like.userId) === userId})
+      
+      if (!isEmptyArray(totalLikesInPlace)) {
+          next(ApiError.badRequest('Error: user only can post 1 like for place.'))
+          return
+      }
 
+      //userId exists validation
       const userExists = await getSingleUser(userId)
-      console.log("user: ", userExists)
-
       if (isEmptyArray(userExists)) {
         next(ApiError.badRequest('User not found.'))
         return
       }
-
-     
 
       next()
     } catch (err) {

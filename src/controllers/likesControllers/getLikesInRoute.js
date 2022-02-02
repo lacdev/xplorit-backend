@@ -1,13 +1,16 @@
-import { getLikesFromRoute } from '../../usecases/likeUsecases/getLikesFromRoute.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { getLikesFromRoute} from '../../usecases/likeUsecases/getLikesFromRoute.js'
 
 const getLikesInRoute = async (req, res, next) => {
   const { routeId } = req.params
 
   try {
+    
     const foundRoute = await getSingleRoute(routeId)
 
-    const allLikesInRoute = await getLikesFromRoute(foundRoute._id)
+    const id = foundRoute.routeId
+    const allLikesInRoute = await getLikesFromRoute(foundRoute.routeId)
+    console.log(allLikesInRoute)
 
     res.json({
       message: 'success',
@@ -19,6 +22,7 @@ const getLikesInRoute = async (req, res, next) => {
     })
   } catch (err) {
     console.log(err)
+
     next({})
   }
 }

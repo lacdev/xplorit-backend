@@ -1,8 +1,8 @@
-import { Route } from '../../models/route.model.js'
+import { Like } from '../../models/like.model.js'
 
 const deleteLikeFromRoute = async (id) => {
   try {
-    return await Route.findByIdAndDelete(id)
+    return await Like.findByIdAndDelete(id)
   } catch (error) {
     console.error(error)
   }
