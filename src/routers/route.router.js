@@ -17,6 +17,7 @@ import { getLikesInRoute } from '../controllers/likesControllers/getLikesInRoute
 import { saveLikeInRoute } from '../controllers/likesControllers/saveLikeInRoute.js'
 import { deleteLikeInRoute } from '../controllers/likesControllers/deleteLikeInRoute.js'
 import { validateGetReviewsFromRoute } from '../validators/reviewsValidators/getReviewsInRouteValidation.js'
+import { validateReviewUpdateInRoute } from '../validators/reviewsValidators/updateReviewInRouteValidation.js'
 
 // import { validateGetRouteQuery } from '../validators/routesValidators/getRouteQueryValidator.js'
 
@@ -32,7 +33,11 @@ router.delete('/:routeId', validateRouteDeletion, deleteRoute)
 //Reviews in Routes Controllers
 router.get('/:routeId/reviews', validateGetReviewsFromRoute, getReviewsInRoute)
 router.post('/:routeId/reviews', validateSaveReviewInRoute, saveReviewInRoute)
-router.patch('/:routeId/reviews/:reviewId', updateReviewInRoute)
+router.patch(
+  '/:routeId/reviews/:reviewId',
+  validateReviewUpdateInRoute,
+  updateReviewInRoute
+)
 router.delete('/:routeId/reviews/:reviewId', deleteReviewInRoute)
 
 //Likes in routes controllers
