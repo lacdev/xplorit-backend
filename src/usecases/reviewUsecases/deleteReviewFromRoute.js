@@ -1,8 +1,8 @@
-import { Route } from '../../models/route.model.js'
+import { Review } from '../../models/review.model.js'
 
 const deleteReviewFromRoute = async (id) => {
   try {
-    return await Route.findByIdAndDelete(id)
+    return await Review.findByIdAndDelete(id)
   } catch (error) {
     console.error(error)
   }
