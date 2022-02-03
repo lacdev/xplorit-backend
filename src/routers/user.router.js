@@ -32,4 +32,4 @@ router.get('/:userId/reviews', validateUserReviews, getReviewsByUser)
 router.get('/:userId/places', validateUserPlaces, getPlacesByUser)
 router.get('/:userId/routes', validateUserRoutes, getRoutesByUser)
 
-export { router as UsersRouter }
+export { router as usersRouter }

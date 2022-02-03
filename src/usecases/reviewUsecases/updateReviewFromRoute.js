@@ -1,8 +1,8 @@
-import { Route } from '../../models/route.model.js'
+import { Review } from '../../models/review.model.js'
 
 const updateReviewFromRoute = async (id, body) => {
   try {
-    return await Route.findByIdAndUpdate(id, body)
+    return await Review.findByIdAndUpdate(id, body)
   } catch (error) {
     console.error(error)
   }
