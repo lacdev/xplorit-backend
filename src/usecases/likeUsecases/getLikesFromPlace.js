@@ -1,10 +1,8 @@
 import { Like } from '../../models/like.model.js'
 
-const getLikesFromPlace = async (placeId, likeId) => {
+const getLikesFromPlace = async (id) => {
   try {
-    return await Like.find(placeId, likeId)
-    .select('like userId placeId')
-
+    return await Like.find(id)
   } catch (error) {
     console.error(error)
   }

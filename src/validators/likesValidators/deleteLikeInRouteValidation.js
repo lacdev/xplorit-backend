@@ -1,15 +1,16 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
+import { getLikesFromRoute } from '../../usecases/likeUsecases/getLikesFromRoute.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 
-const { body, validationResult } = validator
+const { body, param, validationResult } = validator
 
-const ValidateLikeDeletionInRoute = async (req, res, next) => {
+const validateLikeDeletionInRoute = async (req, res, next) => {
     try {
         const { routeId } = req.params
-        const { userId } = req.body
+        const { userId  } = req.body
   
       //Sanitization and validator chains on user registration requested information from body.
   
@@ -41,34 +42,32 @@ const ValidateLikeDeletionInRoute = async (req, res, next) => {
 
       //route exists validation
       const routeExists = await getSingleRoute({ _id: routeId })
-      console.log("routeExists: " + routeExists)
 
       if (isEmptyArray(routeExists)) {
         next(ApiError.badRequest('route not found.'))
         return
       }
+
+       //userId exists validation
+       const userExists = await getSingleUser(userId)
+
+       if (isEmptyArray(userExists)) {
+         next(ApiError.badRequest('User not found.'))
+         return
+       }
       
       // like exists validation
-      const totalLikesInroute = routeExists.filter((like) =>{(like.userId) === userId})
+      const totalLikesInRoute = await getLikesFromRoute({routeId:routeId, userId:userId})
       
-      if (!isEmptyArray(totalLikesInroute)) {
+      if (isEmptyArray(totalLikesInRoute)) {
           next(ApiError.badRequest('Error: No like found to delete.'))
           return
-      }
-
-      //userId exists validation
-      const userExists = await getSingleUser(userId)
-      if (isEmptyArray(userExists)) {
-        next(ApiError.badRequest('User not found.'))
-        return
-      }
-      
+      }     
       next()
-
     } catch (err) {
       console.error(err)
       next(ApiError.badRequest(err))
     }
   }
   
-  export { ValidateLikeDeletionInRoute }
+  export { validateLikeDeletionInRoute }

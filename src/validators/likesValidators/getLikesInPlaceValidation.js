@@ -1,16 +1,16 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
-import { getSinglePlace } from '../../usecases/PlaceUsecases/getSinglePlace.js'
-import { getLikesFromPlace } from 'usecases/likeUsecases/getLikesFromPlace.js'
+import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 
 
-const { body, validationResult } = validator
 
-const validatePlaceRetrieve = async (req, res, next) => {
+const { param, validationResult } = validator
+
+const getLikesFromPlaceValidation = async (req, res, next) => {
     try {
         const { placeId } = req.params
-       
+        console.log("placeId: ", placeId)
   
       //Sanitization and validator chains on user registration requested information from body.
   
@@ -21,9 +21,7 @@ const validatePlaceRetrieve = async (req, res, next) => {
       .withMessage('Please provide a valid place ID.')
       .run(req)
 
-      
-
-      await Promise.all([placeIdChain])
+      await placeIdChain
 
       //Validation on request results
       const result = validationResult(req)
@@ -43,13 +41,7 @@ const validatePlaceRetrieve = async (req, res, next) => {
         return
       }
 
-      const allLikesInPlace = await getLikesFromPlace(foundPlace.placeId)
-      
-      if(isEmptyArray(allLikesInPlace)) {
-        next(ApiError.notFound('Like not found')) 
-        return
-      }
-      
+          
       next()
     } catch (err) {
       console.error(err)
@@ -57,4 +49,4 @@ const validatePlaceRetrieve = async (req, res, next) => {
     }
   }
   
-  export { validatePlaceRetrieve }
+  export { getLikesFromPlaceValidation }

@@ -1,10 +1,13 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
+import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { getLikesFromRoute } from '../../usecases/likeUsecases/getLikesFromRoute.js'
 
-const { body, validationResult } = validator
+const { param, body, validationResult } = validator
 
-const ValidateLikeInRoute = async (req, res, next) => {
+const validateLikeInRoute = async (req, res, next) => {
     try {
         const { routeId } = req.params
         const { userId } = req.body
@@ -27,7 +30,7 @@ const ValidateLikeInRoute = async (req, res, next) => {
 
       await Promise.all([routeIdChain, userIdChain])
 
-      
+      //Validation on request results
       const result = validationResult(req)
   
       if (!result.isEmpty()) {
@@ -36,19 +39,29 @@ const ValidateLikeInRoute = async (req, res, next) => {
         )
         return
       }
-  
-      const routeExists = await getSingleroute({ _id: routeId })
+
+      //route exists validation
+      const routeExists = await getSingleRoute({ _id: routeId })
 
       if (isEmptyArray(routeExists)) {
         next(ApiError.badRequest('route not found.'))
         return
       }
+      
+        //userId exists validation
+        const userExists = await getSingleUser(userId)
 
-      const userExists = await getSingleUser(userId)
+        if (isEmptyArray(userExists)) {
+          next(ApiError.badRequest('User not found.'))
+          return
+        }
+      //Unique like exists validation
+      const totalLikesInRoute = await getLikesFromRoute ({routeId:routeId, userId:userId})
+      console.log(totalLikesInRoute)
 
-      if (isEmptyArray(userExists)) {
-        next(ApiError.badRequest('User not found.'))
-        return
+      if (!isEmptyArray(totalLikesInRoute)) {
+          next(ApiError.badRequest('Error: user only can post 1 like for route.'))
+          return
       }
 
       next()
@@ -58,4 +71,4 @@ const ValidateLikeInRoute = async (req, res, next) => {
     }
   }
   
-  export { ValidateLikeInRoute }
+  export { validateLikeInRoute }

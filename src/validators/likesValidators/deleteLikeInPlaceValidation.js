@@ -1,14 +1,16 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
+import { getLikesFromPlace } from '../../usecases/likeUsecases/getLikesFromPlace.js'
+import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 
-const { body, validationResult } = validator
+const { body, param, validationResult } = validator
 
-const ValidateLikeDeletionInPlace = async (req, res, next) => {
+const validateLikeDeletionInPlace = async (req, res, next) => {
     try {
         const { placeId } = req.params
-        const { userId } = req.body
-        console.log("aaa:", userId)
+        const { userId  } = req.body
   
       //Sanitization and validator chains on user registration requested information from body.
   
@@ -40,34 +42,33 @@ const ValidateLikeDeletionInPlace = async (req, res, next) => {
 
       //Place exists validation
       const placeExists = await getSinglePlace({ _id: placeId })
-      console.log("placeExists: " + placeExists)
 
       if (isEmptyArray(placeExists)) {
         next(ApiError.badRequest('Place not found.'))
         return
       }
+
+       //userId exists validation
+       const userExists = await getSingleUser(userId)
+
+       if (isEmptyArray(userExists)) {
+         next(ApiError.badRequest('User not found.'))
+         return
+       }
       
       // like exists validation
-      const totalLikesInPlace = placeExists.filter((like) =>{(like.userId) === userId})
+      const totalLikesInPlace = await getLikesFromPlace({placeId:placeId, userId:userId})
+      console.log(totalLikesInPlace)
       
-      if (!isEmptyArray(totalLikesInPlace)) {
+      if (isEmptyArray(totalLikesInPlace)) {
           next(ApiError.badRequest('Error: No like found to delete.'))
           return
-      }
-
-      //userId exists validation
-      const userExists = await getSingleUser(userId)
-      if (isEmptyArray(userExists)) {
-        next(ApiError.badRequest('User not found.'))
-        return
-      }
-      
+      }     
       next()
-
     } catch (err) {
       console.error(err)
       next(ApiError.badRequest(err))
     }
   }
   
-  export { ValidateLikeDeletionInPlace }
+  export { validateLikeDeletionInPlace }

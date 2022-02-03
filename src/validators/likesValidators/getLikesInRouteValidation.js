@@ -1,27 +1,26 @@
 import { ApiError } from '../../errors/ApiError.js'
-import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 
-const { body, validationResult } = validator
 
-const validateRouteRetrieve = async (req, res, next) => {
+
+const { param, validationResult } = validator
+
+const getLikesFromRouteValidation = async (req, res, next) => {
     try {
         const { routeId } = req.params
-       
   
       //Sanitization and validator chains on user registration requested information from body.
   
-      const routeIDChain = param('routeId')
+      const routeIdChain = param('routeId')
       .exists()
       .withMessage('Please provide a route ID.')
       .isMongoId()
       .withMessage('Please provide a valid route ID.')
       .run(req)
 
-      await Promise.all([routeIDChain])
-      
+      await routeIdChain
 
       //Validation on request results
       const result = validationResult(req)
@@ -33,15 +32,16 @@ const validateRouteRetrieve = async (req, res, next) => {
         return
       }
 
-      //Route exists validation
+      //route exists validation
       const routeExists = await getSingleRoute({ _id: routeId })
-      console.log("routeExists: " + routeExists)
+      console.log(routeExists)
 
       if (isEmptyArray(routeExists)) {
         next(ApiError.badRequest('route not found.'))
         return
       }
-      
+
+          
       next()
     } catch (err) {
       console.error(err)
@@ -49,4 +49,4 @@ const validateRouteRetrieve = async (req, res, next) => {
     }
   }
   
-  export { validateRouteRetrieve }
+  export { getLikesFromRouteValidation }
