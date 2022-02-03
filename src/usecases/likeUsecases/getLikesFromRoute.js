@@ -1,9 +1,9 @@
-import { Like } from '../../models/like.model.js'
+import { Route } from '../../models/route.model.js'
 
 const getLikesFromRoute = async (id) => {
   try {
-    return await Like.find(id)
-    .select('like userId routeId')
+    return await Route.find(id)
+    .select()
 
   } catch (error) {
     console.error(error)

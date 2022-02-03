@@ -1,17 +1,20 @@
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { getLikesFromPlace } from '../../usecases/likeUsecases/getLikesFromPlace.js'
+import mongoose from 'mongoose'
 
 const getLikesInPlace = async (req, res, next) => {
-  const { placeId } = req.params
+  const { placeId, likeId } = req.params
 
   try {
-    
-    const foundPlace = await getSinglePlace(placeId)
 
-    const id= foundPlace.placeId
-    console.log(id)
-    const allLikesInPlace = await getLikesFromPlace(foundPlace.placeId)
+    const newPlaceId = mongoose.Types.ObjectId(placeId);
+    
+    const foundPlace = await getSinglePlace(newPlaceId)
+
+    console.log(foundPlace._id)
+    const allLikesInPlace = await getLikesFromPlace(foundPlace._id,likeId)
     console.log(allLikesInPlace)
+
     
     res.json({
       message: 'success',

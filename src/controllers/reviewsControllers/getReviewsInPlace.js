@@ -6,7 +6,7 @@ const getReviewsInPlace = async (req, res, next) => {
 
   try {
     const foundPlace = await getSinglePlace(placeId)
-
+    console.log(foundPlace._id)
     const allReviewsInPlace = await getAllReviewsFromPlace(foundPlace._id)
 
     res.json({

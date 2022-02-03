@@ -8,7 +8,6 @@ const getLikesInRoute = async (req, res, next) => {
     
     const foundRoute = await getSingleRoute(routeId)
 
-    const id = foundRoute.routeId
     const allLikesInRoute = await getLikesFromRoute(foundRoute.routeId)
     console.log(allLikesInRoute)
 
