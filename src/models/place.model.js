@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const imagesArrayLimit = (val) => val.length <= 6
 
-const locationArrayLimit = (val) => val.length === 2
+// const locationArrayLimit = (val) => val.length === 2
 
 const tagsArrayLimit = (val) => val.length <= 4
 
@@ -42,18 +42,6 @@ const statesArray = [
   'Zacatecas',
 ]
 
-// const pointSchema = new mongoose.Schema({
-//   type: {
-//     type: String,
-//     enum: ['Point'],
-//     required: true,
-//   },
-//   coordinates: {
-//     type: [Number],
-//     required: true,
-//   },
-// })
-
 const PlaceSchema = new mongoose.Schema(
   {
     ownerId: {
@@ -68,7 +56,7 @@ const PlaceSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      
+      required: true,
       minlength: 50,
     },
     address: {
@@ -82,12 +70,12 @@ const PlaceSchema = new mongoose.Schema(
       },
       state: {
         type: String,
-        
+        required: true,
         enum: statesArray,
       },
       zipcode: {
         type: Number,
-        
+        required: true,
       },
     },
     tags: {
@@ -104,19 +92,11 @@ const PlaceSchema = new mongoose.Schema(
     },
     scheduleStart: {
       type: Date,
-<<<<<<< HEAD
       required: [true, 'A valid start date must be provided.'],
     },
     scheduleFinish: {
       type: Date,
       required: [true, 'A valid finish date must be provided.'],
-=======
-      
-    },
-    scheduleFinish: {
-      type: Date,
-      
->>>>>>> develop
     },
     location: {
       type: {
@@ -125,16 +105,16 @@ const PlaceSchema = new mongoose.Schema(
         required: true,
       },
       coordinates: {
-        type: [Number],
-        required: true,
-        validate: [
-          locationArrayLimit,
-          'Location array coordenates items must be 2.',
+        type: [
+          {
+            type: Number,
+            required: [true, 'You must provide an array of valid coordinates.'],
+          },
         ],
+        required: true,
       },
     },
     images: {
-<<<<<<< HEAD
       type: [
         {
           type: String,
@@ -142,15 +122,6 @@ const PlaceSchema = new mongoose.Schema(
             true,
             'You must provide an array of image URL with a maximum of 6 items.',
           ],
-=======
-      type: Array,
-      
-      validate: {
-        validator: function (array) {
-          return array.every(
-            (image) => typeof image === 'string' && array.length <= 6
-          )
->>>>>>> develop
         },
       ],
       validate: [imagesArrayLimit, 'Images max items must be 6.'],
