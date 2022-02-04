@@ -50,7 +50,7 @@ const PlaceSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
+      
       minlength: 50,
     },
     address: {
@@ -64,12 +64,12 @@ const PlaceSchema = new mongoose.Schema(
       },
       state: {
         type: String,
-        required: true,
+        
         enum: statesArray,
       },
       zipcode: {
         type: Number,
-        required: true,
+        
       },
     },
     tags: {
@@ -78,11 +78,11 @@ const PlaceSchema = new mongoose.Schema(
     },
     scheduleStart: {
       type: Date,
-      required: true,
+      
     },
     scheduleFinish: {
       type: Date,
-      required: true,
+      
     },
     ubication: {
       lat: { type: Number, required: true },
@@ -90,7 +90,7 @@ const PlaceSchema = new mongoose.Schema(
     },
     images: {
       type: Array,
-      required: true,
+      
       validate: {
         validator: function (array) {
           return array.every(

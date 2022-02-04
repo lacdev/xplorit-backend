@@ -19,6 +19,9 @@ import { deleteLikeInPlace } from '../controllers/likesControllers/deleteLikeInP
 import { validateGetReviewsFromPlace } from '../validators/reviewsValidators/getReviewsInPlaceValidation.js'
 import { validateReviewUpdateInPlace } from '../validators/reviewsValidators/updateReviewInPlaceValidation.js'
 import { validateReviewDeleteInPlace } from '../validators/reviewsValidators/deleteReviewInPlaceValidation.js'
+import { getLikesFromPlaceValidation } from '../validators/likesValidators/getLikesInPlaceValidation.js'
+import { validateLikeInPlace } from '../validators/likesValidators/saveLikeInPlaceValidation.js'
+import { validateLikeDeletionInPlace } from '../validators/likesValidators/deleteLikeInPlaceValidation.js'
 // import { validateGetPlaceQuery } from '../validators/placesValidators/getPlaceQueryValidator.js'
 
 const router = express.Router()
@@ -45,8 +48,8 @@ router.delete(
 )
 
 //Likes in places controllers
-router.get('/:placeId/likes', getLikesInPlace)
-router.post('/:placeId/likes', saveLikeInPlace)
-router.delete('/:placeId/likes/:likeId', deleteLikeInPlace)
+router.get('/:placeId/likes', getLikesFromPlaceValidation, getLikesInPlace)
+router.post('/:placeId/likes', validateLikeInPlace, saveLikeInPlace)
+router.delete('/:placeId/likes/:likeId',validateLikeDeletionInPlace, deleteLikeInPlace)
 
 export { router as placesRouter }

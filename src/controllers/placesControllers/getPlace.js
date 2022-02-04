@@ -4,7 +4,10 @@ const getPlace = async (req, res, next) => {
   const { placeId } = req.params
 
   try {
-    const singlePlace = await getSinglePlace(placeId)
+    
+    const { placeId, name, address, city, ownerId } = req.params
+
+    const singlePlace = await getSinglePlace(placeId, name, address, city, ownerId)
 
     res.json({
       message: 'success',
@@ -19,5 +22,7 @@ const getPlace = async (req, res, next) => {
     next({})
   }
 }
+
+
 
 export { getPlace }

@@ -1,9 +1,8 @@
-import { Place } from '../../models/place.model.js'
-// import { ApiError } from '../../errors/ApiError.js'
+import { Like } from '../../models/like.model.js'
 
 const deleteLikeFromPlace = async (id) => {
   try {
-    return await Place.findByIdAndDelete(id)
+    return await Like.findByIdAndDelete(id)
   } catch (error) {
     console.error(error)
   }
