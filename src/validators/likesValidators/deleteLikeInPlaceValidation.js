@@ -58,7 +58,6 @@ const validateLikeDeletionInPlace = async (req, res, next) => {
       
       // like exists validation
       const totalLikesInPlace = await getLikesFromPlace({placeId:placeId, userId:userId})
-      console.log(totalLikesInPlace)
       
       if (isEmptyArray(totalLikesInPlace)) {
           next(ApiError.badRequest('Error: No like found to delete.'))

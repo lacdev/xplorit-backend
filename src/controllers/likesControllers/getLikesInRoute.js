@@ -3,10 +3,12 @@ import { getLikesFromRoute } from '../../usecases/likeUsecases/getLikesFromRoute
 const getLikesInRoute = async (req, res, next) => {
   const { routeId } = req.params
   try {
-
-    const allLikesInRoute = await getLikesFromRoute({routeId: routeId})
+    
+    const allLikesInRoute = await getLikesFromRoute({ routeId: routeId })
+  
     
     if(allLikesInRoute) {
+      console.log(allLikesInRoute)
       res.json({
         message: 'success',
         payload: {

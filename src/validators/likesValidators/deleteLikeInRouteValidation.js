@@ -40,11 +40,11 @@ const validateLikeDeletionInRoute = async (req, res, next) => {
         return
       }
 
-      //route exists validation
+      //Place exists validation
       const routeExists = await getSingleRoute({ _id: routeId })
 
       if (isEmptyArray(routeExists)) {
-        next(ApiError.badRequest('route not found.'))
+        next(ApiError.badRequest('Place not found.'))
         return
       }
 
@@ -58,6 +58,7 @@ const validateLikeDeletionInRoute = async (req, res, next) => {
       
       // like exists validation
       const totalLikesInRoute = await getLikesFromRoute({routeId:routeId, userId:userId})
+      console.log(totalLikesInRoute)
       
       if (isEmptyArray(totalLikesInRoute)) {
           next(ApiError.badRequest('Error: No like found to delete.'))
