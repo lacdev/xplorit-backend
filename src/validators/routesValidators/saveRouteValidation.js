@@ -49,20 +49,20 @@ const validateRouteCreation = async (req, res, next) => {
       .withMessage('fullRoute must be an array.')
       .run(req)
 
-    const latitudeChain = check('fullRoute.*.lat')
+    const pointChain = check('fullRoute.*.type')
       .not()
       .isEmpty()
       .withMessage('please provide a latitude')
-      .isNumeric()
-      .withMessage('Latitude is not valid.')
+      .isString()
+      .withMessage('type must be a valid string named Point.')
       .run(req)
 
-    const longitudeChain = check('fullRoute.*.long')
+    const coordinatesChain = check('fullRoute.*.coordinates')
+      .isArray()
+      .withMessage('Coordinates must be a valid GeoJSON Array')
       .not()
       .isEmpty()
-      .withMessage('please provide a longitude')
-      .isNumeric()
-      .withMessage('Longitude is not valid.')
+      .withMessage('please provide a valid coordinates array.')
       .run(req)
 
     const imagesChain = body('images')
@@ -77,8 +77,8 @@ const validateRouteCreation = async (req, res, next) => {
       descriptionChain,
       tagsChain,
       fullRouteChain,
-      latitudeChain,
-      longitudeChain,
+      pointChain,
+      coordinatesChain,
       imagesChain,
     ])
 

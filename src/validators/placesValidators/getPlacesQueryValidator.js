@@ -1,6 +1,6 @@
 import Ajv from 'ajv'
 import { ApiError } from '../../errors/ApiError.js'
-import { getPlaceSchema } from '../../schemas/getPlaceSchema.js'
+import { getPlaceSchema } from '../../schemas/getPlacesFilterSchema.js'
 const ajv = new Ajv()
 
 const validateGetPlaceQuery = (req, res, next) => {

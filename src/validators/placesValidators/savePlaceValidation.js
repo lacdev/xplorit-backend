@@ -92,21 +92,45 @@ const validatePlaceCreation = async (req, res, next) => {
       .withMessage('Schedule finish is not a valid date.')
       .run(req)
 
-    const latitudeChain = check('ubication.lat')
+    const locationChain = body('location')
+      .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
-      .withMessage('please provide a latitude')
-      .isNumeric()
-      .withMessage('Latitude is not valid.')
+      .withMessage('Location must be an object.')
       .run(req)
 
-    const longitudeChain = check('ubication.long')
+    const pointChain = body('location.type')
+      .exists({ checkNull: true, checkFalsy: true })
+      .matches('Point')
+      .withMessage('type of location must be a string named Point.')
       .not()
       .isEmpty()
-      .withMessage('please provide a longitude')
-      .isNumeric()
-      .withMessage('Longitude is not valid.')
+      .withMessage('Point must be a a string.')
       .run(req)
+
+    const coordenatesChain = body('location.coordinates')
+      .exists({ checkNull: true, checkFalsy: true })
+      .isArray()
+      .withMessage('Coordenates must be a valid GeoJSON Array.')
+      .not()
+      .isEmpty()
+      .withMessage('Coordenates must be an array of valid coordenates.')
+      .run(req)
+    // const latitudeChain = check('ubication.lat')
+    //   .not()
+    //   .isEmpty()
+    //   .withMessage('please provide a latitude')
+    //   .isNumeric()
+    //   .withMessage('Latitude is not valid.')
+    //   .run(req)
+
+    // const longitudeChain = check('ubication.long')
+    //   .not()
+    //   .isEmpty()
+    //   .withMessage('please provide a longitude')
+    //   .isNumeric()
+    //   .withMessage('Longitude is not valid.')
+    //   .run(req)
 
     const imagesChain = body('images')
       .exists({ checkNull: true, checkFalsy: true })
@@ -126,8 +150,9 @@ const validatePlaceCreation = async (req, res, next) => {
       tagsChain,
       scheduleStartChain,
       scheduleFinishChain,
-      latitudeChain,
-      longitudeChain,
+      locationChain,
+      pointChain,
+      coordenatesChain,
       imagesChain,
     ])
 
