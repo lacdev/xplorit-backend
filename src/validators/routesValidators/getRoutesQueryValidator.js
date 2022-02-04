@@ -1,11 +1,11 @@
 import Ajv from 'ajv'
 import { ApiError } from '../../errors/ApiError.js'
-import { getRouteSchema } from '../../schemas/getRouteSchema.js'
+import { getRouteSchema } from '../../schemas/getRoutesFilterSchema.js'
 const ajv = new Ajv()
 
 const validateGetRouteQuery = async (req, res, next) => {
   try {
-    const valid = await ajv.validate(getRouteSchema, req.query)
+    const valid = ajv.validate(getRouteSchema, req.query)
 
     if (!valid) next(ApiError.badRequest(ajv.errors))
 

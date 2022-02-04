@@ -1,5 +1,11 @@
 import mongoose from 'mongoose'
 
+const imagesArrayLimit = (val) => val.length <= 6
+
+const locationArrayLimit = (val) => val.length === 2
+
+const tagsArrayLimit = (val) => val.length <= 4
+
 const statesArray = [
   'Aguascalientes',
   'Baja California',
@@ -35,6 +41,18 @@ const statesArray = [
   'Yucatan',
   'Zacatecas',
 ]
+
+// const pointSchema = new mongoose.Schema({
+//   type: {
+//     type: String,
+//     enum: ['Point'],
+//     required: true,
+//   },
+//   coordinates: {
+//     type: [Number],
+//     required: true,
+//   },
+// })
 
 const PlaceSchema = new mongoose.Schema(
   {
@@ -73,31 +91,51 @@ const PlaceSchema = new mongoose.Schema(
       },
     },
     tags: {
-      type: Array,
-      required: true,
+      type: [
+        {
+          type: String,
+          required: true,
+        },
+      ],
+      validate: [
+        tagsArrayLimit,
+        'Tags array must have a maximum of 4 String items.',
+      ],
     },
     scheduleStart: {
       type: Date,
-      required: true,
+      required: [true, 'A valid start date must be provided.'],
     },
     scheduleFinish: {
       type: Date,
-      required: true,
+      required: [true, 'A valid finish date must be provided.'],
     },
-    ubication: {
-      lat: { type: Number, required: true },
-      long: { type: Number, required: true },
+    location: {
+      type: {
+        type: String, // Don't do `{ location: { type: String } }`
+        enum: ['Point'], // 'location.type' must be 'Point'
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+        validate: [
+          locationArrayLimit,
+          'Location array coordenates items must be 2.',
+        ],
+      },
     },
     images: {
-      type: Array,
-      required: true,
-      validate: {
-        validator: function (array) {
-          return array.every(
-            (image) => typeof image === 'string' && array.length <= 6
-          )
+      type: [
+        {
+          type: String,
+          required: [
+            true,
+            'You must provide an array of image URL with a maximum of 6 items.',
+          ],
         },
-      },
+      ],
+      validate: [imagesArrayLimit, 'Images max items must be 6.'],
     },
   },
   { timestamps: true }

@@ -2,7 +2,7 @@ const getPlaceSchema = {
   type: 'object',
   properties: {
     upTo: { type: 'string' },
-    sortBy: { type: 'string' },
+    sort: { type: 'string' },
     latest: { type: 'string' },
     name: { type: 'string' },
     tags: { type: 'array' },
