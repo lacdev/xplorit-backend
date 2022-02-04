@@ -68,7 +68,7 @@ const PlaceSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
+      
       minlength: 50,
     },
     address: {
@@ -82,12 +82,12 @@ const PlaceSchema = new mongoose.Schema(
       },
       state: {
         type: String,
-        required: true,
+        
         enum: statesArray,
       },
       zipcode: {
         type: Number,
-        required: true,
+        
       },
     },
     tags: {
@@ -104,11 +104,19 @@ const PlaceSchema = new mongoose.Schema(
     },
     scheduleStart: {
       type: Date,
+<<<<<<< HEAD
       required: [true, 'A valid start date must be provided.'],
     },
     scheduleFinish: {
       type: Date,
       required: [true, 'A valid finish date must be provided.'],
+=======
+      
+    },
+    scheduleFinish: {
+      type: Date,
+      
+>>>>>>> develop
     },
     location: {
       type: {
@@ -126,6 +134,7 @@ const PlaceSchema = new mongoose.Schema(
       },
     },
     images: {
+<<<<<<< HEAD
       type: [
         {
           type: String,
@@ -133,6 +142,15 @@ const PlaceSchema = new mongoose.Schema(
             true,
             'You must provide an array of image URL with a maximum of 6 items.',
           ],
+=======
+      type: Array,
+      
+      validate: {
+        validator: function (array) {
+          return array.every(
+            (image) => typeof image === 'string' && array.length <= 6
+          )
+>>>>>>> develop
         },
       ],
       validate: [imagesArrayLimit, 'Images max items must be 6.'],

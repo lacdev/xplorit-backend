@@ -19,6 +19,9 @@ import { deleteLikeInRoute } from '../controllers/likesControllers/deleteLikeInR
 import { validateGetReviewsFromRoute } from '../validators/reviewsValidators/getReviewsInRouteValidation.js'
 import { validateReviewUpdateInRoute } from '../validators/reviewsValidators/updateReviewInRouteValidation.js'
 import { validateReviewDeleteInRoute } from '../validators/reviewsValidators/deleteReviewInRouteValidation.js'
+import { getLikesFromRouteValidation } from '../validators/likesValidators/getLikesInRouteValidation.js'
+import { validateLikeInRoute } from '../validators/likesValidators/saveLikeInRouteValidation.js'
+import { validateLikeDeletionInRoute } from '../validators/likesValidators/deleteLikeInRouteValidation.js'
 // import { validateGetRouteQuery } from '../validators/routesValidators/getRouteQueryValidator.js'
 
 const router = express.Router()
@@ -45,8 +48,8 @@ router.delete(
 )
 
 //Likes in routes controllers
-router.get('/:routeId/likes', getLikesInRoute)
-router.post('/:routeId/likes', saveLikeInRoute)
-router.delete('/:routeId/likes/:likeId', deleteLikeInRoute)
+router.get('/:routeId/likes', getLikesFromRouteValidation, getLikesInRoute)
+router.post('/:routeId/likes', validateLikeInRoute, saveLikeInRoute)
+router.delete('/:routeId/likes/:likeId', validateLikeDeletionInRoute, deleteLikeInRoute)
 
 export { router as routesRouter }

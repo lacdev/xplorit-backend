@@ -12,6 +12,17 @@ const savePlace = async (req, res, next) => {
       statusCode: 200,
       description: 'Place created successfully',
     })
+
+    if (savedPlace) {
+      res.json({
+        message: 'success',
+        payload: {
+          data: savedPlace,
+          description: 'Place created successfully',
+          statusCode: 200,
+        },
+      })
+    }
   } catch (err) {
     console.error(err)
     next({})

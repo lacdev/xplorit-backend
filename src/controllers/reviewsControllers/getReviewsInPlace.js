@@ -4,6 +4,7 @@ const getReviewsInPlace = async (req, res, next) => {
   const { placeId } = req.params
 
   try {
+    
     const allReviewsInPlace = await getAllReviewsFromPlace({ placeId: placeId })
 
     res.json({

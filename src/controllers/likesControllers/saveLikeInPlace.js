@@ -1,14 +1,11 @@
-import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { postLikeToPlace } from '../../usecases/likeUsecases/postLikeToPlace.js'
 
 const saveLikeInPlace = async (req, res, next) => {
-  const { placeId } = req.params
-  const { newLike } = req.body
-
+  const { placeId} = req.params
+  const { userId } = req.body
+  
   try {
-    const foundRoute = await getSinglePlace(placeId)
-
-    const savedLike = await postLikeToPlace(foundRoute._id, newLike)
+    const savedLike = await postLikeToPlace({placeId:placeId, userId:userId})
 
     res.json({
       message: 'success',
