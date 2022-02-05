@@ -1,9 +1,19 @@
 import { createSingleUser } from '../../usecases/userUsecases/createSingleUser.js'
 import { hashPassword } from '../../lib/bcrypt.js'
+import gravatar from 'gravatar'
 
 const saveUser = async (req, res, next) => {
   try {
-    const { username, password, email, avatar, coverPhoto } = req.body
+    const { username, password, email } = req.body
+
+    const secureUrl = gravatar.url(
+      email,
+      { s: '128', r: 'g', d: 'identicon' },
+      true
+    )
+
+    const defaultCoverPhoto =
+      'https://storage.googleapis.com/xplorit-images/xplorit_cover_default.png'
 
     const hashedPassword = await hashPassword(password)
 
@@ -11,8 +21,8 @@ const saveUser = async (req, res, next) => {
       username,
       password: hashedPassword,
       email,
-      avatar,
-      coverPhoto,
+      avatar: secureUrl,
+      coverPhoto: defaultCoverPhoto,
     })
 
     if (savedUser) {

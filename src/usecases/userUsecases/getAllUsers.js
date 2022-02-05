@@ -1,14 +1,16 @@
 import { User } from '../../models/user.model.js'
 
-const getAllUsers = async () => {
+const getAllUsers = async (query) => {
   const myCustomLabels = {
     totalDocs: 'totalUsers',
     docs: 'users',
   }
 
+  console.log('Query found??', query)
+
   const options = {
-    page: 1,
-    limit: 10,
+    page: query.page,
+    limit: query.limit,
     customLabels: myCustomLabels,
     select: 'username avatar coverPhoto',
   }

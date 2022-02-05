@@ -3,10 +3,16 @@ import { ApiError } from '../../errors/ApiError.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getReviewsInPlace = async (req, res, next) => {
-  const { placeId } = req.params
-
   try {
-    const allReviewsInPlace = await getAllReviewsFromPlace(placeId)
+    const { placeId } = req.params
+
+    let page = parseInt(req.query.page) || 1
+    let limit = parseInt(req.query.limit) || 5
+
+    const allReviewsInPlace = await getAllReviewsFromPlace(placeId, {
+      page,
+      limit,
+    })
 
     console.log('Reviews in place found????', allReviewsInPlace.reviews)
 
