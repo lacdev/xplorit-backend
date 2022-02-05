@@ -28,8 +28,6 @@ const validateGetReviewsFromRoute = async (req, res, next) => {
 
     const foundRoute = await getSingleRoute(routeId)
 
-    console.log('Place found?:', foundRoute)
-
     if (isEmptyObject(foundRoute)) {
       next(ApiError.notFound('Route not found.'))
       return

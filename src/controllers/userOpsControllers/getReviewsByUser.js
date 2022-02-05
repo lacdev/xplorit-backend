@@ -1,20 +1,22 @@
-import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getReviewsMadeByUser } from '../../usecases/userUsecases/getReviewsMadeByUser.js'
+import { ApiError } from '../../errors/ApiError.js'
+import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getReviewsByUser = async (req, res, next) => {
   const { userId } = req.params
 
   try {
-    const foundUser = await getSingleUser(userId)
+    const reviewsByUser = await getReviewsMadeByUser(userId)
 
-    const reviewsByUser = getReviewsMadeByUser(foundUser._id)
+    if (isEmptyArray(reviewsByUser)) {
+      next(ApiError.notFound('No reviews created by this user were found.'))
+      return
+    }
 
     res.json({
       message: 'success',
-      payload: {
-        data: reviewsByUser,
-        statusCode: 200,
-      },
+      statusCode: 200,
+      data: reviewsByUser,
     })
   } catch (err) {
     console.error(err)

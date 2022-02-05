@@ -9,9 +9,8 @@ const deleteReviewInPlace = async (req, res, next) => {
     if (deletedReview) {
       res.json({
         message: 'success',
-        data: 'No content',
-        description: 'Deleted review successfully',
         statusCode: 204,
+        data: 'Deleted review successfully',
       })
     }
   } catch (err) {

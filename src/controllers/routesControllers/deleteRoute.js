@@ -9,11 +9,8 @@ const deleteRoute = async (req, res, next) => {
     if (deletedRoute) {
       res.json({
         message: 'success',
-        payload: {
-          data: 'No content',
-          description: 'Deleted route successfully',
-          statusCode: 204,
-        },
+        statusCode: 204,
+        data: 'Deleted route successfully',
       })
     }
   } catch (err) {

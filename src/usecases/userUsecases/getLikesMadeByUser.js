@@ -1,8 +1,8 @@
-import { User } from '../../models/user.model.js'
+import { Like } from '../../models/like.model.js'
 
 const getLikesMadeByUser = async (id) => {
   try {
-    return await User.findById(id)
+    return await Like.find({ userId: id })
   } catch (error) {
     console.error(error)
   }

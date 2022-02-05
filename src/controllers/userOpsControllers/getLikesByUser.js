@@ -1,20 +1,22 @@
-import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getLikesMadeByUser } from '../../usecases/userUsecases/getLikesMadeByUser.js'
+import { ApiError } from '../../errors/ApiError.js'
+import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getLikesByUser = async (req, res, next) => {
   const { userId } = req.params
 
   try {
-    const foundUser = await getSingleUser(userId)
+    const likesByUser = await getLikesMadeByUser(userId)
 
-    const likesByUser = getLikesMadeByUser(foundUser._id)
+    if (isEmptyArray(likesByUser)) {
+      next(ApiError.notFound('No likes by this user were found.'))
+      return
+    }
 
     res.json({
       message: 'success',
-      payload: {
-        data: likesByUser,
-        statusCode: 200,
-      },
+      statusCode: 200,
+      data: likesByUser,
     })
   } catch (err) {
     console.error(err)

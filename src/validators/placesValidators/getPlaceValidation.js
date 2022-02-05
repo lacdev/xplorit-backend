@@ -27,7 +27,7 @@ const validateGetPlace = async (req, res, next) => {
     }
 
     const foundPlace = await getSinglePlace(placeId)
-    console.log(foundPlace)
+
     if (isEmptyObject(foundPlace)) {
       next(ApiError.notFound('Place not found.'))
       return

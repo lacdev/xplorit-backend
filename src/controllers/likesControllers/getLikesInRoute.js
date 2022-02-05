@@ -1,24 +1,22 @@
 import { getLikesFromRoute } from '../../usecases/likeUsecases/getLikesFromRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
+import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getLikesInRoute = async (req, res, next) => {
   const { routeId } = req.params
   try {
-    
     const allLikesInRoute = await getLikesFromRoute({ routeId: routeId })
-  
-    
-    if(allLikesInRoute) {
-      console.log(allLikesInRoute)
-      res.json({
-        message: 'success',
-        payload: {
-          data: allLikesInRoute,
-          description: 'Likes found successfully',
-          statusCode: 200,
-        },
-      })
+
+    if (isEmptyArray(allLikesInRoute)) {
+      next(ApiError.notFound('No likes for this route were found.'))
+      return
     }
 
+    res.json({
+      message: 'success',
+      statusCode: 200,
+      data: allLikesInRoute,
+    })
   } catch (err) {
     console.log(err)
 

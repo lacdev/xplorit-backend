@@ -1,20 +1,22 @@
-import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getRoutesCreatedByUser } from '../../usecases/userUsecases/getRoutesCreatedByUser.js'
+import { ApiError } from '../../errors/ApiError.js'
+import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getRoutesByUser = async (req, res, next) => {
   const { userId } = req.params
 
   try {
-    const foundUser = await getSingleUser(userId)
+    const routesByUser = await getRoutesCreatedByUser(userId)
 
-    const routesByUser = getRoutesCreatedByUser(foundUser._id)
+    if (isEmptyArray(routesByUser)) {
+      next(ApiError.notFound('No routes created by this user were found.'))
+      return
+    }
 
     res.json({
       message: 'success',
-      payload: {
-        data: routesByUser,
-        statusCode: 200,
-      },
+      statusCode: 200,
+      data: routesByUser,
     })
   } catch (err) {
     console.error(err)

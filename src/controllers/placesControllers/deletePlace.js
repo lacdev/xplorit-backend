@@ -2,18 +2,15 @@ import { deleteSinglePlace } from '../../usecases/placeUsecases/deleteSinglePlac
 
 const deletePlace = async (req, res, next) => {
   try {
-    const { id } = req.params
+    const { placeId } = req.params
 
-    const deletedPlace = await deleteSinglePlace(id)
+    const deletedPlace = await deleteSinglePlace(placeId)
 
     if (deletedPlace) {
       res.json({
         message: 'success',
-        payload: {
-          data: 'No content',
-          description: 'Deleted place successfully',
-          statusCode: 204,
-        },
+        statusCode: 204,
+        data: 'Deleted place successfully',
       })
     }
   } catch (err) {

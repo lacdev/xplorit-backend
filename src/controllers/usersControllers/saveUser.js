@@ -18,7 +18,7 @@ const saveUser = async (req, res, next) => {
     if (savedUser) {
       res.json({
         success: true,
-        description: 'User created successfully',
+        description: 'New user created successfully',
         statusCode: 201,
       })
     }

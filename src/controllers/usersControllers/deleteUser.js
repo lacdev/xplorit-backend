@@ -9,11 +9,8 @@ const deleteUser = async (req, res, next) => {
     if (deletedUser) {
       res.json({
         message: 'success',
-        payload: {
-          data: 'No content',
-          description: 'Deleted user successfully',
-          statusCode: 204,
-        },
+        data: 'Deleted user successfully',
+        statusCode: 204,
       })
     }
   } catch (err) {

@@ -9,8 +9,8 @@ const saveRoute = async (req, res, next) => {
     if (savedRoute) {
       res.json({
         message: 'success',
-        description: 'Route created successfully',
         statusCode: 200,
+        description: 'Route created successfully',
       })
     }
   } catch (err) {
