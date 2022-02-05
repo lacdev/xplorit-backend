@@ -6,11 +6,13 @@ const getRoute = async (req, res, next) => {
   try {
     const singleRoute = await getSingleRoute(routeId)
 
-    res.json({
-      description: 'Route found',
-      statusCode: 200,
-      data: singleRoute,
-    })
+    if (singleRoute) {
+      res.json({
+        description: 'Route found',
+        statusCode: 200,
+        data: singleRoute,
+      })
+    }
   } catch (err) {
     console.error(err)
     next({})

@@ -5,7 +5,6 @@ const savePlace = async (req, res, next) => {
     const newPlace = req.body
 
     const savedPlace = await createSinglePlace(newPlace)
-    console.log(savedPlace)
 
     res.json({
       message: 'success',

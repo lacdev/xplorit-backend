@@ -17,8 +17,8 @@ const updateUser = async (req, res, next) => {
     if (updatedUser) {
       res.json({
         success: true,
-        description: 'User updated successfully',
         statusCode: 201,
+        description: 'User updated successfully',
       })
     }
   } catch (err) {
