@@ -12,6 +12,9 @@ const saveUser = async (req, res, next) => {
       true
     )
 
+    const defaultCoverPhoto =
+      'https://storage.googleapis.com/xplorit-images/xplorit_cover_default.png'
+
     const hashedPassword = await hashPassword(password)
 
     const savedUser = await createSingleUser({
@@ -19,7 +22,7 @@ const saveUser = async (req, res, next) => {
       password: hashedPassword,
       email,
       avatar: secureUrl,
-      coverPhoto: 'default',
+      coverPhoto: defaultCoverPhoto,
     })
 
     if (savedUser) {

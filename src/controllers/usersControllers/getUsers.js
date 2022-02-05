@@ -7,6 +7,7 @@ const getUsers = async (req, res, next) => {
   let limit = parseInt(req.query.limit) || 10
 
   //Filters object pending
+  //Example getAllusers({filters}, {query})
 
   try {
     const allUsers = await getAllUsers({ page, limit })

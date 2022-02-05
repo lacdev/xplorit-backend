@@ -7,6 +7,9 @@ const getRoutes = async (req, res, next) => {
     let page = parseInt(req.query.page) || 1
     let limit = parseInt(req.query.limit) || 9
 
+    //Filters object pending
+    //Example getAllRoutes({filters}, {query})
+
     const allRoutes = await getAllRoutes({ page, limit })
     if (isEmptyArray(allRoutes)) {
       next(ApiError.notFound('No routes were found.'))
