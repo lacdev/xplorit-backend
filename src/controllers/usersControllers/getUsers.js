@@ -3,8 +3,11 @@ import { ApiError } from '../../errors/ApiError.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getUsers = async (req, res, next) => {
+  let page = parseInt(req.query.page) || 1
+  let limit = parseInt(req.query.limit) || 10
+
   try {
-    const allUsers = await getAllUsers()
+    const allUsers = await getAllUsers({ page, limit })
     if (isEmptyArray(allUsers)) {
       next(ApiError.notFound('No users were found.'))
     }
