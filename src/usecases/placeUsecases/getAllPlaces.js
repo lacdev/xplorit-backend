@@ -1,16 +1,18 @@
 import { Place } from '../../models/place.model.js'
 
-const getAllPlaces = async () => {
+const getAllPlaces = async (query) => {
   const myCustomLabels = {
     totalDocs: 'totalPlaces',
     docs: 'places',
   }
 
   const options = {
-    page: 1,
-    limit: 9,
+    page: query.page,
+    limit: query.limit,
     customLabels: myCustomLabels,
   }
+
+  console.log('Query found??', query)
 
   try {
     return await Place.paginate({}, options)

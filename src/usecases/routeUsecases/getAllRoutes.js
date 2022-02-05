@@ -1,16 +1,19 @@
 import { Route } from '../../models/route.model.js'
 
-const getAllRoutes = async () => {
+const getAllRoutes = async (query) => {
   const myCustomLabels = {
     totalDocs: 'totalRoutes',
     docs: 'routes',
   }
 
   const options = {
-    page: 1,
-    limit: 9,
+    page: query.page,
+    limit: query.limit,
     customLabels: myCustomLabels,
   }
+
+  console.log('Query found??', query)
+
   try {
     return await Route.paginate({}, options)
   } catch (error) {

@@ -3,10 +3,16 @@ import { ApiError } from '../../errors/ApiError.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getReviewsInRoute = async (req, res, next) => {
-  const { routeId } = req.params
-
   try {
-    const allReviewsInRoute = await getAllReviewsFromRoute(routeId)
+    const { routeId } = req.params
+
+    let page = parseInt(req.query.page) || 1
+    let limit = parseInt(req.query.limit) || 5
+
+    const allReviewsInRoute = await getAllReviewsFromRoute(routeId, {
+      page,
+      limit,
+    })
 
     console.log('Reviews in route found????', allReviewsInRoute.reviews)
 

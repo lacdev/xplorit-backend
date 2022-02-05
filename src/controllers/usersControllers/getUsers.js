@@ -6,6 +6,8 @@ const getUsers = async (req, res, next) => {
   let page = parseInt(req.query.page) || 1
   let limit = parseInt(req.query.limit) || 10
 
+  //Filters object pending
+
   try {
     const allUsers = await getAllUsers({ page, limit })
     if (isEmptyArray(allUsers)) {
