@@ -6,9 +6,11 @@ const getReviewsInRoute = async (req, res, next) => {
   const { routeId } = req.params
 
   try {
-    const allReviewsInRoute = await getAllReviewsFromRoute({ routeId: routeId })
+    const allReviewsInRoute = await getAllReviewsFromRoute(routeId)
 
-    if (isEmptyArray(allReviewsInRoute)) {
+    console.log('Reviews in route found????', allReviewsInRoute.reviews)
+
+    if (isEmptyArray(allReviewsInRoute.reviews)) {
       next(ApiError.notFound('No reviews for this route were found.'))
       return
     }

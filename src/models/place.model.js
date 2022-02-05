@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import paginate from 'mongoose-paginate-v2'
 
 const imagesArrayLimit = (val) => val.length <= 6
 
@@ -129,6 +130,8 @@ const PlaceSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+
+PlaceSchema.plugin(paginate)
 
 const Place = mongoose.model('place', PlaceSchema)
 

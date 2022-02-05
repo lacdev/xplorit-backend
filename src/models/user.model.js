@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import paginate from 'mongoose-paginate-v2'
 
 const userSchema = new mongoose.Schema(
   {
@@ -31,6 +32,8 @@ const userSchema = new mongoose.Schema(
 )
 
 userSchema.path('email').set((value) => value.toLowerCase())
+
+userSchema.plugin(paginate)
 
 const User = mongoose.model('user', userSchema)
 
