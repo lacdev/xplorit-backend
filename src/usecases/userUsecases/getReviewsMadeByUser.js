@@ -1,8 +1,8 @@
-import { User } from '../../models/user.model.js'
+import { Review } from '../../models/review.model.js'
 
 const getReviewsMadeByUser = async (id) => {
   try {
-    return await User.findById(id)
+    return await Review.find({ ownerId: id })
   } catch (error) {
     console.error(error)
   }

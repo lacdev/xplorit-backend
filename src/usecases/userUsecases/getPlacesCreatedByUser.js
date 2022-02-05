@@ -1,8 +1,8 @@
-import { User } from '../../models/user.model.js'
+import { Place } from '../../models/place.model.js'
 
 const getPlacesCreatedByUser = async (id) => {
   try {
-    return await User.findById(id)
+    return await Place.find({ ownerId: id })
   } catch (error) {
     console.error(error)
   }

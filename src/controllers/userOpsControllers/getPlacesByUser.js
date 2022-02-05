@@ -1,19 +1,15 @@
-import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getPlacesCreatedByUser } from '../../usecases/userUsecases/getPlacesCreatedByUser.js'
 
 const getPlacesByUser = async (req, res, next) => {
   const { userId } = req.params
 
   try {
-    const foundUser = await getSingleUser(userId)
-    const placesByUser = getPlacesCreatedByUser(foundUser._id)
+    const placesByUser = getPlacesCreatedByUser(userId)
 
     res.json({
       message: 'success',
-      payload: {
-        data: placesByUser,
-        statusCode: 200,
-      },
+      statusCode: 200,
+      data: placesByUser,
     })
   } catch (err) {
     console.error(err)
