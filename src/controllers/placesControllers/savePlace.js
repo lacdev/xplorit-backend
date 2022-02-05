@@ -6,20 +6,11 @@ const savePlace = async (req, res, next) => {
 
     const savedPlace = await createSinglePlace(newPlace)
 
-    res.json({
-      message: 'success',
-      statusCode: 200,
-      description: 'Place created successfully',
-    })
-
     if (savedPlace) {
       res.json({
         message: 'success',
-        payload: {
-          data: savedPlace,
-          description: 'Place created successfully',
-          statusCode: 200,
-        },
+        statusCode: 200,
+        description: 'Place created successfully',
       })
     }
   } catch (err) {

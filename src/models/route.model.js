@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import paginate from 'mongoose-paginate-v2'
 
 const imagesArrayLimit = (val) => val.length <= 6
 
@@ -69,6 +70,8 @@ const RouteSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+
+RouteSchema.plugin(paginate)
 
 const Route = mongoose.model('route', RouteSchema)
 
