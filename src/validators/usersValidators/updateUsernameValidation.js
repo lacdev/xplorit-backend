@@ -7,9 +7,6 @@ import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 const validateUsernameUpdate = async (req, res, next) => {
   try {
     const { userId } = req.params
-    const { username } = req.body
-
-    console.log('Did I receive a new username bro?', username)
 
     const userIDChain = param('userId')
       .exists()
