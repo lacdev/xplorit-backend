@@ -4,13 +4,15 @@ import { hashPassword } from '../../lib/bcrypt.js'
 const updateUser = async (req, res, next) => {
   try {
     const { userId } = req.params
-    const { avatar, coverPhoto, password } = req.body
+    const data = JSON.parse(req.body.data)
 
-    const hashedPass = await hashPassword(password)
+    console.log('Is my data being read in the controller?', data)
+
+    const hashedPass = await hashPassword(data.password)
 
     const updatedUser = await updateSingleUser(userId, {
-      avatar,
-      coverPhoto,
+      // avatar: avatar,
+      // coverPhoto: coverPhoto,
       password: hashedPass,
     })
 

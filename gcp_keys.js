@@ -13,6 +13,8 @@ const GCP_KEYS = {
   client_x509_cert_url: variables.GCP_CLIENT_X509_CERT_URL,
 }
 
-const google_cloud_keys = JSON.stringify(GCP_KEYS)
+// const google_cloud_keys = JSON.stringify(GCP_KEYS)
 
-export { google_cloud_keys }
+// export { google_cloud_keys }
+
+export default GCP_KEYS
