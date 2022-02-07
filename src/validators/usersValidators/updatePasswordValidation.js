@@ -4,10 +4,9 @@ const { param, body, validationResult } = validator
 import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
-const validateUsernameUpdate = async (req, res, next) => {
+const validatePasswordUpdate = async (req, res, next) => {
   try {
     const { userId } = req.params
-    const { password } = req.body
 
     const userIDChain = param('userId')
       .exists()
@@ -16,18 +15,22 @@ const validateUsernameUpdate = async (req, res, next) => {
       .withMessage('Please provide a valid ID.')
       .run(req)
 
-    const usernameChain = body('username')
+    const passwordChain = body('password')
       .exists({ checkFalsy: true, checkNull: true })
-      .withMessage('Username is required and must be at least 4 characters.')
+      .withMessage(
+        'Password is required and must be at least 8 characters and should contain a number.'
+      )
       .not()
       .isEmpty()
-      .custom((value) => !/\s/.test(value))
-      .withMessage('No spaces are allowed in the username')
-      .trim()
-      .escape()
+      .isLength({ min: 8 })
+      .withMessage(
+        'Password needs to be at least 8 Characters and should contain at least 1 number.'
+      )
+      .matches(/\d/)
+      .withMessage('must contain a number')
       .run(req)
 
-    await Promise.all([usernameChain, userIDChain])
+    await Promise.all([passwordChain, userIDChain])
 
     const result = validationResult(req)
 
@@ -49,9 +52,9 @@ const validateUsernameUpdate = async (req, res, next) => {
 
     next()
   } catch (e) {
-    console.error(err)
-    next(ApiError.badRequest(err))
+    console.error(e)
+    next(ApiError.badRequest(e))
   }
 }
 
-export { validateUsernameUpdate }
+export { validatePasswordUpdate }

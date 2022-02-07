@@ -2,7 +2,7 @@ import express from 'express'
 import { getUsers } from '../controllers/usersControllers/getUsers.js'
 import { getUser } from '../controllers/usersControllers/getUser.js'
 import { saveUser } from '../controllers/usersControllers/saveUser.js'
-import { updateUser } from '../controllers/usersControllers/updateUser.js'
+// import { updateUser } from '../controllers/usersControllers/updateUser.js'
 import { deleteUser } from '../controllers/usersControllers/deleteUser.js'
 import { getLikesByUser } from '../controllers/userOpsControllers/getLikesByUser.js'
 import { getReviewsByUser } from '../controllers/userOpsControllers/getReviewsByUser.js'
@@ -22,8 +22,12 @@ import { validateUserRoutes } from '../validators/userOpsValidators/getRoutesFro
 // import { validateP}
 // import { ApiError } from '../errors/ApiError.js'
 // import { handleImagesArray } from '../middlewares/image-upload-handler.js'
+
+//User update operation imports
 import { validateUsernameUpdate } from '../validators/usersValidators/updateUsernameValidation.js'
 import { updateUsername } from '../controllers/usersControllers/updateUsername.js'
+import { validatePasswordUpdate } from '../validators/usersValidators/updatePasswordValidation.js'
+import { updatePassword } from '../controllers/usersControllers/updatePassword.js'
 
 const router = express.Router()
 
@@ -47,7 +51,7 @@ router.delete('/:userId', validateUserDeletion, deleteUser)
 // userImagesUpdate,
 
 //User information update endpoints.
-// router.patch('/:userId/password', validatePasswordUpdate, updatePassword)
+router.patch('/:userId/password', validatePasswordUpdate, updatePassword)
 // router.patch('/:userId/avatar', validateAvatarUpdate, updateAvatar)
 // router.patch('/:userId/cover', validateCoverUpdate, updateCover)
 router.patch('/:userId/username', validateUsernameUpdate, updateUsername)
