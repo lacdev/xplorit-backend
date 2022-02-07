@@ -50,6 +50,10 @@ router.delete(
 //Likes in places controllers
 router.get('/:placeId/likes', getLikesFromPlaceValidation, getLikesInPlace)
 router.post('/:placeId/likes', validateLikeInPlace, saveLikeInPlace)
-router.delete('/:placeId/likes/:likeId',validateLikeDeletionInPlace, deleteLikeInPlace)
+router.delete(
+  '/:placeId/likes/:likeId',
+  validateLikeDeletionInPlace,
+  deleteLikeInPlace
+)
 
 export { router as placesRouter }

@@ -1,13 +1,10 @@
-/* eslint-disable no-undef */
-import dotenv from 'dotenv'
 import app from './src/lib/server.js'
 import dbConnect from './src/lib/db.js'
+import { variables } from './src/config/config.js'
 
-dotenv.config()
+const port = variables.PORT
 
-const port = process.env.PORT || 8080 || 9090
-
-dbConnect(process.env)
+dbConnect(variables)
   .then(() => {
     console.log('DB Connected')
     app.listen(port, () => {

@@ -3,10 +3,53 @@ import validator from 'express-validator'
 import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 const { body, check, validationResult } = validator
+// import variables from '../../config/config.js'
+// // import Jimp from 'jimp'
+// // import Cloud from '@google-cloud/storage'
+// import { Storage } from '@google-cloud/storage'
+// // const { Storage } = Cloud
+// import { Buffer } from 'buffer'
+
+// const storage = new Storage({ keyFilename: './src/config/key.json' })
+
+// const bucket = storage.bucket(variables.gcp_bucket)
 
 const validatePlaceCreation = async (req, res, next) => {
   try {
     const { ownerId } = req.body
+
+    // console.log(images)
+    // const buffersArray = []
+
+    // images.forEach(async (image, index) => {
+    //   let matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/)
+
+    //   if (matches.length !== 3) {
+    //     return new Error('Invalid input string')
+    //   }
+
+    //   const buffer = Buffer.from(matches[2], 'base64')
+
+    //   const file = bucket.file(`places/${ownerId}/image${index}.jpg`)
+
+    //   await file
+    //     .save(buffer)
+
+    //     .then(() => {
+    //       const content = file.publicUrl()
+    //       // const publicUrl = `https://storage.googleapis.com/xplorit-images/${file}`
+    //       buffersArray.push(content)
+    //       // console.log('Your files are available at:', buffersArray)
+    //     })
+    //     .then(() => {
+    //       console.log('Async files are there????', buffersArray)
+
+    //       image = buffersArray[index]
+    //     })
+    //     // .then(() => console.log("Are my images being modified???", image))
+
+    //     .catch((e) => console.error(e))
+    // })
 
     const ownerIdChain = body('ownerId')
       .exists({ checkNull: true, checkFalsy: true })
@@ -116,21 +159,6 @@ const validatePlaceCreation = async (req, res, next) => {
       .isEmpty()
       .withMessage('Coordenates must be an array of valid coordenates.')
       .run(req)
-    // const latitudeChain = check('ubication.lat')
-    //   .not()
-    //   .isEmpty()
-    //   .withMessage('please provide a latitude')
-    //   .isNumeric()
-    //   .withMessage('Latitude is not valid.')
-    //   .run(req)
-
-    // const longitudeChain = check('ubication.long')
-    //   .not()
-    //   .isEmpty()
-    //   .withMessage('please provide a longitude')
-    //   .isNumeric()
-    //   .withMessage('Longitude is not valid.')
-    //   .run(req)
 
     const imagesChain = body('images')
       .exists({ checkNull: true, checkFalsy: true })

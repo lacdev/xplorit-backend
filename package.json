@@ -25,6 +25,7 @@
     "gravatar": "^1.8.2",
     "helmet": "^5.0.1",
     "http-status-codes": "^2.2.0",
+    "jimp": "^0.16.1",
     "jsonwebtoken": "^8.5.1",
     "limiter": "^2.1.0",
     "mongoose": "^6.1.6",
@@ -37,6 +38,7 @@
     "rate-limiter-flexible": "^2.3.6",
     "redis": "^4.0.3",
     "safe-regex": "^2.1.1",
+    "sharp": "^0.30.0",
     "stripe": "^8.202.0",
     "winston": "^3.5.0"
   },
