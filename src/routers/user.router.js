@@ -16,14 +16,25 @@ import { validateUserLikes } from '../validators/userOpsValidators/getLikesFromU
 import { validateUserReviews } from '../validators/userOpsValidators/getReviewsFromUserValidation.js'
 import { validateUserPlaces } from '../validators/userOpsValidators/getPlacesFromUserValidation.js'
 import { validateUserRoutes } from '../validators/userOpsValidators/getRoutesFromUserValidation.js'
+import multer from 'multer'
+// import { ApiError } from '../errors/ApiError.js'
+// import { handleImagesArray } from '../middlewares/image-upload-handler.js'
 
 const router = express.Router()
+
+// const upload = multer()
+const maxSize = 0.2 * 1024 * 1024
+
+const userImagesUpdate = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: maxSize },
+}).array('images', 2)
 
 //User controllers
 router.get('/', getUsers)
 router.get('/:userId', validateGetUser, getUser)
 router.post('/', validateUserSignup, saveUser)
-router.patch('/:userId', validateUserUpdate, updateUser)
+router.patch('/:userId', userImagesUpdate, validateUserUpdate, updateUser)
 router.delete('/:userId', validateUserDeletion, deleteUser)
 
 //User Ops controllers

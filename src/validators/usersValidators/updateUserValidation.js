@@ -3,10 +3,30 @@ import validator from 'express-validator'
 const { param, body, validationResult } = validator
 import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
+import sharp from 'sharp'
 
 const validateUserUpdate = async (req, res, next) => {
   try {
     const { userId } = req.params
+
+    console.log(' are my files here?', req.files)
+
+    const typesAllowed = ['image/jpeg', 'image/png']
+
+    if (!isEmptyArray(req.files)) {
+      for (let image of req.files) {
+        if (typesAllowed.indexOf(image.mimetype) === -1) {
+          next(
+            ApiError.badRequest(
+              'Only images of type png and jpeg are allowed with a maximum size of 256kb.'
+            )
+          )
+          return
+        } else {
+          console.log('your images are allowed sir continue.')
+        }
+      }
+    }
 
     const userIDChain = param('userId')
       .exists()
