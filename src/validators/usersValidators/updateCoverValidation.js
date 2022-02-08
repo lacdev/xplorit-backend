@@ -55,7 +55,7 @@ const validateCoverUpdate = async (req, res, next) => {
 
     const compressedImage = await compressImage(req.file.buffer)
 
-    const imageUrl = await uploadImage(userId, compressedImage)
+    const imageUrl = await uploadImage(userId, 'cover', compressedImage)
 
     const updatedBody = {
       cover: imageUrl,

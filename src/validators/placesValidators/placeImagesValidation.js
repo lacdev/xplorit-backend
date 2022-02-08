@@ -1,55 +1,32 @@
 import { ApiError } from '../../errors/ApiError.js'
-import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
-import { variables } from '../../config/config.js'
-import { Storage } from '@google-cloud/storage'
-import { v4 } from 'uuid'
+import { uploadImages } from '../../utils/uploadImages.js'
+import { compressImages } from '../../utils/compressImages.js'
 
 const validatePlaceImages = async (req, res, next) => {
   try {
+    if (!req.files) {
+      next(ApiError.badRequest('No images to upload were found.'))
+    }
+
     const typesAllowed = ['image/jpeg', 'image/png']
 
-    if (!isEmptyArray(req.files)) {
-      for (let image of req.files) {
-        console.log('Are these my buffers bro?', image.buffer)
-        if (typesAllowed.indexOf(image.mimetype) === -1) {
-          next(
-            ApiError.badRequest(
-              'Only images of type png and jpeg are allowed with a maximum size of 2mb.'
-            )
+    for (let image of req.files) {
+      if (typesAllowed.indexOf(image.mimetype) === -1) {
+        next(
+          ApiError.badRequest(
+            'Only images of type png and jpeg are allowed with a maximum size of 2mb.'
           )
-          return
-        }
+        )
+        return
       }
     }
 
-    const storage = new Storage({
-      keyFile: process.env.GCP_SECRET,
-    })
+    const imagesCompressed = await compressImages(req.files)
 
-    const bucket = storage.bucket(variables.GCP_BUCKET) //Name of the bucket
-
-    const uniqueIdentifier = v4()
-
-    const GcImages = await Promise.all(
-      req.files.map(async (image, index) => {
-        const newFile = image.buffer
-        let destFileName = `places/place-id-${uniqueIdentifier}/place_image${
-          index + 1
-        }.jpeg`
-
-        const fileHandle = bucket.file(destFileName) //where the file will be stored.
-
-        const [fileExists] = await fileHandle.exists()
-
-        if (!fileExists) {
-          await fileHandle.save(newFile)
-          return fileHandle.publicUrl()
-        }
-      })
-    )
+    const imagesUrls = await uploadImages('place', imagesCompressed)
 
     const newBody = JSON.parse(req.body.data)
-    newBody.images = GcImages
+    newBody.images = imagesUrls
     req.body = newBody
 
     next()
