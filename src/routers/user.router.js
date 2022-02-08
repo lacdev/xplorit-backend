@@ -16,21 +16,12 @@ import { validateUserLikes } from '../validators/userOpsValidators/getLikesFromU
 import { validateUserReviews } from '../validators/userOpsValidators/getReviewsFromUserValidation.js'
 import { validateUserPlaces } from '../validators/userOpsValidators/getPlacesFromUserValidation.js'
 import { validateUserRoutes } from '../validators/userOpsValidators/getRoutesFromUserValidation.js'
-
-//To be deprecated
-// import { updateUser } from '../controllers/usersControllers/updateUser.js'
-// import { validateUserUpdate } from '../validators/usersValidators/updateUserValidation.js'
-
-//User update operation imports
 import { validateUsernameUpdate } from '../validators/usersValidators/updateUsernameValidation.js'
 import { updateUsername } from '../controllers/usersControllers/updateUsername.js'
-
 import { validatePasswordUpdate } from '../validators/usersValidators/updatePasswordValidation.js'
 import { updatePassword } from '../controllers/usersControllers/updatePassword.js'
-
 import { validateAvatarUpdate } from '../validators/usersValidators/updateAvatarValidation.js'
 import { updateAvatar } from '../controllers/usersControllers/updateAvatar.js'
-
 import { validateCoverUpdate } from '../validators/usersValidators/updateCoverValidation.js'
 import { updateCover } from '../controllers/usersControllers/updateCover.js'
 
