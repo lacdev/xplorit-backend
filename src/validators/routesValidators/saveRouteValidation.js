@@ -36,7 +36,7 @@ const validateRouteCreation = async (req, res, next) => {
       .withMessage('Please provide a description for the place.')
       .isString()
       .withMessage('Name must be a string.')
-      .isLength({ max: 300 })
+      .isLength({ max: 1000 })
       .run(req)
 
     const tagsChain = body('tags')
