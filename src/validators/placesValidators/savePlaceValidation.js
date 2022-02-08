@@ -10,6 +10,9 @@ const { body, check, validationResult } = validator
 // // const { Storage } = Cloud
 // import { Buffer } from 'buffer'
 
+// import { variables } from '../../config/config.js'
+// import { Storage } from '@google-cloud/storage'
+
 // const storage = new Storage({ keyFilename: './src/config/key.json' })
 
 // const bucket = storage.bucket(variables.gcp_bucket)

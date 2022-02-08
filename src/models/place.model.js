@@ -58,7 +58,7 @@ const PlaceSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
-      minlength: 50,
+      maxlength: 1000,
     },
     address: {
       street: {

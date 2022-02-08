@@ -35,7 +35,7 @@ import { validateCoverUpdate } from '../validators/usersValidators/updateCoverVa
 import { updateCover } from '../controllers/usersControllers/updateCover.js'
 
 const router = express.Router()
-const maxSize = 0.2 * 1024 * 1024
+const maxSize = 0.5 * 1024 * 1024
 
 const upload = multer({
   storage: multer.memoryStorage(),
