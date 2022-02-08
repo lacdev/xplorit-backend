@@ -10,10 +10,12 @@ const updateCover = async (req, res, next) => {
     })
 
     if (updatedUser) {
+      const { coverPhoto } = updatedUser
       res.json({
         success: true,
-        description: 'Cover photo updated successfully',
         statusCode: 201,
+        description: 'Cover photo updated successfully',
+        data: coverPhoto,
       })
     }
   } catch (err) {

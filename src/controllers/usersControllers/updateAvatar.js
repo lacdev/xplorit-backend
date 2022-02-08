@@ -10,10 +10,13 @@ const updateAvatar = async (req, res, next) => {
     })
 
     if (updatedUser) {
+      const { avatar } = updatedUser
+
       res.json({
         success: true,
-        description: 'Avatar updated successfully',
         statusCode: 201,
+        description: 'Avatar updated successfully',
+        data: avatar,
       })
     }
   } catch (err) {

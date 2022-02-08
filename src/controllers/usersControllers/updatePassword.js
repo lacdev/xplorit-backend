@@ -16,7 +16,7 @@ const updatePassword = async (req, res, next) => {
       res.json({
         success: true,
         statusCode: 201,
-        description: 'User updated successfully',
+        description: 'User password updated successfully',
       })
     }
   } catch (err) {

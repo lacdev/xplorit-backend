@@ -10,10 +10,12 @@ const updateUsername = async (req, res, next) => {
     })
 
     if (updatedUser) {
+      const { username } = updatedUser
       res.json({
         success: true,
-        description: 'Username updated successfully',
         statusCode: 201,
+        description: 'Username updated successfully',
+        data: username,
       })
     }
   } catch (err) {
