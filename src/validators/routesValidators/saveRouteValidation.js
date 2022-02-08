@@ -42,6 +42,11 @@ const validateRouteCreation = async (req, res, next) => {
       .withMessage('Tags must be an array.')
       .run(req)
 
+    const tagsStringsChain = body('tags.*')
+      .isString()
+      .withMessage('tags inside tags array must be strings.')
+      .run(req)
+
     const fullRouteChain = body('fullRoute')
       .isArray()
       .withMessage('fullRoute must be an array.')
@@ -69,15 +74,25 @@ const validateRouteCreation = async (req, res, next) => {
       .withMessage('Images must be an array.')
       .run(req)
 
+    const imagesUrlsChain = body('images.*')
+      .exists()
+      .isURL()
+      .withMessage(
+        'Images array must contain an array of valid URL strings and a maximum of 6 items.'
+      )
+      .run(req)
+
     await Promise.all([
       ownerIdChain,
       nameChain,
       descriptionChain,
       tagsChain,
+      tagsStringsChain,
       fullRouteChain,
       pointChain,
       coordinatesChain,
       imagesChain,
+      imagesUrlsChain,
     ])
 
     const result = validationResult(req)

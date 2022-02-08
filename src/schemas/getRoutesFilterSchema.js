@@ -1,18 +1,31 @@
-const getRouteSchema = {
+const getRoutesSchema = {
   type: 'object',
   properties: {
-    upTo: { type: 'string' },
-    sortBy: { type: 'string' },
-    latest: { type: 'string' },
+    page: { type: 'String' },
+    limit: { type: 'String' },
+    sort: { type: 'string' },
+    latest: { type: 'String' },
     distance: { type: 'String' },
-  },
-  optionalProperties: {
-    name: { type: 'string' },
-    tags: { type: 'array' },
+    position: { type: 'array' },
+    radius: { type: 'String' },
+    name: { type: 'String' },
+    state: { type: 'String' },
+    city: { type: 'String' },
+    tags: { type: 'String' },
     isOpen: { type: 'boolean' },
-    mostLiked: { type: 'boolean' },
   },
-  required: ['upTo', 'sortBy', 'latest', 'distance'],
+  required: [
+    'sort',
+    'latest',
+    'distance',
+    'radius',
+    'limit',
+    'page',
+    'name',
+    'state',
+    'city',
+    'tags',
+  ],
 }
 
-export { getRouteSchema }
+export { getRoutesSchema }

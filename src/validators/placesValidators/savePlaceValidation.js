@@ -80,6 +80,11 @@ const validatePlaceCreation = async (req, res, next) => {
       .withMessage('Tags must be an array.')
       .run(req)
 
+    const tagsStringsChain = body('tags.*')
+      .isString()
+      .withMessage('tags inside tags array must be strings.')
+      .run(req)
+
     const scheduleStartChain = body('scheduleStart')
       .exists({ checkNull: true, checkFalsy: true })
       .isDate()
@@ -123,6 +128,14 @@ const validatePlaceCreation = async (req, res, next) => {
       .withMessage('Images must be an array.')
       .run(req)
 
+    const imagesUrlsChain = body('images.*')
+      .exists()
+      .isURL()
+      .withMessage(
+        'Images array must contain an array of valid URL strings and a maximum of 6 items.'
+      )
+      .run(req)
+
     await Promise.all([
       ownerIdChain,
       nameChain,
@@ -133,12 +146,14 @@ const validatePlaceCreation = async (req, res, next) => {
       stateChain,
       zipCodeChain,
       tagsChain,
+      tagsStringsChain,
       scheduleStartChain,
       scheduleFinishChain,
       locationChain,
       pointChain,
       coordenatesChain,
       imagesChain,
+      imagesUrlsChain,
     ])
 
     const result = validationResult(req)
