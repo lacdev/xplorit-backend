@@ -1,19 +1,10 @@
 import { postReviewToPlace } from '../../usecases/reviewUsecases/postReviewToPlace.js'
-import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 
 const saveReviewInPlace = async (req, res, next) => {
-  const { placeId } = req.params
-  const newReview = req.body
-  const { userId } = newReview
-
   try {
-    const foundUser = await getSingleUser(userId)
+    const { placeId } = req.params
+    const newReview = req.body
 
-    console.log('User found:', foundUser)
-    console.log('Place Id found:', placeId)
-
-    // newReview.avatar = foundUser.avatar
-    // newReview.username = foundUser.username
     newReview.placeId = placeId
 
     const savedReview = await postReviewToPlace(newReview)

@@ -1,9 +1,6 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 const { param, validationResult } = validator
-// body,
-// import sharp from 'sharp'
-
 import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { variables } from '../../config/config.js'
@@ -45,8 +42,6 @@ const validateAvatarUpdate = async (req, res, next) => {
       return
     }
 
-    console.log('is my file here?', req.file)
-
     const typesAllowed = ['image/jpeg', 'image/png']
 
     if (typesAllowed.indexOf(req.file.mimetype) === -1) {
@@ -56,14 +51,7 @@ const validateAvatarUpdate = async (req, res, next) => {
         )
       )
       return
-    } else {
-      console.log(
-        'your image is allowed sir, please continue.',
-        req.file.mimetype
-      )
     }
-
-    console.log(' is this my buffer bro?', req.file.buffer)
 
     const storage = new Storage({
       keyFile: process.env.GCP_SECRET,
@@ -81,15 +69,11 @@ const validateAvatarUpdate = async (req, res, next) => {
 
     const imageUrl = await uploadImage(req.file)
 
-    console.log('is this my new image uploaded?', imageUrl)
-
     const updatedBody = {
       avatar: imageUrl,
     }
 
     req.body = updatedBody
-
-    console.log('is this my new body?', req.body)
 
     next()
   } catch (err) {

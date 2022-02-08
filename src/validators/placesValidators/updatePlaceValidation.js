@@ -16,6 +16,7 @@ const validatePlaceUpdate = async (req, res, next) => {
       .run(req)
 
     const nameChain = body('name')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -28,6 +29,7 @@ const validatePlaceUpdate = async (req, res, next) => {
       .run(req)
 
     const descriptionChain = body('description')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -40,6 +42,7 @@ const validatePlaceUpdate = async (req, res, next) => {
       .run(req)
 
     const addressChain = check('address')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -47,6 +50,7 @@ const validatePlaceUpdate = async (req, res, next) => {
       .run(req)
 
     const streetChain = check('address.street')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -54,6 +58,7 @@ const validatePlaceUpdate = async (req, res, next) => {
       .run(req)
 
     const cityChain = check('address.city')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -61,6 +66,7 @@ const validatePlaceUpdate = async (req, res, next) => {
       .run(req)
 
     const stateChain = check('address.state')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -68,6 +74,7 @@ const validatePlaceUpdate = async (req, res, next) => {
       .run(req)
 
     const zipCodeChain = check('address.zipcode')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -76,23 +83,27 @@ const validatePlaceUpdate = async (req, res, next) => {
       .run(req)
 
     const tagsChain = body('tags')
+      .optional()
       .isArray()
       .withMessage('Tags must be an array.')
       .run(req)
 
     const scheduleStartChain = body('scheduleStart')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .isDate()
       .withMessage('Schedule start is not a valid date.')
       .run(req)
 
     const scheduleFinishChain = body('scheduleFinish')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .isDate()
       .withMessage('Schedule finish is not a valid date.')
       .run(req)
 
     const latitudeChain = check('ubication.lat')
+      .optional()
       .not()
       .isEmpty()
       .withMessage('please provide a latitude')
@@ -101,18 +112,13 @@ const validatePlaceUpdate = async (req, res, next) => {
       .run(req)
 
     const longitudeChain = check('ubication.long')
+      .optional()
       .not()
       .isEmpty()
       .withMessage('please provide a longitude')
       .isNumeric()
       .withMessage('Longitude is not valid.')
       .run(req)
-
-    // const imagesChain = body('images')
-    //   .exists({ checkNull: true, checkFalsy: true })
-    //   .isArray()
-    //   .withMessage('Images must be an array.')
-    //   .run(req)
 
     await Promise.all([
       placeIdChain,

@@ -4,8 +4,6 @@ const savePlace = async (req, res, next) => {
   try {
     const newPlace = req.body
 
-    // console.log('new place body???', newPlace)
-
     const savedPlace = await createSinglePlace(newPlace)
 
     if (savedPlace) {

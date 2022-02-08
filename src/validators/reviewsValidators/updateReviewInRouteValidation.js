@@ -26,6 +26,7 @@ const validateReviewUpdateInRoute = async (req, res, next) => {
       .run(req)
 
     const commentChain = body('comment')
+      .optional()
       .exists({ checkFalsy: true, checkNull: true })
       .withMessage('Please provide a valid comment update for your review.')
       .not()
@@ -36,6 +37,7 @@ const validateReviewUpdateInRoute = async (req, res, next) => {
       .run(req)
 
     const starsChain = body('stars')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()

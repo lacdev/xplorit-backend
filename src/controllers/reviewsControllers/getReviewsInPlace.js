@@ -14,8 +14,6 @@ const getReviewsInPlace = async (req, res, next) => {
       limit,
     })
 
-    console.log('Reviews in place found????', allReviewsInPlace.reviews)
-
     if (isEmptyArray(allReviewsInPlace.reviews)) {
       next(ApiError.notFound('No reviews for this place were found.'))
       return

@@ -74,8 +74,6 @@ const validateSaveReviewInRoute = async (req, res, next) => {
       routeId: routeId,
     })
 
-    console.log('The review exists? :', reviewExists)
-
     if (!isEmptyArray(reviewExists)) {
       next(ApiError.badRequest('You can only post one review per route.'))
       return

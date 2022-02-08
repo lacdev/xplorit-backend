@@ -9,8 +9,6 @@ const validateRouteCreation = async (req, res, next) => {
     const newRoute = req.body
 
     const { ownerId } = newRoute
-    console.log('owner', ownerId)
-    console.log('new Route:', newRoute)
 
     const ownerIdChain = body('ownerId')
       .exists({ checkNull: true, checkFalsy: true })

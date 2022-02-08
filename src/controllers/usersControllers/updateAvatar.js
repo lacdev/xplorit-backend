@@ -5,8 +5,6 @@ const updateAvatar = async (req, res, next) => {
     const { userId } = req.params
     const { avatar } = req.body
 
-    console.log('Is my controller getting the avatar in the body?', avatar)
-
     const updatedUser = await updateSingleUser(userId, {
       avatar: avatar,
     })

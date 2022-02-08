@@ -10,7 +10,6 @@ const validateGetPlaceQuery = (req, res, next) => {
     next(ApiError.badRequest(ajv.errors))
     return
   }
-
   next()
 }
 
