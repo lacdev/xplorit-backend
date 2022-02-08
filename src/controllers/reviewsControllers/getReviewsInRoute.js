@@ -14,8 +14,6 @@ const getReviewsInRoute = async (req, res, next) => {
       limit,
     })
 
-    console.log('Reviews in route found????', allReviewsInRoute.reviews)
-
     if (isEmptyArray(allReviewsInRoute.reviews)) {
       next(ApiError.notFound('No reviews for this route were found.'))
       return

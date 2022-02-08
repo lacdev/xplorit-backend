@@ -337,3 +337,75 @@
 //   storage: multer.memoryStorage(),
 //   limits: { fileSize: maxSize },
 // }).array('images', 6)
+
+// const handleImagesUpload = async (req, res, next) => {
+//     try {
+//       if (!req.body.images) {
+//         next(ApiError.badRequest('No images found to be uploaded.'))
+//       }
+
+//       const bucket = storage.bucket(variables.GCP_BUCKET)
+
+//       const uploadImages = async (id, images) => {
+//         try {
+//           const unresolvedPromises = images.map((image, index) => {
+//             let matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/)
+
+//             if (matches.length !== 3) {
+//               return new Error('Invalid input string')
+//             }
+
+//             const buffer = Buffer.from(matches[2], 'base64')
+
+//             const file = bucket.file(`places/${id}/image${index}.jpg`)
+
+//             file
+//               .save(buffer)
+//               .then(() => {
+//                 let content = file.publicUrl()
+//                 return content
+//               })
+//               .catch((e) => console.error(e))
+//           })
+
+//           return await Promise.all(unresolvedPromises)
+//           // return await Promise.all(results)
+//         } catch (e) {
+//           console.error(e)
+//         }
+//       }
+
+//       // console.log('Log the body pls', req.body)
+//       // const buffersArray = []
+
+//       const { ownerId } = req.body
+
+//       const newImages = await uploadImages(ownerId, req.body.images)
+
+//       req.body.images = newImages
+
+//       // const publicUrl = `https://storage.googleapis.com/xplorit-images/${file}`
+//       // buffersArray.push(content)
+//       // console.log('Your files are available at:', buffersArray)
+
+//       console.log('new images???', newImages)
+
+//       // .then(async () => {
+//       //   const newImages = await mutateImagesArray(
+//       //     req.body.images,
+//       //     buffersArray
+//       //   )
+//       //   req.body.images = newImages
+//       // })
+
+//       // const newArray = await mutateImagesArray(req.body.images, buffersArray)
+
+//       // req.body.images = newArray
+
+//       next()
+//     } catch (e) {
+//       next({})
+//     }
+//   }
+
+//   export { handleImagesUpload }

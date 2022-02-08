@@ -5,8 +5,6 @@ const updateCover = async (req, res, next) => {
     const { userId } = req.params
     const { cover } = req.body
 
-    console.log('Is my controller getting the cover in the body?', cover)
-
     const updatedUser = await updateSingleUser(userId, {
       coverPhoto: cover,
     })

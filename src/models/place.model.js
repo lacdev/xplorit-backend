@@ -60,6 +60,14 @@ const PlaceSchema = new mongoose.Schema(
       required: true,
       maxlength: 1000,
     },
+    average: {
+      type: Number,
+      default: 0,
+    },
+    likes: {
+      type: Number,
+      default: 0,
+    },
     address: {
       street: {
         type: String,

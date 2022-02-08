@@ -16,6 +16,7 @@ const validateRouteUpdate = async (req, res, next) => {
       .run(req)
 
     const nameChain = body('name')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -28,6 +29,7 @@ const validateRouteUpdate = async (req, res, next) => {
       .run(req)
 
     const descriptionChain = body('description')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -38,12 +40,6 @@ const validateRouteUpdate = async (req, res, next) => {
       .trim()
       .escape()
       .run(req)
-
-    // const imagesChain = body('images')
-    //   .exists({ checkNull: true, checkFalsy: true })
-    //   .isArray()
-    //   .withMessage('Images must be an array.')
-    //   .run(req)
 
     await Promise.all([routeIdChain, nameChain, descriptionChain])
 

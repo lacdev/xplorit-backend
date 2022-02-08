@@ -3,9 +3,9 @@ import { ApiError } from '../../errors/ApiError.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getLikesByUser = async (req, res, next) => {
-  const { userId } = req.params
-
   try {
+    const { userId } = req.params
+
     const likesByUser = await getLikesMadeByUser(userId)
 
     if (isEmptyArray(likesByUser)) {
