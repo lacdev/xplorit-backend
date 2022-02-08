@@ -1,3 +1,4 @@
+import { ApiError } from '../../errors/ApiError.js'
 import { createSinglePlace } from '../../usecases/placeUsecases/createSinglePlace.js'
 
 const savePlace = async (req, res, next) => {
@@ -6,13 +7,19 @@ const savePlace = async (req, res, next) => {
 
     const savedPlace = await createSinglePlace(newPlace)
 
-    if (savedPlace) {
-      res.json({
-        message: 'success',
-        statusCode: 200,
-        description: 'Place created successfully',
-      })
+    if (!savedPlace) {
+      next(
+        ApiError.internalError(
+          'Something bad happened while uploading the place.'
+        )
+      )
     }
+
+    res.json({
+      message: 'success',
+      statusCode: 200,
+      description: 'Place created successfully',
+    })
   } catch (err) {
     console.error(err)
     next({})
