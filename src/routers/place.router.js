@@ -1,4 +1,6 @@
 import express from 'express'
+import multer from 'multer'
+
 import { getPlaces } from '../controllers/placesControllers/getPlaces.js'
 import { getPlace } from '../controllers/placesControllers/getPlace.js'
 import { savePlace } from '../controllers/placesControllers/savePlace.js'
@@ -22,14 +24,28 @@ import { validateReviewDeleteInPlace } from '../validators/reviewsValidators/del
 import { getLikesFromPlaceValidation } from '../validators/likesValidators/getLikesInPlaceValidation.js'
 import { validateLikeInPlace } from '../validators/likesValidators/saveLikeInPlaceValidation.js'
 import { validateLikeDeletionInPlace } from '../validators/likesValidators/deleteLikeInPlaceValidation.js'
+import { validatePlaceImages } from '../validators/placesValidators/placeImagesValidation.js'
 // import { validateGetPlaceQuery } from '../validators/placesValidators/getPlaceQueryValidator.js'
 
 const router = express.Router()
 
+const maxSize = 2 * 1024 * 1024
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: maxSize },
+})
+
 //Places controllers
 router.get('/', getPlaces)
 router.get('/:placeId', validateGetPlace, getPlace)
-router.post('/', validatePlaceCreation, savePlace)
+router.post(
+  '/',
+  upload.array('images', 6),
+  validatePlaceImages,
+  validatePlaceCreation,
+  savePlace
+)
 router.patch('/:placeId', validatePlaceUpdate, updatePlace)
 router.delete('/:placeId', validatePlaceDeletion, deletePlace)
 
