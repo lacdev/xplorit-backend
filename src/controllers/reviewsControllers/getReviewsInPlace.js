@@ -14,8 +14,6 @@ const getReviewsInPlace = async (req, res, next) => {
       limit,
     })
 
-    console.log('Reviews in place found????', allReviewsInPlace.reviews)
-
     if (isEmptyArray(allReviewsInPlace.reviews)) {
       next(ApiError.notFound('No reviews for this place were found.'))
       return
@@ -27,9 +25,17 @@ const getReviewsInPlace = async (req, res, next) => {
       data: allReviewsInPlace,
     })
   } catch (err) {
-    console.log(err)
-
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

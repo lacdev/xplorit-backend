@@ -1,19 +1,11 @@
 import { postReviewToPlace } from '../../usecases/reviewUsecases/postReviewToPlace.js'
-import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const saveReviewInPlace = async (req, res, next) => {
-  const { placeId } = req.params
-  const newReview = req.body
-  const { userId } = newReview
-
   try {
-    const foundUser = await getSingleUser(userId)
+    const { placeId } = req.params
+    const newReview = req.body
 
-    console.log('User found:', foundUser)
-    console.log('Place Id found:', placeId)
-
-    // newReview.avatar = foundUser.avatar
-    // newReview.username = foundUser.username
     newReview.placeId = placeId
 
     const savedReview = await postReviewToPlace(newReview)
@@ -22,11 +14,21 @@ const saveReviewInPlace = async (req, res, next) => {
       res.json({
         description: 'Review created in the place successfully',
         statusCode: 200,
+        data: savedReview,
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

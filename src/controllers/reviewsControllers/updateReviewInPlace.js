@@ -1,4 +1,5 @@
 import { updateReviewFromPlace } from '../../usecases/reviewUsecases/updateReviewFromPlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const updateReviewInPlace = async (req, res, next) => {
   const { reviewId } = req.params
@@ -10,11 +11,21 @@ const updateReviewInPlace = async (req, res, next) => {
       res.json({
         message: 'Review updated successfully',
         statusCode: 200,
+        data: updatedReview,
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

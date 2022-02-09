@@ -3,9 +3,9 @@ import { ApiError } from '../../errors/ApiError.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getLikesByUser = async (req, res, next) => {
-  const { userId } = req.params
-
   try {
+    const { userId } = req.params
+
     const likesByUser = await getLikesMadeByUser(userId)
 
     if (isEmptyArray(likesByUser)) {
@@ -19,8 +19,17 @@ const getLikesByUser = async (req, res, next) => {
       data: likesByUser,
     })
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

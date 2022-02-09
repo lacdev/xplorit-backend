@@ -1,4 +1,6 @@
 import express from 'express'
+import multer from 'multer'
+
 import { getRoutes } from '../controllers/routesControllers/getRoutes.js'
 import { getRoute } from '../controllers/routesControllers/getRoute.js'
 import { saveRoute } from '../controllers/routesControllers/saveRoute.js'
@@ -22,14 +24,28 @@ import { validateReviewDeleteInRoute } from '../validators/reviewsValidators/del
 import { getLikesFromRouteValidation } from '../validators/likesValidators/getLikesInRouteValidation.js'
 import { validateLikeInRoute } from '../validators/likesValidators/saveLikeInRouteValidation.js'
 import { validateLikeDeletionInRoute } from '../validators/likesValidators/deleteLikeInRouteValidation.js'
+import { validateRouteImages } from '../validators/routesValidators/routeImagesValidation.js'
 // import { validateGetRouteQuery } from '../validators/routesValidators/getRouteQueryValidator.js'
 
 const router = express.Router()
 
+const maxSize = 2 * 1024 * 1024
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: maxSize },
+})
+
 //Routes controller
 router.get('/', getRoutes)
 router.get('/:routeId', validateGetRoute, getRoute)
-router.post('/', validateRouteCreation, saveRoute)
+router.post(
+  '/',
+  upload.array('images', 6),
+  validateRouteImages,
+  validateRouteCreation,
+  saveRoute
+)
 router.patch('/:routeId', validateRouteUpdate, updateRoute)
 router.delete('/:routeId', validateRouteDeletion, deleteRoute)
 
@@ -50,6 +66,10 @@ router.delete(
 //Likes in routes controllers
 router.get('/:routeId/likes', getLikesFromRouteValidation, getLikesInRoute)
 router.post('/:routeId/likes', validateLikeInRoute, saveLikeInRoute)
-router.delete('/:routeId/likes/:likeId', validateLikeDeletionInRoute, deleteLikeInRoute)
+router.delete(
+  '/:routeId/likes/:likeId',
+  validateLikeDeletionInRoute,
+  deleteLikeInRoute
+)
 
 export { router as routesRouter }

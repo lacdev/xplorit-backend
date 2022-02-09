@@ -1,11 +1,6 @@
 import { User } from '../../models/user.model.js'
 
-const searchForUserBeforeCreation = async (object) => {
-  try {
-    return await User.find(object, { lean: true })
-  } catch (error) {
-    console.error(error)
-  }
-}
+const searchForUserBeforeCreation = async (object) =>
+  await User.find(object, { lean: true })
 
 export { searchForUserBeforeCreation }

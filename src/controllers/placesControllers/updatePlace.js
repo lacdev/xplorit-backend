@@ -1,4 +1,5 @@
 import { updateSinglePlace } from '../../usecases/placeUsecases/updateSinglePlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const updatePlace = async (req, res, next) => {
   try {
@@ -12,11 +13,21 @@ const updatePlace = async (req, res, next) => {
         message: 'success',
         statusCode: 200,
         description: 'Place updated successfully',
+        data: updatedPlace,
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

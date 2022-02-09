@@ -1,4 +1,5 @@
 import { deleteLikeFromRoute } from '../../usecases/likeUsecases/deleteLikeFromRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const deleteLikeInRoute = async (req, res, next) => {
   const { likeId } = req.params
@@ -13,8 +14,17 @@ const deleteLikeInRoute = async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

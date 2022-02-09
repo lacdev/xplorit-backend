@@ -58,7 +58,15 @@ const PlaceSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
-      minlength: 50,
+      maxlength: 1000,
+    },
+    average: {
+      type: Number,
+      default: 0,
+    },
+    likes: {
+      type: Number,
+      default: 0,
     },
     address: {
       street: {

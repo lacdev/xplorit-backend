@@ -39,6 +39,14 @@ const RouteSchema = new mongoose.Schema(
       required: true,
       minlength: 10,
     },
+    average: {
+      type: Number,
+      default: 0,
+    },
+    likes: {
+      type: Number,
+      default: 0,
+    },
     tags: {
       type: [
         {

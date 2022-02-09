@@ -1,4 +1,5 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getUser = async (req, res, next) => {
   try {
@@ -15,8 +16,17 @@ const getUser = async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

@@ -74,8 +74,6 @@ const validateSaveReviewInPlace = async (req, res, next) => {
       placeId: placeId,
     })
 
-    console.log('The review exists? :', reviewExists)
-
     if (!isEmptyArray(reviewExists)) {
       next(ApiError.badRequest('You can only post one review per place.'))
       return

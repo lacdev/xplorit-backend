@@ -1,4 +1,5 @@
 import { updateSingleRoute } from '../../usecases/routeUsecases/updateSingleRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const updateRoute = async (req, res, next) => {
   try {
@@ -15,11 +16,21 @@ const updateRoute = async (req, res, next) => {
         message: 'success',
         statusCode: 200,
         description: 'Updated route successfully',
+        data: updatedRoute,
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

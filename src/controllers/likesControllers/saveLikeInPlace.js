@@ -1,4 +1,5 @@
 import { postLikeToPlace } from '../../usecases/likeUsecases/postLikeToPlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const saveLikeInPlace = async (req, res, next) => {
   const { placeId } = req.params
@@ -18,8 +19,17 @@ const saveLikeInPlace = async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 
