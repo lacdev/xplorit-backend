@@ -1,4 +1,5 @@
 import { updateSingleUser } from '../../usecases/userUsecases/updateSingleUser.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const updateUsername = async (req, res, next) => {
   try {
@@ -19,8 +20,17 @@ const updateUsername = async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

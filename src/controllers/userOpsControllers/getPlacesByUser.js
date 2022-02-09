@@ -19,8 +19,17 @@ const getPlacesByUser = async (req, res, next) => {
       data: placesByUser,
     })
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

@@ -25,9 +25,17 @@ const getReviewsInPlace = async (req, res, next) => {
       data: allReviewsInPlace,
     })
   } catch (err) {
-    console.log(err)
-
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

@@ -8,30 +8,6 @@ const savePlace = async (req, res, next) => {
     const savedPlace = await createSinglePlace(newPlace)
 
     if (savedPlace) {
-      const {
-        name,
-        description,
-        tags,
-        average,
-        likes,
-        scheduleStart,
-        scheduleFinish,
-        createdAt,
-        images,
-      } = savedPlace
-
-      const successfullyUpdated = {
-        name,
-        description,
-        tags,
-        average,
-        likes,
-        scheduleStart,
-        scheduleFinish,
-        createdAt,
-        images,
-      }
-
       res.json({
         message: 'success',
         statusCode: 200,

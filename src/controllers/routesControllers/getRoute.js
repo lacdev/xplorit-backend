@@ -1,4 +1,5 @@
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const getRoute = async (req, res, next) => {
   const { routeId } = req.params
@@ -14,8 +15,17 @@ const getRoute = async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 
