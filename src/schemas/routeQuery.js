@@ -11,7 +11,7 @@ const routeQuerySchema = {
     name: { type: 'string' }, //name of a particular place if any.
     state: { type: 'string' }, //search for routes in a particular state.
     city: { type: 'string' }, //search for routes in a particular city.
-    tags: { type: 'string' }, //search by tags. If multiple tags are given, send them in the same query
+    tags: { type: 'array' }, //search by tags. If multiple tags are given, send them in the same query
     open: { type: 'boolean' }, //search for routes opened only, false by default.
   },
 }
