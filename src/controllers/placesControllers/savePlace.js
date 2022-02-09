@@ -12,6 +12,7 @@ const savePlace = async (req, res, next) => {
         message: 'success',
         statusCode: 200,
         description: 'Place created successfully',
+        data: savedPlace,
       })
     }
   } catch (err) {

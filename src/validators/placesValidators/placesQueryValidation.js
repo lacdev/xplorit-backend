@@ -4,7 +4,7 @@ import Ajv from 'ajv'
 
 const ajv = new Ajv()
 
-const validatePlacesQuery = (req, res, next) => {
+const validatePlacesQuery = async (req, res, next) => {
   try {
     const valid = ajv.validate(placeQuerySchema, req.query)
 

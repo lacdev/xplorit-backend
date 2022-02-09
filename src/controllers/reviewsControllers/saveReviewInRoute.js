@@ -14,6 +14,7 @@ const saveReviewInRoute = async (req, res, next) => {
       res.json({
         description: 'Review created in the route successfully',
         statusCode: 200,
+        data: savedReview,
       })
     }
   } catch (err) {

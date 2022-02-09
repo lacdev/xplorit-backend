@@ -10,6 +10,7 @@ const getUsers = async (req, res, next) => {
 
   //Filters object pending
   //Example getAllusers({filters}, {query})
+  //tags[]=aire libre&tags[]=entretenimiento&tags[]=playa&tags[]=nocturno to send array in query
 
   try {
     const allUsers = await getAllUsers({ page, limit })

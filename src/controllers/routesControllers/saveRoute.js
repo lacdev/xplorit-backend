@@ -7,19 +7,14 @@ const saveRoute = async (req, res, next) => {
   try {
     const savedRoute = await createRoute(newRoute)
 
-    if (!savedRoute) {
-      next(
-        ApiError.internalError(
-          'Something bad happened while uploading the route.'
-        )
-      )
+    if (savedRoute) {
+      res.json({
+        message: 'success',
+        statusCode: 200,
+        description: 'Route created successfully',
+        data: savedRoute,
+      })
     }
-
-    res.json({
-      message: 'success',
-      statusCode: 200,
-      description: 'Route created successfully',
-    })
   } catch (err) {
     if (err.name === 'ValidationError') {
       next(

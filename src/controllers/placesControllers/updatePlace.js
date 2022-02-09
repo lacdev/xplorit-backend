@@ -13,6 +13,7 @@ const updatePlace = async (req, res, next) => {
         message: 'success',
         statusCode: 200,
         description: 'Place updated successfully',
+        data: updatedPlace,
       })
     }
   } catch (err) {
