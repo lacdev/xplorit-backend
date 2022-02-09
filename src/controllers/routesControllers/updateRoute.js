@@ -16,6 +16,7 @@ const updateRoute = async (req, res, next) => {
         message: 'success',
         statusCode: 200,
         description: 'Updated route successfully',
+        data: updatedRoute,
       })
     }
   } catch (err) {

@@ -14,6 +14,7 @@ const saveReviewInPlace = async (req, res, next) => {
       res.json({
         description: 'Review created in the place successfully',
         statusCode: 200,
+        data: savedReview,
       })
     }
   } catch (err) {

@@ -21,18 +21,12 @@ const validatePlaceImages = async (req, res, next) => {
       }
     }
 
-    // const imagesCompressed = await compressImages(req.files)
+    const imagesCompressed = await compressImages(req.files)
 
-    // const imagesUrls = await uploadImages('place', imagesCompressed)
-
-    // const newBody = JSON.parse(req.body.data)
-    // newBody.images = imagesUrls
-    // req.body = newBody
-
-    const undefinedImages = [undefined, undefined]
+    const imagesUrls = await uploadImages('place', imagesCompressed)
 
     const newBody = JSON.parse(req.body.data)
-    newBody.images = undefinedImages
+    newBody.images = imagesUrls
     req.body = newBody
 
     next()

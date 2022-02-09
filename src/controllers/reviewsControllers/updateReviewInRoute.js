@@ -11,6 +11,7 @@ const updateReviewInRoute = async (req, res, next) => {
       res.json({
         message: 'Review updated successfully',
         statusCode: 200,
+        data: updatedReview,
       })
     }
   } catch (err) {
