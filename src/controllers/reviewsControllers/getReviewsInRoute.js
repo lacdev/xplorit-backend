@@ -15,7 +15,12 @@ const getReviewsInRoute = async (req, res, next) => {
     })
 
     if (isEmptyArray(allReviewsInRoute.reviews)) {
-      next(ApiError.notFound('No reviews for this route were found.'))
+      next(
+        ApiError.notFound({
+          message: 'No reviews for this route were found.',
+          data: allReviewsInRoute.reviews,
+        })
+      )
       return
     }
 

@@ -8,7 +8,12 @@ const getLikesInPlace = async (req, res, next) => {
     const allLikesInPlace = await getLikesFromPlace({ placeId: placeId })
 
     if (isEmptyArray(allLikesInPlace)) {
-      next(ApiError.notFound('No likes for this place were found.'))
+      next(
+        ApiError.notFound({
+          message: 'No likes for this place were found.',
+          data: allLikesInPlace,
+        })
+      )
       return
     }
 

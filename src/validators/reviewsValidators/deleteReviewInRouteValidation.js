@@ -33,9 +33,9 @@ const validateReviewDeleteInRoute = async (req, res, next) => {
       return
     }
 
-    const placeExists = await getSingleRoute(routeId)
+    const routeExists = await getSingleRoute(routeId)
 
-    if (isEmptyArray(placeExists)) {
+    if (!routeExists) {
       next(ApiError.badRequest('Route not found.'))
       return
     }

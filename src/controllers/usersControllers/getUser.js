@@ -5,7 +5,9 @@ const getUser = async (req, res, next) => {
   try {
     const { userId } = req.params
 
-    const foundUser = await getSingleUser(userId)
+    const foundUser = await getSingleUser({
+      _id: userId,
+    })
 
     if (foundUser) {
       res.json({

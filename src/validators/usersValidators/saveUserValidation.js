@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
-import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
-import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 const { body, validationResult } = validator
 
 const validateUserSignup = async (req, res, next) => {
@@ -76,19 +74,19 @@ const validateUserSignup = async (req, res, next) => {
       return
     }
 
-    const userNameExists = await searchForUserBeforeCreation({
+    const usernameExists = await getSingleUser({
       username: username,
     })
 
-    const emailExists = await searchForUserBeforeCreation({ email: email })
-
-    if (!isEmptyArray(userNameExists)) {
-      next(ApiError.badRequest('Username already registered.'))
+    if (usernameExists) {
+      next(ApiError.badRequest('Username or email already registered.'))
       return
     }
 
-    if (!isEmptyArray(emailExists)) {
-      next(ApiError.badRequest('Email already registered.'))
+    const emailExists = await getSingleUser({ email: email })
+
+    if (emailExists) {
+      next(ApiError.badRequest('Username or email already registered.'))
       return
     }
 

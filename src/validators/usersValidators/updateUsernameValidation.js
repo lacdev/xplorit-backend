@@ -1,12 +1,12 @@
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 const { param, body, validationResult } = validator
-import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
-import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const validateUsernameUpdate = async (req, res, next) => {
   try {
     const { userId } = req.params
+    const { username } = req.body
 
     const userIDChain = param('userId')
       .exists()
@@ -37,12 +37,21 @@ const validateUsernameUpdate = async (req, res, next) => {
       return
     }
 
-    const userNameExists = await searchForUserBeforeCreation({
+    const userExists = await getSingleUser({
       _id: userId,
     })
 
-    if (isEmptyArray(userNameExists)) {
-      next(ApiError.badRequest('User not found.'))
+    if (!userExists) {
+      next(ApiError.notFound('User not found.'))
+      return
+    }
+
+    const usernameExists = await getSingleUser({
+      username: username,
+    })
+
+    if (usernameExists) {
+      next(ApiError.badRequest('Username already in use.'))
       return
     }
 

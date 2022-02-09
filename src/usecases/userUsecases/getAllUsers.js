@@ -23,14 +23,3 @@ const getAllUsers = async (query) => {
 }
 
 export { getAllUsers }
-
-// const getAllUsers = async () => {
-//   try {
-//     return await User.find()
-//       .select('username avatar coverPhoto')
-//       .find({ hashedPassword: { $ne: null } })
-//       .setOptions({ sanitizeFilter: true })
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }

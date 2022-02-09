@@ -1,7 +1,6 @@
-import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
-import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
-import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
+import { ApiError } from '../../errors/ApiError.js'
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 const { body, check, validationResult } = validator
 
 const validatePlaceCreation = async (req, res, next) => {
@@ -128,13 +127,13 @@ const validatePlaceCreation = async (req, res, next) => {
       .withMessage('Images must be an array.')
       .run(req)
 
-    // const imagesUrlsChain = body('images.*')
-    //   .exists()
-    //   .isURL()
-    //   .withMessage(
-    //     'Images array must contain an array of valid URL strings and a maximum of 6 items.'
-    //   )
-    //   .run(req)
+    const imagesUrlsChain = body('images.*')
+      .exists()
+      .isURL()
+      .withMessage(
+        'Images array must contain an array of valid URL strings and a maximum of 6 items.'
+      )
+      .run(req)
 
     await Promise.all([
       ownerIdChain,
@@ -153,7 +152,7 @@ const validatePlaceCreation = async (req, res, next) => {
       pointChain,
       coordenatesChain,
       imagesChain,
-      // imagesUrlsChain,
+      imagesUrlsChain,
     ])
 
     const result = validationResult(req)
@@ -165,11 +164,11 @@ const validatePlaceCreation = async (req, res, next) => {
       return
     }
 
-    const userNameExists = await searchForUserBeforeCreation({
+    const userNameExists = await getSingleUser({
       _id: ownerId,
     })
 
-    if (isEmptyArray(userNameExists)) {
+    if (!userNameExists) {
       next(ApiError.badRequest('User not found.'))
       return
     }

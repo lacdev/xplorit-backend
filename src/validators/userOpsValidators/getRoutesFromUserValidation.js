@@ -1,6 +1,5 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
-import { isEmptyObject } from '../../utils/checkForEmpyObject.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 const { param, validationResult } = validator
 
@@ -26,9 +25,11 @@ const validateUserRoutes = async (req, res, next) => {
       return
     }
 
-    const foundUser = await getSingleUser(userId)
+    const userExists = await getSingleUser({
+      _id: userId,
+    })
 
-    if (isEmptyObject(foundUser)) {
+    if (!userExists) {
       next(ApiError.notFound('User not found.'))
       return
     }

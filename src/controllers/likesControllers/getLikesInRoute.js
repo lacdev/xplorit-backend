@@ -8,7 +8,12 @@ const getLikesInRoute = async (req, res, next) => {
     const allLikesInRoute = await getLikesFromRoute({ routeId: routeId })
 
     if (isEmptyArray(allLikesInRoute)) {
-      next(ApiError.notFound('No likes for this route were found.'))
+      next(
+        ApiError.notFound({
+          message: 'No likes for this place were found.',
+          data: allLikesInRoute,
+        })
+      )
       return
     }
 

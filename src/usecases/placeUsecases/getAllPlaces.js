@@ -21,12 +21,4 @@ const getAllPlaces = async (query) => {
   }
 }
 
-// const getAllPlaces = async () => {
-//   try {
-//     return await Place.find()
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
-
 export { getAllPlaces }
