@@ -1,10 +1,5 @@
 import { Route } from '../../models/route.model.js'
 
-const getRoutesCreatedByUser = async (id) => {
-  try {
-    return await Route.find({ ownerId: id })
-  } catch (error) {
-    console.error(error)
-  }
-}
+const getRoutesCreatedByUser = async (id) => await Route.find({ ownerId: id })
+
 export { getRoutesCreatedByUser }

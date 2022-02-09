@@ -5,13 +5,15 @@ import Ajv from 'ajv'
 const ajv = new Ajv()
 
 const validatePlacesQuery = (req, res, next) => {
-  const valid = ajv.validate(placeQuerySchema, req.query)
+  try {
+    const valid = ajv.validate(placeQuerySchema, req.query)
 
-  if (!valid) {
-    next(ApiError.badRequest(ajv.errors))
-    return
+    if (!valid) next(ApiError.badRequest(ajv.errors))
+
+    next()
+  } catch (e) {
+    next({})
   }
-  next()
 }
 
 export { validatePlacesQuery }

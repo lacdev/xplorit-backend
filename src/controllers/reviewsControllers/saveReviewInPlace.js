@@ -1,4 +1,5 @@
 import { postReviewToPlace } from '../../usecases/reviewUsecases/postReviewToPlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const saveReviewInPlace = async (req, res, next) => {
   try {
@@ -16,8 +17,17 @@ const saveReviewInPlace = async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

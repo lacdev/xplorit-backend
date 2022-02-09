@@ -1,4 +1,5 @@
 import { createSingleUser } from '../../usecases/userUsecases/createSingleUser.js'
+import { ApiError } from '../../errors/ApiError.js'
 import { hashPassword } from '../../lib/bcrypt.js'
 import gravatar from 'gravatar'
 
@@ -33,8 +34,17 @@ const saveUser = async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

@@ -1,4 +1,5 @@
 import { postLikeToRoute } from '../../usecases/likeUsecases/postLikeToRoute.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const saveLikeInRoute = async (req, res, next) => {
   const { routeId } = req.params
@@ -18,8 +19,17 @@ const saveLikeInRoute = async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

@@ -1,4 +1,5 @@
 import { deleteReviewFromPlace } from '../../usecases/reviewUsecases/deleteReviewFromPlace.js'
+import { ApiError } from '../../errors/ApiError.js'
 
 const deleteReviewInPlace = async (req, res, next) => {
   const { reviewId } = req.params
@@ -14,8 +15,17 @@ const deleteReviewInPlace = async (req, res, next) => {
       })
     }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

@@ -3,6 +3,8 @@ import { ApiError } from '../../errors/ApiError.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getUsers = async (req, res, next) => {
+  console.log('Is this my query?', req.query)
+
   let page = parseInt(req.query.page) || 1
   let limit = parseInt(req.query.limit) || 10
 
@@ -21,8 +23,17 @@ const getUsers = async (req, res, next) => {
       data: allUsers,
     })
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 
