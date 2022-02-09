@@ -7,22 +7,49 @@ const savePlace = async (req, res, next) => {
 
     const savedPlace = await createSinglePlace(newPlace)
 
-    if (!savedPlace) {
-      next(
-        ApiError.internalError(
-          'Something bad happened while uploading the place.'
-        )
-      )
-    }
+    if (savedPlace) {
+      const {
+        name,
+        description,
+        tags,
+        average,
+        likes,
+        scheduleStart,
+        scheduleFinish,
+        createdAt,
+        images,
+      } = savedPlace
 
-    res.json({
-      message: 'success',
-      statusCode: 200,
-      description: 'Place created successfully',
-    })
+      const successfullyUpdated = {
+        name,
+        description,
+        tags,
+        average,
+        likes,
+        scheduleStart,
+        scheduleFinish,
+        createdAt,
+        images,
+      }
+
+      res.json({
+        message: 'success',
+        statusCode: 200,
+        description: 'Place created successfully',
+      })
+    }
   } catch (err) {
-    console.error(err)
-    next({})
+    if (err.name === 'ValidationError') {
+      next(
+        ApiError.badRequest({
+          message: 'Validation Error',
+          errors: err,
+        })
+      )
+      return
+    } else {
+      next({})
+    }
   }
 }
 

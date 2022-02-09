@@ -1,11 +1,5 @@
 import { User } from '../../models/user.model.js'
 
-const deleteSingleUser = async (id) => {
-  try {
-    return await User.findByIdAndDelete(id)
-  } catch (error) {
-    console.error(error)
-  }
-}
+const deleteSingleUser = async (id) => await User.findByIdAndDelete(id)
 
 export { deleteSingleUser }
