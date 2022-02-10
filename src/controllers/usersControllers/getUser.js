@@ -14,7 +14,7 @@ const getUser = async (req, res, next) => {
         message: 'success',
         description: 'User found',
         statusCode: 200,
-        foundUser,
+        data: foundUser,
       })
     }
   } catch (err) {

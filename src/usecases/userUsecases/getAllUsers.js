@@ -1,22 +1,27 @@
 import { User } from '../../models/user.model.js'
 
-const getAllUsers = async (query) => {
+const getAllUsers = async (opts) => {
   const myCustomLabels = {
     totalDocs: 'totalUsers',
     docs: 'users',
   }
 
-  console.log('Query found??', query)
+  // console.log('filter found??', filter)
 
-  const options = {
-    page: query.page,
-    limit: query.limit,
-    customLabels: myCustomLabels,
-    select: 'username avatar coverPhoto',
+  const query = {
+    state: 'guanjauto',
+    latest: Boolean(opts.latest),
   }
 
+  const options = {
+    page: parseInt(opts.page) || 1,
+    limit: parseInt(opts.limit) || 10,
+  }
+
+  console.log('my options', options)
+  // User.find({filter}).limit().skip()
   try {
-    return await User.paginate({}, options)
+    return await User.paginate({ filter }, options)
   } catch (error) {
     console.error(error)
   }
