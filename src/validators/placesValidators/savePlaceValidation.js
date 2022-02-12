@@ -34,7 +34,7 @@ const validatePlaceCreation = async (req, res, next) => {
       .isString()
       .withMessage('Name must be a string.')
       .isLength({ max: 2000 })
-      .trim()
+      .trim() //Modificar manana
       .escape()
       .run(req)
 
