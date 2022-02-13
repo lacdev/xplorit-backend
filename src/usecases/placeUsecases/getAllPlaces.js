@@ -9,17 +9,23 @@ const getAllPlaces = async (requestQuery) => {
   const options = {
     page: parseInt(requestQuery.page) || 1,
     limit: parseInt(requestQuery.limit) || 9,
+    //   sort: requestQuery.sort || likes || average || createdAt
     customLabels: myCustomLabels,
-    // projection:
+    projection: {
+      address: 1,
+      location: 1,
+      _id: 1,
+      ownerId: 1,
+      name: 1,
+      description: 1,
+      average: 1,
+      likes: 1,
+      tags: 1,
+      images: 1,
+      createdAt: 1,
+      updatedAt: 1,
+    },
   }
-
-  // const paginationOptions = {
-  //   page: parseInt(requestQuery.page) || 1,
-  //   limit: parseInt(requestQuery.limit) || 9,
-  //   sort: requestQuery.sort || likes || average || createdAt
-  // }
-
-  // const docs = await Place.find({}).sort(sort).limit(limit);
 
   // My Query Object which will be constructed logically from the queries sent in the request.
 
@@ -53,11 +59,8 @@ const getAllPlaces = async (requestQuery) => {
     query['$and'] = $and
   }
 
-  //TODO convertir elementos tags a lowercase al llegar.
-
-  //$nearshpere query $geoWithin with $centerSphere query with Mongoose
-
   //Geo queries
+
   if (requestQuery.lng && requestQuery.lat && requestQuery.distance) {
     let longitude = parseFloat(requestQuery.lng)
     let latitude = parseFloat(requestQuery.lat)
@@ -65,16 +68,6 @@ const getAllPlaces = async (requestQuery) => {
       parseInt(requestQuery.distance) > 1 ? parseInt(requestQuery.distance) : 1
 
     console.log('whats the distance bro?', distance)
-
-    // query['$and'] = [
-    //   {
-    //     'location.coordinates': {
-    //       $geoWithin: {
-    //         $centerSphere: [[longitude, latitude], distance / 3963.2],
-    //       },
-    //     },
-    //   },
-    // ]
 
     $and.push({
       'location.coordinates': {
@@ -93,13 +86,6 @@ const getAllPlaces = async (requestQuery) => {
 }
 
 export { getAllPlaces }
-
-// query = { ...query, $and: [{ tags: { $all: tagsToLowerCase } }] }
-// for (let key of req.query) {
-//   if (key === 'q') {
-//     optionals.push()
-//   }
-// }
 
 // const getClockTime = () => {
 //   let now = new Date()
