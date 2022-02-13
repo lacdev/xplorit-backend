@@ -1,18 +1,19 @@
-import { getAllPlaces } from '../../usecases/placeUsecases/getAllPlaces.js'
+import { getAllStates } from '../../usecases/stateUsecases/getAllStates.js'
 import { ApiError } from '../../errors/ApiError.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
-const getPlaces = async (req, res, next) => {
+const getStates = async (req, res, next) => {
   try {
-    const allPlaces = await getAllPlaces(req.query)
+    const allStates = await getAllStates()
 
-    console.log('All places is returning what? ', allPlaces)
+    console.log(allStates.map((state) => state.estado))
+    console.log(allStates.length)
 
-    if (isEmptyArray(allPlaces.docs)) {
+    if (isEmptyArray(allStates)) {
       next(
         ApiError.notFound({
-          message: 'No places were found.',
-          data: allPlaces.docs,
+          message: 'No states were found.',
+          data: allStates,
         })
       )
       return
@@ -21,8 +22,8 @@ const getPlaces = async (req, res, next) => {
     res.json({
       message: 'success',
       statusCode: 200,
-      description: 'Places found successfully',
-      data: allPlaces,
+      description: 'States found successfully',
+      data: allStates,
     })
   } catch (err) {
     if (err.name === 'ValidationError') {
@@ -39,4 +40,4 @@ const getPlaces = async (req, res, next) => {
   }
 }
 
-export { getPlaces }
+export { getStates }

@@ -16,6 +16,7 @@ const getAllUsers = async ({
   const options = {
     page: parseInt(page) || 1,
     limit: parseInt(limit) || 10,
+    projection: { _id: 1, username: 1, avatar: 1, coverPhoto: 1, createdAt: 1 },
   }
 
   // {$or:[], {$and:[]tagas y geo query }}
@@ -39,23 +40,21 @@ const getAllUsers = async ({
   // }
 
   //si le das a checkbox de guanajuato $and
+  // let projection = { username: 1, avatar: 1, coverPhoto: 1 }
+  // .select(projection)
 
-  try {
-    return await User.paginate(
-      {
-        $or: [
-          { username: RegExp(q, 'ig') },
-          {
-            avatar: RegExp(q, 'ig'),
-          },
-          { email: RegExp(q, 'ig') },
-        ],
-      },
-      options
-    )
-  } catch (error) {
-    console.error(error)
-  }
+  return await User.paginate(
+    {
+      $or: [
+        { username: RegExp(q, 'ig') },
+        {
+          avatar: RegExp(q, 'ig'),
+        },
+        { email: RegExp(q, 'ig') },
+      ],
+    },
+    options
+  )
 }
 
 export { getAllUsers }

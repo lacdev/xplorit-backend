@@ -14,7 +14,7 @@ const saveUser = async (req, res, next) => {
     )
 
     const defaultCoverPhoto =
-      'https://xplorit.s3.amazonaws.com/default/xplorit_cover_default.png'
+      'https://storage.googleapis.com/xplorit-images/xplorit_cover_default.png'
 
     const hashedPassword = await hashPassword(password)
 
