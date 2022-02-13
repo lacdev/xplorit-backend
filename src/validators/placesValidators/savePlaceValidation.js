@@ -33,10 +33,10 @@ const validatePlaceCreation = async (req, res, next) => {
       .withMessage('Please provide a description for the place.')
       .isString()
       .withMessage('Name must be a string.')
-      .isLength({ max: 2000 })
+      .isLength({ max: 3000 })
       .trim() //Modificar manana
-      .escape()
-      .run(req)
+      .escape() //Modificar manana
+      .run(req) //Pendiente revisar esto.
 
     const addressChain = check('address')
       .exists({ checkNull: true, checkFalsy: true })

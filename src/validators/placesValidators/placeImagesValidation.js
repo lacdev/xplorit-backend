@@ -4,17 +4,18 @@ import { compressImages } from '../../utils/compressImages.js'
 
 const validatePlaceImages = async (req, res, next) => {
   try {
-    if (!req.files) {
+    if (!req.files || req.files.length === 0) {
       next(ApiError.badRequest('No images to upload were found.'))
     }
 
-    const typesAllowed = ['image/jpeg', 'image/png']
+    const typesAllowed = ['image/jpeg', 'image/png', 'image/webp']
 
     for (let image of req.files) {
+      console.log('My mimetype', image.mimetype)
       if (typesAllowed.indexOf(image.mimetype) === -1) {
         next(
           ApiError.badRequest(
-            'Only images of type png and jpeg are allowed with a maximum size of 2mb.'
+            'Only images of type png, jpeg and webp are allowed with a maximum size of 2mb.'
           )
         )
         return
