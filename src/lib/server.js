@@ -6,6 +6,7 @@ import helmet from 'helmet'
 import { usersRouter } from '../routers/user.router.js'
 import { routesRouter } from '../routers/route.router.js'
 import { placesRouter } from '../routers/place.router.js'
+import { statesRouter } from '../routers/state.router.js'
 import { ApiErrorHandler } from '../middlewares/api-error-handler.js'
 
 const app = express()
@@ -21,6 +22,7 @@ app.use(morgan('combined'))
 app.use('/v1/users', usersRouter)
 app.use('/v1/places', placesRouter)
 app.use('/v1/routes', routesRouter)
+app.use('/v1/states', statesRouter)
 
 // Health endpoint
 app.get('/', (req, res) => {

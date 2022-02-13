@@ -1,22 +1,26 @@
-import { getRoutesCreatedByUser } from '../../usecases/userUsecases/getRoutesCreatedByUser.js'
+import { getAllStates } from '../../usecases/stateUsecases/getAllStates.js'
 import { ApiError } from '../../errors/ApiError.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
-const getRoutesByUser = async (req, res, next) => {
-  const { userId } = req.params
-
+const getStates = async (req, res, next) => {
   try {
-    const routesByUser = await getRoutesCreatedByUser(userId)
+    const allStates = await getAllStates()
 
-    if (isEmptyArray(routesByUser)) {
-      next(ApiError.notFound('No routes created by this user were found.'))
+    if (isEmptyArray(allStates)) {
+      next(
+        ApiError.notFound({
+          message: 'No states were found.',
+          data: allStates,
+        })
+      )
       return
     }
 
     res.json({
       message: 'success',
       statusCode: 200,
-      data: routesByUser,
+      description: 'States found successfully',
+      data: allStates,
     })
   } catch (err) {
     if (err.name === 'ValidationError') {
@@ -34,4 +38,4 @@ const getRoutesByUser = async (req, res, next) => {
   }
 }
 
-export { getRoutesByUser }
+export { getStates }

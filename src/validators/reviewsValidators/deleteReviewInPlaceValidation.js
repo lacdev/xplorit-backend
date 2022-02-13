@@ -35,7 +35,7 @@ const validateReviewDeleteInPlace = async (req, res, next) => {
 
     const placeExists = await getSinglePlace(placeId)
 
-    if (isEmptyArray(placeExists)) {
+    if (!placeExists) {
       next(ApiError.badRequest('Place not found.'))
       return
     }
@@ -48,6 +48,7 @@ const validateReviewDeleteInPlace = async (req, res, next) => {
       next(ApiError.badRequest('Review not found'))
       return
     }
+
     next()
   } catch (err) {
     console.error(err)

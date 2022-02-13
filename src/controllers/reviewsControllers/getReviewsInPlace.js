@@ -15,7 +15,12 @@ const getReviewsInPlace = async (req, res, next) => {
     })
 
     if (isEmptyArray(allReviewsInPlace.reviews)) {
-      next(ApiError.notFound('No reviews for this place were found.'))
+      next(
+        ApiError.notFound({
+          message: 'No reviews for this place were found.',
+          data: allReviewsInPlace.reviews,
+        })
+      )
       return
     }
 
@@ -34,6 +39,7 @@ const getReviewsInPlace = async (req, res, next) => {
       )
       return
     } else {
+      console.log(err)
       next({})
     }
   }

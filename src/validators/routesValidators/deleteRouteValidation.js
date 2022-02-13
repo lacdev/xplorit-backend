@@ -1,7 +1,6 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
-import { isEmptyObject } from '../../utils/checkForEmpyObject.js'
 const { param, validationResult } = validator
 
 const validateRouteDeletion = async (req, res, next) => {
@@ -28,7 +27,7 @@ const validateRouteDeletion = async (req, res, next) => {
 
     const foundRoute = await getSingleRoute(routeId)
 
-    if (isEmptyObject(foundRoute)) {
+    if (!foundRoute) {
       next(ApiError.notFound('Route not found.'))
       return
     }

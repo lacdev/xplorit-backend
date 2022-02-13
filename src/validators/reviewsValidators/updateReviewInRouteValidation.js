@@ -71,14 +71,14 @@ const validateReviewUpdateInRoute = async (req, res, next) => {
 
     const routeExists = await getSingleRoute(routeId)
 
-    if (isEmptyArray(routeExists)) {
+    if (!routeExists) {
       next(ApiError.badRequest('Route not found.'))
       return
     }
 
     const userExists = await getSingleUser(userId)
 
-    if (isEmptyArray(userExists)) {
+    if (!userExists) {
       next(ApiError.badRequest('User not found.'))
       return
     }

@@ -71,14 +71,14 @@ const validateReviewUpdateInPlace = async (req, res, next) => {
 
     const placeExists = await getSinglePlace(placeId)
 
-    if (isEmptyArray(placeExists)) {
+    if (!placeExists) {
       next(ApiError.badRequest('Place not found.'))
       return
     }
 
     const userExists = await getSingleUser(userId)
 
-    if (isEmptyArray(userExists)) {
+    if (!userExists) {
       next(ApiError.badRequest('User not found.'))
       return
     }

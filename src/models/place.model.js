@@ -120,6 +120,7 @@ const PlaceSchema = new mongoose.Schema(
             required: [true, 'You must provide an array of valid coordinates.'],
           },
         ],
+        index: '2dsphere',
         required: true,
       },
     },
@@ -138,6 +139,8 @@ const PlaceSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+
+// PlaceSchema.path('tags').set((value) => value.map((tag) => tag.toLowerCase()))
 
 PlaceSchema.plugin(paginate)
 

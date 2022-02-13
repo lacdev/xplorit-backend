@@ -1,6 +1,5 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
-import { isEmptyObject } from '../../utils/checkForEmpyObject.js'
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 const { param, validationResult } = validator
 
@@ -28,7 +27,7 @@ const validateGetReviewsFromPlace = async (req, res, next) => {
 
     const foundPlace = await getSinglePlace(placeId)
 
-    if (isEmptyObject(foundPlace)) {
+    if (!foundPlace) {
       next(ApiError.notFound('Place not found.'))
       return
     }
