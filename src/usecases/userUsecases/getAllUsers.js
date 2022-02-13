@@ -1,18 +1,6 @@
 import { User } from '../../models/user.model.js'
 
-const getAllUsers = async ({
-  q,
-  page,
-  limit,
-  name,
-  sort,
-  state,
-  city,
-  tags,
-  latest,
-  email,
-  avatar,
-}) => {
+const getAllUsers = async ({ q, page, limit }) => {
   const options = {
     page: parseInt(page) || 1,
     limit: parseInt(limit) || 10,
@@ -21,9 +9,9 @@ const getAllUsers = async ({
 
   // {$or:[], {$and:[]tagas y geo query }}
 
-  const query = {}
+  // const query = {}
 
-  const optionals = []
+  // const optionals = []
 
   // const makeQuery = (req.query) => {
   //   for (let key of req.query) {

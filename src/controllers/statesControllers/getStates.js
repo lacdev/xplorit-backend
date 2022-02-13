@@ -6,9 +6,6 @@ const getStates = async (req, res, next) => {
   try {
     const allStates = await getAllStates()
 
-    console.log(allStates.map((state) => state.estado))
-    console.log(allStates.length)
-
     if (isEmptyArray(allStates)) {
       next(
         ApiError.notFound({
@@ -35,6 +32,7 @@ const getStates = async (req, res, next) => {
       )
       return
     } else {
+      console.log(err)
       next({})
     }
   }

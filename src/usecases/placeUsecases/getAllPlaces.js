@@ -1,9 +1,16 @@
 import { Place } from '../../models/place.model.js'
 
 const getAllPlaces = async (requestQuery) => {
+  const myCustomLabels = {
+    totalDocs: 'totalPlaces',
+    docs: 'places',
+  }
+
   const options = {
     page: parseInt(requestQuery.page) || 1,
     limit: parseInt(requestQuery.limit) || 9,
+    customLabels: myCustomLabels,
+    // projection:
   }
 
   // const paginationOptions = {
@@ -14,18 +21,11 @@ const getAllPlaces = async (requestQuery) => {
 
   // const docs = await Place.find({}).sort(sort).limit(limit);
 
-  // const myCustomLabels = {
-  //   totalDocs: 'totalPlaces',
-  //   docs: 'places',
-  // }
-
-  // const options = {
-  //   customLabels: myCustomLabels,
-  // }
-
   // My Query Object which will be constructed logically from the queries sent in the request.
 
   let query = {}
+
+  let $and = []
 
   //Filters for the q parameter, searches globally for keywords in the selected fields.
 
@@ -48,14 +48,44 @@ const getAllPlaces = async (requestQuery) => {
   if (requestQuery.tags) {
     const tagsArray = requestQuery.tags.split(',')
     const tagsToLowerCase = tagsArray.map((tag) => tag.toLowerCase())
-    query['$and'] = [{ tags: { $all: tagsToLowerCase } }]
+    // query['$and'] = [{ tags: { $all: tagsToLowerCase } }]
+    $and.push({ tags: { $all: tagsToLowerCase } })
+    query['$and'] = $and
   }
 
   //TODO convertir elementos tags a lowercase al llegar.
 
-  //Geo queries
+  //$nearshpere query $geoWithin with $centerSphere query with Mongoose
 
-  //nearshpere query $centerSphere query with Mongoose
+  //Geo queries
+  if (requestQuery.lng && requestQuery.lat && requestQuery.distance) {
+    let longitude = parseFloat(requestQuery.lng)
+    let latitude = parseFloat(requestQuery.lat)
+    let distance =
+      parseInt(requestQuery.distance) > 1 ? parseInt(requestQuery.distance) : 1
+
+    console.log('whats the distance bro?', distance)
+
+    // query['$and'] = [
+    //   {
+    //     'location.coordinates': {
+    //       $geoWithin: {
+    //         $centerSphere: [[longitude, latitude], distance / 3963.2],
+    //       },
+    //     },
+    //   },
+    // ]
+
+    $and.push({
+      'location.coordinates': {
+        $geoWithin: {
+          $centerSphere: [[longitude, latitude], distance / 3963.2],
+        },
+      },
+    })
+
+    query['$and'] = $and
+  }
 
   console.log('Query found??', JSON.stringify(query, '\n', 2))
 

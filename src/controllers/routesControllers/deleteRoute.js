@@ -24,6 +24,7 @@ const deleteRoute = async (req, res, next) => {
       )
       return
     } else {
+      console.log(err)
       next({})
     }
   }

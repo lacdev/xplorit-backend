@@ -1,5 +1,5 @@
-import { getStates } from '../controllers/statesControllers/getStates.js'
 import express from 'express'
+import { getStates } from '../controllers/statesControllers/getStates.js'
 
 const router = express.Router()
 
