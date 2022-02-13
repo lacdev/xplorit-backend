@@ -7,6 +7,7 @@ import { usersRouter } from '../routers/user.router.js'
 import { routesRouter } from '../routers/route.router.js'
 import { placesRouter } from '../routers/place.router.js'
 import { statesRouter } from '../routers/state.router.js'
+import { loginRouter } from '../routers/login.router.js'
 import { ApiErrorHandler } from '../middlewares/api-error-handler.js'
 
 const app = express()
@@ -14,8 +15,8 @@ const app = express()
 //Middlewares
 app.use(cors())
 app.use(helmet())
-app.use(express.json({ limit: '20mb', extended: true }))
-app.use(express.urlencoded({ limit: '20mb', extended: true }))
+app.use(express.json({ limit: '10mb', extended: true }))
+app.use(express.urlencoded({ limit: '10mb', extended: true }))
 app.use(morgan('combined'))
 
 //Routers
@@ -23,9 +24,10 @@ app.use('/v1/users', usersRouter)
 app.use('/v1/places', placesRouter)
 app.use('/v1/routes', routesRouter)
 app.use('/v1/states', statesRouter)
+app.use('/v1/login', loginRouter)
 
 // Health endpoint
-app.get('/', (req, res) => {
+app.get('/_health', (req, res) => {
   res.end('Server is up and running.')
 })
 

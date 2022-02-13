@@ -6,9 +6,7 @@ const getPlaces = async (req, res, next) => {
   try {
     const allPlaces = await getAllPlaces(req.query)
 
-    console.log('All places is returning what? ', allPlaces.places)
-
-    console.log(Error)
+    // console.log('All places is returning what? ', allPlaces.places)
 
     if (isEmptyArray(allPlaces.places)) {
       next(

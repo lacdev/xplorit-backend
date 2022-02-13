@@ -1,6 +1,6 @@
 import { Place } from '../../models/place.model.js'
 
-const getAllPlaces = async (requestQuery) => {
+const getAllPlaces = async (requestQuery = {}) => {
   const myCustomLabels = {
     totalDocs: 'totalPlaces',
     docs: 'places',
@@ -33,6 +33,8 @@ const getAllPlaces = async (requestQuery) => {
 
   let $and = []
 
+  console.log('requestQuery found??', requestQuery)
+
   //Filters for the q parameter, searches globally for keywords in the selected fields.
 
   const qFilters = [
@@ -54,12 +56,11 @@ const getAllPlaces = async (requestQuery) => {
   if (requestQuery.tags) {
     const tagsArray = requestQuery.tags.split(',')
     const tagsToLowerCase = tagsArray.map((tag) => tag.toLowerCase())
-    // query['$and'] = [{ tags: { $all: tagsToLowerCase } }]
     $and.push({ tags: { $all: tagsToLowerCase } })
     query['$and'] = $and
   }
 
-  //Geo queries
+  //Geo queries are always required.
 
   if (requestQuery.lng && requestQuery.lat && requestQuery.distance) {
     let longitude = parseFloat(requestQuery.lng)
@@ -67,7 +68,7 @@ const getAllPlaces = async (requestQuery) => {
     let distance =
       parseInt(requestQuery.distance) > 1 ? parseInt(requestQuery.distance) : 1
 
-    console.log('whats the distance bro?', distance)
+    // console.log('whats the distance bro?', distance)
 
     $and.push({
       'location.coordinates': {
@@ -80,47 +81,9 @@ const getAllPlaces = async (requestQuery) => {
     query['$and'] = $and
   }
 
-  console.log('Query found??', JSON.stringify(query, '\n', 2))
+  // console.log('Query found??', JSON.stringify(query, '\n', 2))
 
   return await Place.paginate(query, options)
 }
 
 export { getAllPlaces }
-
-// const getClockTime = () => {
-//   let now = new Date()
-//   let hour = now.getHours()
-//   let minute = now.getMinutes()
-//   let second = now.getSeconds()
-//   let ap = 'AM'
-//   if (hour > 11) {
-//     ap = 'PM'
-//   }
-//   if (hour > 12) {
-//     hour = hour - 12
-//   }
-//   if (hour == 0) {
-//     hour = 12
-//   }
-//   if (hour < 10) {
-//     hour = '0' + hour
-//   }
-//   if (minute < 10) {
-//     minute = '0' + minute
-//   }
-//   if (second < 10) {
-//     second = '0' + second
-//   }
-//   let timeString = hour + ':' + minute + ':' + second + ' ' + ap
-//   return timeString
-// }
-
-// {$or:[], {$and:[]tagas y geo query }}
-
-//{ <field>: /pattern/<options> }
-
-// const tagFilters = [{ tags: { $all: { $expr: { requestQuery.tags.map(tag => tag.toLowerCase())  } } } }]
-
-// const tagFilters = [{ tags: { $all: requestQuery.tags } }] //['tag1', 'tag2']
-
-// query = { ...query, $or: qFilters }
