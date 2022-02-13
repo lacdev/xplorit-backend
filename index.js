@@ -1,18 +1,14 @@
-/* eslint-disable no-undef */
-require('dotenv').config()
+import app from './src/lib/server.js'
+import dbConnect from './src/lib/db.js'
+import { variables } from './src/config/config.js'
 
-const dbConnect = require('./src/lib/db')
-const app = require('./src/lib/server')
+const port = variables.PORT
 
-dbConnect(process.env)
+dbConnect(variables)
   .then(() => {
     console.log('DB Connected')
-    app.listen(process.env.PORT, () => {
-      console.log(`Server is up and running`)
+    app.listen(port, () => {
+      console.log(`Server is up and listening on port ${port}`)
     })
   })
   .catch((error) => console.log(error))
-
-app.get('/test', (req, res) =>
-  res.send('Hello from the server. This is a test and should be ignored.')
-)

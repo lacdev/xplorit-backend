@@ -1,25 +1,47 @@
 {
-  "name": "testing-practice",
+  "name": "xplorit-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node and Express REST API for a Travel themed client.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "start": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "grmnmtz",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/storage": "^5.18.1",
+    "ajv": "^8.9.0",
+    "aws-sdk": "^2.1066.0",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
+    "connect-timeout": "^1.9.0",
     "cors": "^2.8.5",
     "dotenv": "^13.0.1",
     "express": "^4.17.2",
+    "express-rate-limit": "^6.2.0",
     "express-validator": "^6.14.0",
+    "gravatar": "^1.8.2",
+    "helmet": "^5.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "limiter": "^2.1.0",
     "mongoose": "^6.1.6",
+    "mongoose-aggregate-paginate-v2": "^1.0.6",
+    "mongoose-paginate-v2": "^1.5.0",
     "morgan": "^1.10.0",
-    "passport": "^0.5.2"
+    "multer": "^1.4.4",
+    "node-fetch": "^3.2.0",
+    "nodemailer": "^6.7.2",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "qs": "^6.10.3",
+    "rate-limiter-flexible": "^2.3.6",
+    "redis": "^4.0.3",
+    "safe-regex": "^2.1.1",
+    "sharp": "^0.30.0",
+    "stripe": "^8.202.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.8",
@@ -28,5 +50,6 @@
     "eslint": "^8.7.0",
     "jest": "^27.4.7",
     "nodemon": "^2.0.15"
-  }
+  },
+  "type": "module"
 }
