@@ -1,22 +1,22 @@
 import { Review } from '../../models/review.model.js'
 
 const getAllReviewsFromRoute = async (id, query) => {
-  const myCustomLabels = {
-    totalDocs: 'totalReviews',
-    docs: 'reviews',
-  }
+  // const myCustomLabels = {
+  //   totalDocs: 'totalReviews',
+  //   docs: 'reviews',
+  // }
 
-  const options = {
-    page: query.page,
-    limit: query.limit,
-    customLabels: myCustomLabels,
-  }
+  // const options = {
+  //   page: query.page,
+  //   limit: query.limit,
+  //   customLabels: myCustomLabels,
+  // }
 
-  try {
-    return await Review.paginate({ routeId: id }, options)
-  } catch (error) {
-    console.error(error)
-  }
+  // return await Review.paginate({ routeId: id }, options)
+  return await Review.find({ routeId: id }).populate('userId', {
+    username: 1,
+    avatar: 1,
+  })
 }
 
 // const getAllReviewsFromRoute = async (id) => {
