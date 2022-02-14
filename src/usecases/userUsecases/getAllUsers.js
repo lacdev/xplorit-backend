@@ -9,11 +9,11 @@ const getAllUsers = async (requestQuery) => {
 
   return await User.paginate(
     {
-      $or: [
-        { username: { $regex: `${requestQuery.q}`, $options: 'i' } },
-        { avatar: { $regex: `${requestQuery.q}`, $options: 'i' } },
-        { email: { $regex: `${requestQuery.q}`, $options: 'i' } },
-      ],
+      // $or: [
+      //   { username: { $regex: `${requestQuery.q}`, $options: 'i' } },
+      //   { avatar: { $regex: `${requestQuery.q}`, $options: 'i' } },
+      //   { email: { $regex: `${requestQuery.q}`, $options: 'i' } },
+      // ],
     },
     options
   )

@@ -1,13 +1,14 @@
 import express from 'express'
+import { validateUserLogin } from '../validators/loginValidators/loginValidation.js'
+import { loginUser } from '../controllers/loginControllers/userLogin.js'
+import { verifyToken } from '../middlewares/authentication.js'
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-  res.send('Login completed GET.')
+router.get('/', verifyToken, (req, res) => {
+  res.send('Welcome to the protected route bro.')
 })
 
-router.post('/', (req, res) => {
-  res.send('Login completed POST.')
-})
+router.post('/', validateUserLogin, loginUser)
 
 export { router as loginRouter }
