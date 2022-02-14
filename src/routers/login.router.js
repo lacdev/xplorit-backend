@@ -5,6 +5,7 @@ import { verifyToken } from '../middlewares/authentication.js'
 
 const router = express.Router()
 
+//Test route for protected routes.
 router.get('/', verifyToken, (req, res) => {
   res.send('Welcome to the protected route bro.')
 })
