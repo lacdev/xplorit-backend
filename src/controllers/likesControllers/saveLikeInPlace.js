@@ -1,4 +1,5 @@
 import { postLikeToPlace } from '../../usecases/likeUsecases/postLikeToPlace.js'
+import { updateSinglePlace } from '../../usecases/placeUsecases/updateSinglePlace.js'
 import { ApiError } from '../../errors/ApiError.js'
 
 const saveLikeInPlace = async (req, res, next) => {
@@ -12,11 +13,17 @@ const saveLikeInPlace = async (req, res, next) => {
     })
 
     if (savedLike) {
-      res.json({
-        message: 'success',
-        statusCode: 200,
-        data: 'Like saved in place successfully',
+      const updatedPlace = await updateSinglePlace(placeId, {
+        $inc: { likes: 1 },
       })
+
+      if (updatedPlace) {
+        res.json({
+          message: 'Like saved in place successfully',
+          statusCode: 200,
+          data: updatedPlace,
+        })
+      }
     }
   } catch (err) {
     if (err.name === 'ValidationError') {
