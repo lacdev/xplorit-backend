@@ -1,5 +1,5 @@
 import { Like } from '../../models/like.model.js'
 
-const getLikesFromRoute = async (object) => await Like.find(object)
+const getLikesFromRoute = async (query) => await Like.find(query)
 
 export { getLikesFromRoute }

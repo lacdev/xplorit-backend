@@ -57,7 +57,7 @@ const validateSaveReviewInPlace = async (req, res, next) => {
       return
     }
 
-    const placeExists = await getSinglePlace(placeId)
+    const placeExists = await getSinglePlace({ _id: placeId })
 
     if (!placeExists) {
       next(ApiError.badRequest('Place not found.'))
@@ -80,7 +80,7 @@ const validateSaveReviewInPlace = async (req, res, next) => {
 
     console.log('What is all reviews returning?', reviewExists)
 
-    if (!isEmptyArray(reviewExists)) {
+    if (!isEmptyArray(reviewExists.reviews)) {
       next(ApiError.badRequest('You can only post one review per place.'))
       return
     }

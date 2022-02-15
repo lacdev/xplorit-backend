@@ -71,7 +71,7 @@ const validateReviewUpdateInPlace = async (req, res, next) => {
       return
     }
 
-    const placeExists = await getSinglePlace(placeId)
+    const placeExists = await getSinglePlace({ _id: placeId })
 
     if (!placeExists) {
       next(ApiError.badRequest('Place not found.'))
@@ -80,7 +80,7 @@ const validateReviewUpdateInPlace = async (req, res, next) => {
 
     // const foundUser = await getSingleUser({ _id: id })
 
-    const userExists = await getSingleUser(userId)
+    const userExists = await getSingleUser({ _id: userId })
 
     if (!userExists) {
       next(ApiError.badRequest('User not found.'))
@@ -91,7 +91,7 @@ const validateReviewUpdateInPlace = async (req, res, next) => {
       _id: reviewId,
     })
 
-    if (isEmptyArray(reviewExists)) {
+    if (isEmptyArray(reviewExists.reviews)) {
       next(ApiError.badRequest('Review not found'))
       return
     }

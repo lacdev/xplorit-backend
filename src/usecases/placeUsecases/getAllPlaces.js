@@ -37,8 +37,6 @@ const getAllPlaces = async (requestQuery = {}) => {
 
   let $and = []
 
-  console.log('requestQuery found??', requestQuery)
-
   //Filters for the q parameter, searches globally for keywords in the selected fields.
 
   const qFilters = [
@@ -51,7 +49,6 @@ const getAllPlaces = async (requestQuery = {}) => {
   //User searched for a keyword in the search bar ?
 
   if (requestQuery.q) {
-    console.log('my query?', requestQuery.q)
     query['$or'] = qFilters
   }
 

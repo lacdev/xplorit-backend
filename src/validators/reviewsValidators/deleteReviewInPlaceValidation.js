@@ -36,12 +36,15 @@ const validateReviewDeleteInPlace = async (req, res, next) => {
       return
     }
 
-    const placeExists = await getSinglePlace(placeId)
+    const placeExists = await getSinglePlace({ _id: placeId })
 
     if (!placeExists) {
       next(ApiError.badRequest('Place not found.'))
       return
     }
+
+    //Validate that the userId of the review is equal to the payload of the token.
+    //PENDING
 
     const reviewExists = await getAllReviewsFromPlace({
       _id: reviewId,
