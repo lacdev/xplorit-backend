@@ -44,9 +44,9 @@ const validateLikeInRoute = async (req, res, next) => {
       return
     }
 
-    const userExists = await getSingleUser(userId)
+    const userExists = await getSingleUser({ userId: userId })
 
-    if (isEmptyArray(userExists)) {
+    if (!userExists) {
       next(ApiError.badRequest('User not found.'))
       return
     }

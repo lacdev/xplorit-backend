@@ -24,6 +24,7 @@ import { validateAvatarUpdate } from '../validators/usersValidators/updateAvatar
 import { updateAvatar } from '../controllers/usersControllers/updateAvatar.js'
 import { validateCoverUpdate } from '../validators/usersValidators/updateCoverValidation.js'
 import { updateCover } from '../controllers/usersControllers/updateCover.js'
+// import { verifyToken } from '../middlewares/authentication.js'
 
 const router = express.Router()
 const maxSize = 0.5 * 1024 * 1024
@@ -34,20 +35,41 @@ const upload = multer({
 })
 
 // //User controllers
+
+//To be deprecated (Not public information about users will be provided.)
 router.get('/', getUsers)
+
+//Pending authentication middleware
+
 router.get('/:userId', validateGetUser, getUser)
+
 router.post('/', validateUserSignup, saveUser)
+
+//Pending authentication middleware (Pending deprecation or soft delete.)
+
 router.delete('/:userId', validateUserDeletion, deleteUser)
 
 //User information update endpoints.
+
+//Pending authentication middleware
+
 router.patch('/:userId/password', validatePasswordUpdate, updatePassword)
+
+//Pending authentication middleware
+
 router.patch('/:userId/username', validateUsernameUpdate, updateUsername)
+
+//Pending authentication middleware
+
 router.patch(
   '/:userId/avatar',
   upload.single('avatar'),
   validateAvatarUpdate,
   updateAvatar
 )
+
+//Pending authentication middleware
+
 router.patch(
   '/:userId/cover',
   upload.single('cover'),
@@ -56,9 +78,21 @@ router.patch(
 )
 
 //User Ops controllers
+
+//Pending authentication middleware
+
 router.get('/:userId/likes', validateUserLikes, getLikesByUser)
+
+//Pending authentication middleware
+
 router.get('/:userId/reviews', validateUserReviews, getReviewsByUser)
+
+//Pending authentication middleware
+
 router.get('/:userId/places', validateUserPlaces, getPlacesByUser)
+
+//Pending authentication middleware
+
 router.get('/:userId/routes', validateUserRoutes, getRoutesByUser)
 
 export { router as usersRouter }

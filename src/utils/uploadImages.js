@@ -20,7 +20,7 @@ const uploadImages = async (type, files) => {
           index + 1
         }.webp` //Name of the file
 
-        const fileHandle = bucket.file(destination) //where the file will be stored.
+        const fileHandle = bucket.file(destination) //where the files will be stored.
 
         await fileHandle.save(newFile)
 

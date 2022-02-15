@@ -25,7 +25,10 @@ import { getLikesFromRouteValidation } from '../validators/likesValidators/getLi
 import { validateLikeInRoute } from '../validators/likesValidators/saveLikeInRouteValidation.js'
 import { validateLikeDeletionInRoute } from '../validators/likesValidators/deleteLikeInRouteValidation.js'
 import { validateRouteImages } from '../validators/routesValidators/routeImagesValidation.js'
+// import { verifyToken } from '../middlewares/authentication.js'
 // import { validateGetRouteQuery } from '../validators/routesValidators/getRouteQueryValidator.js'
+
+//Pending Rate Limiter
 
 const router = express.Router()
 
@@ -39,6 +42,9 @@ const upload = multer({
 //Routes controller
 router.get('/', getRoutes)
 router.get('/:routeId', validateGetRoute, getRoute)
+
+//Pending authentication middleware
+
 router.post(
   '/',
   upload.array('images', 6),
@@ -46,17 +52,32 @@ router.post(
   validateRouteCreation,
   saveRoute
 )
+
+//Pending authentication middleware
+
 router.patch('/:routeId', validateRouteUpdate, updateRoute)
+
+//Pending authentication middleware
+
 router.delete('/:routeId', validateRouteDeletion, deleteRoute)
 
 //Reviews in Routes Controllers
 router.get('/:routeId/reviews', validateGetReviewsFromRoute, getReviewsInRoute)
+
+//Pending authentication middleware
+
 router.post('/:routeId/reviews', validateSaveReviewInRoute, saveReviewInRoute)
+
+//Pending authentication middleware
+
 router.patch(
   '/:routeId/reviews/:reviewId',
   validateReviewUpdateInRoute,
   updateReviewInRoute
 )
+
+//Pending authentication middleware
+
 router.delete(
   '/:routeId/reviews/:reviewId',
   validateReviewDeleteInRoute,
@@ -65,7 +86,13 @@ router.delete(
 
 //Likes in routes controllers
 router.get('/:routeId/likes', getLikesFromRouteValidation, getLikesInRoute)
+
+//Pending authentication middleware
+
 router.post('/:routeId/likes', validateLikeInRoute, saveLikeInRoute)
+
+//Pending authentication middleware
+
 router.delete(
   '/:routeId/likes/:likeId',
   validateLikeDeletionInRoute,

@@ -1,36 +1,22 @@
 import { User } from '../../models/user.model.js'
 
-const getAllUsers = async (query) => {
-  const myCustomLabels = {
-    totalDocs: 'totalUsers',
-    docs: 'users',
-  }
-
-  console.log('Query found??', query)
-
+const getAllUsers = async (requestQuery) => {
   const options = {
-    page: query.page,
-    limit: query.limit,
-    customLabels: myCustomLabels,
-    select: 'username avatar coverPhoto',
+    page: parseInt(requestQuery.page) || 1,
+    limit: parseInt(requestQuery.limit) || 10,
+    projection: { _id: 1, username: 1, avatar: 1, coverPhoto: 1, createdAt: 1 },
   }
 
-  try {
-    return await User.paginate({}, options)
-  } catch (error) {
-    console.error(error)
-  }
+  return await User.paginate(
+    {
+      // $or: [
+      //   { username: { $regex: `${requestQuery.q}`, $options: 'i' } },
+      //   { avatar: { $regex: `${requestQuery.q}`, $options: 'i' } },
+      //   { email: { $regex: `${requestQuery.q}`, $options: 'i' } },
+      // ],
+    },
+    options
+  )
 }
 
 export { getAllUsers }
-
-// const getAllUsers = async () => {
-//   try {
-//     return await User.find()
-//       .select('username avatar coverPhoto')
-//       .find({ hashedPassword: { $ne: null } })
-//       .setOptions({ sanitizeFilter: true })
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }

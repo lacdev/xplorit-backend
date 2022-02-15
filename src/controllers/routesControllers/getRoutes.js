@@ -4,15 +4,13 @@ import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getRoutes = async (req, res, next) => {
   try {
-    let page = parseInt(req.query.page) || 1
-    let limit = parseInt(req.query.limit) || 9
+    const allRoutes = await getAllRoutes(req.query)
 
-    //Filters object pending
-    //Example getAllRoutes({filters}, {query})
+    // console.log('All routes is returning what? ', allRoutes.routes)
 
-    const allRoutes = await getAllRoutes({ page, limit })
-    if (isEmptyArray(allRoutes)) {
+    if (isEmptyArray(allRoutes.routes)) {
       next(ApiError.notFound('No routes were found.'))
+      return
     }
 
     res.json({
@@ -22,15 +20,16 @@ const getRoutes = async (req, res, next) => {
       data: allRoutes,
     })
   } catch (err) {
-    if (err.name === 'ValidationError') {
+    if (err.name === 'MongoServerError') {
       next(
         ApiError.badRequest({
-          message: 'Validation Error',
-          errors: err,
+          message: 'Error',
+          errors: err.message,
         })
       )
       return
     } else {
+      console.log(err)
       next({})
     }
   }

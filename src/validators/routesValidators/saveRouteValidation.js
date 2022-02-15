@@ -1,7 +1,6 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
-import { searchForUserBeforeCreation } from '../../usecases/userUsecases/searchUserBeforeCreation.js'
-import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 const { body, check, validationResult } = validator
 
 const validateRouteCreation = async (req, res, next) => {
@@ -104,11 +103,11 @@ const validateRouteCreation = async (req, res, next) => {
       return
     }
 
-    const userNameExists = await searchForUserBeforeCreation({
+    const userNameExists = await getSingleUser({
       _id: ownerId,
     })
 
-    if (isEmptyArray(userNameExists)) {
+    if (!userNameExists) {
       next(ApiError.badRequest('User not found.'))
       return
     }

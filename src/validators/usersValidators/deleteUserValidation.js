@@ -1,7 +1,6 @@
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
-import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
-import { isEmptyObject } from '../../utils/checkForEmpyObject.js'
 const { param, validationResult } = validator
 
 const validateUserDeletion = async (req, res, next) => {
@@ -26,9 +25,9 @@ const validateUserDeletion = async (req, res, next) => {
       return
     }
 
-    const foundUser = await getSingleUser(userId)
+    const foundUser = await getSingleUser({ _id: userId })
 
-    if (isEmptyObject(foundUser)) {
+    if (!foundUser) {
       next(ApiError.notFound('User not found.'))
       return
     }

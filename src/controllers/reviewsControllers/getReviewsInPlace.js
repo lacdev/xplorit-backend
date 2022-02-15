@@ -6,16 +6,19 @@ const getReviewsInPlace = async (req, res, next) => {
   try {
     const { placeId } = req.params
 
-    let page = parseInt(req.query.page) || 1
-    let limit = parseInt(req.query.limit) || 5
-
-    const allReviewsInPlace = await getAllReviewsFromPlace(placeId, {
-      page,
-      limit,
+    const allReviewsInPlace = await getAllReviewsFromPlace({
+      placeId: placeId,
     })
 
-    if (isEmptyArray(allReviewsInPlace.reviews)) {
-      next(ApiError.notFound('No reviews for this place were found.'))
+    console.log('What is this?', allReviewsInPlace)
+
+    if (isEmptyArray(allReviewsInPlace)) {
+      next(
+        ApiError.notFound({
+          message: 'No reviews for this place were found.',
+          data: allReviewsInPlace,
+        })
+      )
       return
     }
 
@@ -34,6 +37,7 @@ const getReviewsInPlace = async (req, res, next) => {
       )
       return
     } else {
+      console.log(err)
       next({})
     }
   }
