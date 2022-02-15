@@ -25,7 +25,10 @@ import { getLikesFromPlaceValidation } from '../validators/likesValidators/getLi
 import { validateLikeInPlace } from '../validators/likesValidators/saveLikeInPlaceValidation.js'
 import { validateLikeDeletionInPlace } from '../validators/likesValidators/deleteLikeInPlaceValidation.js'
 import { validatePlaceImages } from '../validators/placesValidators/placeImagesValidation.js'
+// import { verifyToken } from '../middlewares/authentication.js'
 // import { validateGetPlaceQuery } from '../validators/placesValidators/getPlaceQueryValidator.js'
+
+//Pending Rate Limiter
 
 const router = express.Router()
 
@@ -39,6 +42,9 @@ const upload = multer({
 //Places controllers
 router.get('/', getPlaces)
 router.get('/:placeId', validateGetPlace, getPlace)
+
+//Pending authentication middleware
+
 router.post(
   '/',
   upload.array('images', 6),
@@ -46,17 +52,32 @@ router.post(
   validatePlaceCreation,
   savePlace
 )
+
+//Pending authentication middleware
+
 router.patch('/:placeId', validatePlaceUpdate, updatePlace)
+
+//Pending authentication middleware
+
 router.delete('/:placeId', validatePlaceDeletion, deletePlace)
 
 //Reviews in places controllers
 router.get('/:placeId/reviews', validateGetReviewsFromPlace, getReviewsInPlace)
+
+//Pending authentication middleware
+
 router.post('/:placeId/reviews', validateSaveReviewInPlace, saveReviewInPlace)
+
+//Pending authentication middleware
+
 router.patch(
   '/:placeId/reviews/:reviewId',
   validateReviewUpdateInPlace,
   updateReviewInPlace
 )
+
+//Pending authentication middleware
+
 router.delete(
   '/:placeId/reviews/:reviewId',
   validateReviewDeleteInPlace,
@@ -65,7 +86,13 @@ router.delete(
 
 //Likes in places controllers
 router.get('/:placeId/likes', getLikesFromPlaceValidation, getLikesInPlace)
+
+//Pending authentication middleware
+
 router.post('/:placeId/likes', validateLikeInPlace, saveLikeInPlace)
+
+//Pending authentication middleware
+
 router.delete(
   '/:placeId/likes/:likeId',
   validateLikeDeletionInPlace,
