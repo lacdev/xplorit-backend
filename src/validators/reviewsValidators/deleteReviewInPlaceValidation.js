@@ -7,6 +7,9 @@ const { param, validationResult } = validator
 
 const validateReviewDeleteInPlace = async (req, res, next) => {
   const { placeId, reviewId } = req.params
+
+  // const { id } = req.user
+
   try {
     const placeIdChain = param('placeId')
       .exists()
@@ -44,7 +47,7 @@ const validateReviewDeleteInPlace = async (req, res, next) => {
       _id: reviewId,
     })
 
-    if (isEmptyArray(reviewExists)) {
+    if (isEmptyArray(reviewExists.reviews)) {
       next(ApiError.badRequest('Review not found'))
       return
     }

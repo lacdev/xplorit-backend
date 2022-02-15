@@ -7,6 +7,8 @@ const validateRouteUpdate = async (req, res, next) => {
   try {
     const { routeId } = req.params
 
+    // const { id } = req.user
+
     const routeIdChain = param('routeId')
       .exists()
       .withMessage('Please provide a user ID.')

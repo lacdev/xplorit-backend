@@ -1,6 +1,6 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
-import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
+// import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 
 const { param, validationResult } = validator
@@ -8,6 +8,8 @@ const { param, validationResult } = validator
 const getLikesFromRouteValidation = async (req, res, next) => {
   try {
     const { routeId } = req.params
+
+    // const { id } = req.user
 
     const routeIdChain = param('routeId')
       .exists()
@@ -29,8 +31,8 @@ const getLikesFromRouteValidation = async (req, res, next) => {
 
     const routeExists = await getSingleRoute({ _id: routeId })
 
-    if (isEmptyArray(routeExists)) {
-      next(ApiError.badRequest('route not found.'))
+    if (!routeExists) {
+      next(ApiError.badRequest('Route not found.'))
       return
     }
 

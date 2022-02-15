@@ -6,6 +6,9 @@ const { param, validationResult } = validator
 const validateGetUser = async (req, res, next) => {
   try {
     const { userId } = req.params
+
+    // const { id } = req.user
+
     const userIDChain = param('userId')
       .exists()
       .withMessage('Please provide a user ID.')
@@ -23,6 +26,8 @@ const validateGetUser = async (req, res, next) => {
       )
       return
     }
+
+    // const foundUser = await getSingleUser({ _id: id })
 
     const foundUser = await getSingleUser({ _id: userId })
 

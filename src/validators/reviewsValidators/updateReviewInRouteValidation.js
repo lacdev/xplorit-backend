@@ -10,6 +10,8 @@ const validateReviewUpdateInRoute = async (req, res, next) => {
   const { routeId, reviewId } = req.params
   const { userId } = req.body
 
+  // const { id } = req.user
+
   try {
     const routeIdChain = param('routeId')
       .exists()
@@ -75,6 +77,8 @@ const validateReviewUpdateInRoute = async (req, res, next) => {
       next(ApiError.badRequest('Route not found.'))
       return
     }
+
+    // const foundUser = await getSingleUser({ _id: id })
 
     const userExists = await getSingleUser(userId)
 

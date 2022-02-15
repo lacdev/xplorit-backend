@@ -12,6 +12,8 @@ const validateSaveReviewInPlace = async (req, res, next) => {
     const review = req.body
     const { userId } = review
 
+    // const { id } = req.user
+
     const placeIdChain = param('placeId')
       .exists()
       .withMessage('Please provide a place ID.')
@@ -61,6 +63,8 @@ const validateSaveReviewInPlace = async (req, res, next) => {
       next(ApiError.badRequest('Place not found.'))
       return
     }
+
+    // const foundUser = await getSingleUser({ _id: id })
 
     const userExists = await getSingleUser({ _id: userId })
 

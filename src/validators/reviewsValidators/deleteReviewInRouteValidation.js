@@ -7,6 +7,9 @@ const { param, validationResult } = validator
 
 const validateReviewDeleteInRoute = async (req, res, next) => {
   const { routeId, reviewId } = req.params
+
+  // const { id } = req.user
+
   try {
     const routeIdChain = param('routeId')
       .exists()

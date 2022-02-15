@@ -10,6 +10,8 @@ const validateReviewUpdateInPlace = async (req, res, next) => {
   const { placeId, reviewId } = req.params
   const { userId } = req.body
 
+  // const { id } = req.user
+
   try {
     const placeIdChain = param('placeId')
       .exists()
@@ -75,6 +77,8 @@ const validateReviewUpdateInPlace = async (req, res, next) => {
       next(ApiError.badRequest('Place not found.'))
       return
     }
+
+    // const foundUser = await getSingleUser({ _id: id })
 
     const userExists = await getSingleUser(userId)
 
