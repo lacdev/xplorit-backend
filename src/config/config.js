@@ -18,6 +18,7 @@ const variables = {
   GCP_TOKEN_URI: process.env.GCP_TOKEN_URI,
   GCP_AUTH_PROVIDER_X509_CERT_URL: process.env.GCP_AUTH_PROVIDER_X509_CERT_URL,
   CLIENT_X509_CERT_URL: process.env.GCP_CLIENT_X509_CERT_URL,
+  JWT_SECRET: process.env.JWT_SECRET,
 }
 
 export { variables }

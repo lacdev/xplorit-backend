@@ -62,7 +62,7 @@ const validateSaveReviewInPlace = async (req, res, next) => {
       return
     }
 
-    const userExists = await getSingleUser(userId)
+    const userExists = await getSingleUser({ _id: userId })
 
     if (!userExists) {
       next(ApiError.badRequest('User not found.'))
@@ -73,6 +73,8 @@ const validateSaveReviewInPlace = async (req, res, next) => {
       userId: userId,
       placeId: placeId,
     })
+
+    console.log('What is all reviews returning?', reviewExists)
 
     if (!isEmptyArray(reviewExists)) {
       next(ApiError.badRequest('You can only post one review per place.'))
