@@ -29,11 +29,11 @@ const ReviewSchema = new mongoose.Schema(
     },
     placeId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Place',
+      ref: 'place',
     },
     routeId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Route',
+      ref: 'route',
     },
   },
   { timestamps: true }

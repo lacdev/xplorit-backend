@@ -27,9 +27,7 @@ app.use('/v1/states', statesRouter)
 app.use('/v1/login', loginRouter)
 
 // Health endpoint
-app.get('/_health', (req, res) => {
-  res.end('Server is up and running.')
-})
+app.get('/_health', (req, res) => res.end('Server is up and running.'))
 
 //Errors Middleware
 app.use(ApiErrorHandler)

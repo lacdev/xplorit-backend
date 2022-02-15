@@ -6,10 +6,14 @@ const getAllPlaces = async (requestQuery = {}) => {
     docs: 'places',
   }
 
+  // let user = { path: 'userId', select: 'username avatar' }
+
+  let user = { path: 'ownerId', select: 'username avatar' }
   const options = {
     page: parseInt(requestQuery.page) || 1,
     limit: parseInt(requestQuery.limit) || 9,
     //   sort: requestQuery.sort || likes || average || createdAt
+    populate: user,
     customLabels: myCustomLabels,
     projection: {
       address: 1,
