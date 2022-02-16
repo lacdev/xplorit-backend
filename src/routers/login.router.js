@@ -10,6 +10,8 @@ router.get('/', verifyToken, (req, res) => {
   res.send('Welcome to the protected route bro.')
 })
 
+//Pending Rate Limiter
+
 router.post('/', validateUserLogin, loginUser)
 
 export { router as loginRouter }

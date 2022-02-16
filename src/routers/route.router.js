@@ -94,9 +94,15 @@ router.post('/:routeId/likes', validateLikeInRoute, saveLikeInRoute)
 //Pending authentication middleware
 
 router.delete(
-  '/:routeId/likes/:likeId',
+  '/:routeId/likes/',
   validateLikeDeletionInRoute,
   deleteLikeInRoute
 )
+
+// router.delete(
+//   '/:routeId/likes/:likeId',
+//   validateLikeDeletionInRoute,
+//   deleteLikeInRoute
+// )
 
 export { router as routesRouter }

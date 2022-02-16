@@ -7,6 +7,9 @@ const { param, validationResult } = validator
 
 const validateReviewDeleteInPlace = async (req, res, next) => {
   const { placeId, reviewId } = req.params
+
+  // const { id } = req.user
+
   try {
     const placeIdChain = param('placeId')
       .exists()
@@ -33,18 +36,21 @@ const validateReviewDeleteInPlace = async (req, res, next) => {
       return
     }
 
-    const placeExists = await getSinglePlace(placeId)
+    const placeExists = await getSinglePlace({ _id: placeId })
 
     if (!placeExists) {
       next(ApiError.badRequest('Place not found.'))
       return
     }
 
+    //Validate that the userId of the review is equal to the payload of the token.
+    //PENDING
+
     const reviewExists = await getAllReviewsFromPlace({
       _id: reviewId,
     })
 
-    if (isEmptyArray(reviewExists)) {
+    if (isEmptyArray(reviewExists.reviews)) {
       next(ApiError.badRequest('Review not found'))
       return
     }

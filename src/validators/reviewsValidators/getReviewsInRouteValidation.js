@@ -7,6 +7,8 @@ const validateGetReviewsFromRoute = async (req, res, next) => {
   try {
     const { routeId } = req.params
 
+    // const { id } = req.user
+
     const routeIdChain = param('routeId')
       .exists()
       .withMessage('Please provide a route ID.')
@@ -25,7 +27,7 @@ const validateGetReviewsFromRoute = async (req, res, next) => {
       return
     }
 
-    const foundRoute = await getSingleRoute(routeId)
+    const foundRoute = await getSingleRoute({ _id: routeId })
 
     if (!foundRoute) {
       next(ApiError.notFound('Route not found.'))

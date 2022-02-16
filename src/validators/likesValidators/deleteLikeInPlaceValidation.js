@@ -12,6 +12,8 @@ const validateLikeDeletionInPlace = async (req, res, next) => {
     const { placeId } = req.params
     const { userId } = req.body
 
+    // const { id } = req.user
+
     const placeIdChain = param('placeId')
       .exists()
       .withMessage('Please provide a place ID.')
@@ -39,14 +41,18 @@ const validateLikeDeletionInPlace = async (req, res, next) => {
 
     const placeExists = await getSinglePlace({ _id: placeId })
 
-    if (isEmptyArray(placeExists)) {
+    if (!placeExists) {
       next(ApiError.badRequest('Place not found.'))
       return
     }
 
-    const userExists = await getSingleUser(userId)
+    // const foundUser = await getSingleUser({ _id: id })
 
-    if (isEmptyArray(userExists)) {
+    const userExists = await getSingleUser({
+      _id: userId,
+    })
+
+    if (!userExists) {
       next(ApiError.badRequest('User not found.'))
       return
     }
@@ -56,10 +62,13 @@ const validateLikeDeletionInPlace = async (req, res, next) => {
       userId: userId,
     })
 
+    console.log('What is this returning likes?', totalLikesInPlace)
+
     if (isEmptyArray(totalLikesInPlace)) {
-      next(ApiError.badRequest('Error: No like found to delete.'))
+      next(ApiError.badRequest('No like found to delete.'))
       return
     }
+
     next()
   } catch (err) {
     console.error(err)

@@ -7,6 +7,8 @@ const validateGetRoute = async (req, res, next) => {
   try {
     const { routeId } = req.params
 
+    // const { id } = req.user
+
     const routeIdChain = param('routeId')
       .exists()
       .withMessage('Please provide a route ID.')

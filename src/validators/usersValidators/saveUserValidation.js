@@ -7,6 +7,8 @@ const validateUserSignup = async (req, res, next) => {
   try {
     const { username, email } = req.body
 
+    // const { id } = req.user
+
     const userEmailChain = body('email')
       .exists({ checkFalsy: true, checkNull: true })
       .withMessage('Email is required and must be filled.')
@@ -73,6 +75,8 @@ const validateUserSignup = async (req, res, next) => {
       )
       return
     }
+
+    // const foundUser = await getSingleUser({ _id: id })
 
     const usernameExists = await getSingleUser({
       username: username,

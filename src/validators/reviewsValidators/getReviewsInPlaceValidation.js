@@ -7,6 +7,8 @@ const validateGetReviewsFromPlace = async (req, res, next) => {
   try {
     const { placeId } = req.params
 
+    // const { id } = req.user
+
     const placeIdChain = param('placeId')
       .exists()
       .withMessage('Please provide a place ID.')
@@ -25,7 +27,7 @@ const validateGetReviewsFromPlace = async (req, res, next) => {
       return
     }
 
-    const foundPlace = await getSinglePlace(placeId)
+    const foundPlace = await getSinglePlace({ _id: placeId })
 
     if (!foundPlace) {
       next(ApiError.notFound('Place not found.'))

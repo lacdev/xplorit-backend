@@ -94,9 +94,15 @@ router.post('/:placeId/likes', validateLikeInPlace, saveLikeInPlace)
 //Pending authentication middleware
 
 router.delete(
-  '/:placeId/likes/:likeId',
+  '/:placeId/likes/',
   validateLikeDeletionInPlace,
   deleteLikeInPlace
 )
+
+// router.delete(
+//   '/:placeId/likes/:likeId',
+//   validateLikeDeletionInPlace,
+//   deleteLikeInPlace
+// )
 
 export { router as placesRouter }

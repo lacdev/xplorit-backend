@@ -7,6 +7,9 @@ const { param, validationResult } = validator
 
 const validateReviewDeleteInRoute = async (req, res, next) => {
   const { routeId, reviewId } = req.params
+
+  // const { id } = req.user
+
   try {
     const routeIdChain = param('routeId')
       .exists()
@@ -33,6 +36,9 @@ const validateReviewDeleteInRoute = async (req, res, next) => {
       return
     }
 
+    //Validate that the userId of the review is equal to the payload of the token.
+    //PENDING
+
     const routeExists = await getSingleRoute(routeId)
 
     if (!routeExists) {
@@ -44,10 +50,13 @@ const validateReviewDeleteInRoute = async (req, res, next) => {
       _id: reviewId,
     })
 
-    if (isEmptyArray(reviewExists)) {
+    console.log('review in route exists?', reviewExists)
+
+    if (isEmptyArray(reviewExists.reviews)) {
       next(ApiError.badRequest('Review not found'))
       return
     }
+
     next()
   } catch (err) {
     console.error(err)

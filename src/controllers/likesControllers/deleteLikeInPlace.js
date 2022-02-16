@@ -1,17 +1,29 @@
 import { deleteLikeFromPlace } from '../../usecases/likeUsecases/deleteLikeFromPlace.js'
+import { updateSinglePlace } from '../../usecases/placeUsecases/updateSinglePlace.js'
 import { ApiError } from '../../errors/ApiError.js'
 
 const deleteLikeInPlace = async (req, res, next) => {
-  const { likeId } = req.params
   try {
-    const deletedLike = await deleteLikeFromPlace(likeId)
+    const { placeId } = req.params
+    const { userId } = req.body
+
+    const deletedLike = await deleteLikeFromPlace({
+      placeId: placeId,
+      userId: userId,
+    })
 
     if (deletedLike) {
-      res.json({
-        message: 'success',
-        statusCode: 204,
-        data: 'Deleted like in place successfully',
+      const updatedPlace = await updateSinglePlace(placeId, {
+        $inc: { likes: -1 },
       })
+
+      if (updatedPlace) {
+        res.json({
+          message: 'success',
+          statusCode: 204,
+          data: 'Deleted like in place successfully',
+        })
+      }
     }
   } catch (err) {
     if (err.name === 'ValidationError') {
