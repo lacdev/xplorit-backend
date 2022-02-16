@@ -9,6 +9,11 @@ const validatePlaceCreation = async (req, res, next) => {
 
     // const { id } = req.user
 
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    // const foundUser = await getSingleUser({ _id: id })
+
     const ownerIdChain = body('ownerId')
       .exists({ checkNull: true, checkFalsy: true })
       .withMessage('Please provide a valid ID.')

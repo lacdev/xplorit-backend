@@ -2,10 +2,17 @@ import { postReviewToRoute } from '../../usecases/reviewUsecases/postReviewToRou
 import { ApiError } from '../../errors/ApiError.js'
 
 const saveReviewInRoute = async (req, res, next) => {
-  const { routeId } = req.params
-  const newReview = req.body
-
   try {
+    const { routeId } = req.params
+    const newReview = req.body
+
+    // const { id } = req.user
+
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    // const foundUser = await getSingleUser({ _id: id })
+
     newReview.routeId = routeId
 
     const savedReview = await postReviewToRoute(newReview)

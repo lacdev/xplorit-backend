@@ -14,6 +14,11 @@ const validateLikeInRoute = async (req, res, next) => {
 
     // const { id } = req.user
 
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    // const foundUser = await getSingleUser({ _id: id })
+
     const routeIdChain = param('routeId')
       .exists()
       .withMessage('Please provide a route ID.')

@@ -6,6 +6,13 @@ const saveReviewInPlace = async (req, res, next) => {
     const { placeId } = req.params
     const newReview = req.body
 
+    // const { id } = req.user
+
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    // const foundUser = await getSingleUser({ _id: id })
+
     newReview.placeId = placeId
 
     const savedReview = await postReviewToPlace(newReview)
