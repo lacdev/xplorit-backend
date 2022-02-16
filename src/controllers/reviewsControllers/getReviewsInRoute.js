@@ -6,12 +6,8 @@ const getReviewsInRoute = async (req, res, next) => {
   try {
     const { routeId } = req.params
 
-    let page = parseInt(req.query.page) || 1
-    let limit = parseInt(req.query.limit) || 5
-
-    const allReviewsInRoute = await getAllReviewsFromRoute(routeId, {
-      page,
-      limit,
+    const allReviewsInRoute = await getAllReviewsFromRoute({
+      routeId: routeId,
     })
 
     if (isEmptyArray(allReviewsInRoute.reviews)) {

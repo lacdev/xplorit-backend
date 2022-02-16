@@ -1,5 +1,5 @@
 import { Like } from '../../models/like.model.js'
 
-const deleteLikeFromPlace = async (id) => await Like.findByIdAndDelete(id)
+const deleteLikeFromPlace = async (query) => await Like.findOneAndDelete(query)
 
 export { deleteLikeFromPlace }

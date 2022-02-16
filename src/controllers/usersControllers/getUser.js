@@ -9,14 +9,17 @@ const getUser = async (req, res, next) => {
       _id: userId,
     })
 
-    if (foundUser) {
-      res.json({
-        message: 'success',
-        description: 'User found',
-        statusCode: 200,
-        data: foundUser,
-      })
+    if (!foundUser) {
+      next(ApiError.notFound('User not found.'))
+      return
     }
+
+    res.json({
+      message: 'success',
+      description: 'User found',
+      statusCode: 200,
+      data: foundUser,
+    })
   } catch (err) {
     if (err.name === 'ValidationError') {
       next(

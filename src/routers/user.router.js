@@ -34,7 +34,9 @@ const upload = multer({
   limits: { fileSize: maxSize },
 })
 
-// //User controllers
+//Pending Rate Limiter
+
+//User controllers
 
 //To be deprecated (Not public information about users will be provided.)
 router.get('/', getUsers)

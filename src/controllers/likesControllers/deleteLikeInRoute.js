@@ -1,17 +1,29 @@
 import { deleteLikeFromRoute } from '../../usecases/likeUsecases/deleteLikeFromRoute.js'
+import { updateSingleRoute } from '../../usecases/routeUsecases/updateSingleRoute.js'
 import { ApiError } from '../../errors/ApiError.js'
 
 const deleteLikeInRoute = async (req, res, next) => {
-  const { likeId } = req.params
   try {
-    const deletedLike = await deleteLikeFromRoute(likeId)
+    const { routeId } = req.params
+    const { userId } = req.body
+
+    const deletedLike = await deleteLikeFromRoute({
+      routeId: routeId,
+      userId: userId,
+    })
 
     if (deletedLike) {
-      res.json({
-        message: 'success',
-        statusCode: 204,
-        data: 'Deleted like in route successfully',
+      const updatedRoute = await updateSingleRoute(routeId, {
+        $inc: { likes: -1 },
       })
+
+      if (updatedRoute) {
+        res.json({
+          message: 'success',
+          statusCode: 204,
+          data: 'Deleted like in place successfully',
+        })
+      }
     }
   } catch (err) {
     if (err.name === 'ValidationError') {

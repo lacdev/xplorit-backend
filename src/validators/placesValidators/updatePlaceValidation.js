@@ -2,11 +2,12 @@ import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 const { param, body, check, validationResult } = validator
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
-import { isEmptyObject } from '../../utils/checkForEmpyObject.js'
 
 const validatePlaceUpdate = async (req, res, next) => {
   try {
     const { placeId } = req.params
+
+    // const { id } = req.user
 
     const placeIdChain = param('placeId')
       .exists()
@@ -145,12 +146,13 @@ const validatePlaceUpdate = async (req, res, next) => {
       return
     }
 
-    const placeExists = await getSinglePlace(placeId)
+    const placeExists = await getSinglePlace({ _id: placeId })
 
-    if (isEmptyObject(placeExists)) {
+    if (!placeExists) {
       next(ApiError.badRequest('Place not found.'))
       return
     }
+
     next()
   } catch (e) {
     console.error(e)

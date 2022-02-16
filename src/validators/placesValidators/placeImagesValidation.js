@@ -11,7 +11,6 @@ const validatePlaceImages = async (req, res, next) => {
     const typesAllowed = ['image/jpeg', 'image/png', 'image/webp']
 
     for (let image of req.files) {
-      console.log('My mimetype', image.mimetype)
       if (typesAllowed.indexOf(image.mimetype) === -1) {
         next(
           ApiError.badRequest(
