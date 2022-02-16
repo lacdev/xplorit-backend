@@ -9,6 +9,8 @@ const validateAvatarUpdate = async (req, res, next) => {
   try {
     const { userId } = req.params
 
+    // const { id } = req.user
+
     const userIDChain = param('userId')
       .exists()
       .withMessage('Please provide a user ID.')
@@ -27,6 +29,8 @@ const validateAvatarUpdate = async (req, res, next) => {
       return
     }
 
+    // const foundUser = await getSingleUser({ _id: id })
+
     const userExists = await getSingleUser({
       _id: userId,
     })
@@ -41,12 +45,12 @@ const validateAvatarUpdate = async (req, res, next) => {
       return
     }
 
-    const typesAllowed = ['image/jpeg', 'image/png']
+    const typesAllowed = ['image/jpeg', 'image/png', 'image/webp']
 
     if (typesAllowed.indexOf(req.file.mimetype) === -1) {
       next(
         ApiError.badRequest(
-          'Only an image of type png and jpeg is allowed with a maximum size of 512kb.'
+          'Only an image of type png, jpeg and webp is allowed with a maximum size of 512kb.'
         )
       )
       return

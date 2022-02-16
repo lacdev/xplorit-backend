@@ -7,6 +7,8 @@ const validateUserLikes = async (req, res, next) => {
   try {
     const { userId } = req.params
 
+    // const { id } = req.user
+
     const userIDChain = param('userId')
       .exists()
       .withMessage('Please provide a user ID.')
@@ -24,6 +26,8 @@ const validateUserLikes = async (req, res, next) => {
       )
       return
     }
+
+    // const foundUser = await getSingleUser({ _id: id })
 
     const userExists = await getSingleUser({
       _id: userId,

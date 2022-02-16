@@ -1,5 +1,7 @@
 import { Route } from '../../models/route.model.js'
 
-const getSingleRoute = async (id) => await Route.findOne({ _id: id })
+// let projection = { _id: 1, username: 1, avatar: 1, coverPhoto: 1, createdAt: 1 }
+
+const getSingleRoute = async (query) => await Route.findOne(query)
 
 export { getSingleRoute }

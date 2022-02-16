@@ -26,7 +26,7 @@ const RouteSchema = new mongoose.Schema(
   {
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'user',
       required: true,
     },
     name: {

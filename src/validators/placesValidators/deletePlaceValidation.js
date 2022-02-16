@@ -1,12 +1,13 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
-import { isEmptyObject } from '../../utils/checkForEmpyObject.js'
 const { param, validationResult } = validator
 
 const validatePlaceDeletion = async (req, res, next) => {
   try {
     const { placeId } = req.params
+
+    // const { id } = req.user
 
     const placeIdChain = param('placeId')
       .exists()
@@ -26,9 +27,22 @@ const validatePlaceDeletion = async (req, res, next) => {
       return
     }
 
-    const foundPlace = await getSinglePlace(placeId)
+    // const foundUser = await getSingleUser({ _id: id })
 
-    if (isEmptyObject(foundPlace)) {
+    // const userExists = await getSingleUser({
+    //   _id: userId,
+    // })
+
+    // // const userExists = await getSingleUser(userId)
+
+    // if (!userExists) {
+    //   next(ApiError.badRequest('User not found.'))
+    //   return
+    // }
+
+    const foundPlace = await getSinglePlace({ _id: placeId })
+
+    if (!foundPlace) {
       next(ApiError.notFound('Place not found.'))
       return
     }

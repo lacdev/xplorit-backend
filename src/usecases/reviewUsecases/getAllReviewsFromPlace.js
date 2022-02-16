@@ -1,30 +1,28 @@
 import { Review } from '../../models/review.model.js'
 
-const getAllReviewsFromPlace = async (id, query) => {
+const getAllReviewsFromPlace = async (query) => {
   const myCustomLabels = {
     totalDocs: 'totalReviews',
     docs: 'reviews',
   }
 
+  let user = { path: 'userId', select: 'username avatar' }
+
   const options = {
-    page: query.page,
-    limit: query.limit,
+    page: 1,
+    limit: 10,
+    populate: user,
+    projection: {
+      createdAt: 1,
+      _id: 1,
+      comment: 1,
+      stars: 1,
+      placeId: 1,
+    },
     customLabels: myCustomLabels,
   }
 
-  try {
-    return await Review.paginate({ placeId: id }, options)
-  } catch (error) {
-    console.error(error)
-  }
+  return await Review.paginate(query, options)
 }
-
-// const getAllReviewsFromPlace = async (id) => {
-//   try {
-//     return await Review.find(id)
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
 
 export { getAllReviewsFromPlace }

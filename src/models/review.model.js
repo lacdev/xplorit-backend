@@ -16,24 +16,16 @@ const ReviewSchema = new mongoose.Schema(
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'user',
       required: true,
-    },
-    avatar: {
-      type: String,
-      unique: true,
-    },
-    username: {
-      type: String,
-      unique: true,
     },
     placeId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Place',
+      ref: 'place',
     },
     routeId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Route',
+      ref: 'route',
     },
   },
   { timestamps: true }

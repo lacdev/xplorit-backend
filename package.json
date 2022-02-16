@@ -39,6 +39,7 @@
     "rate-limiter-flexible": "^2.3.6",
     "redis": "^4.0.3",
     "safe-regex": "^2.1.1",
+    "sanitize-html": "^2.7.0",
     "sharp": "^0.30.0",
     "stripe": "^8.202.0",
     "uuid": "^8.3.2"

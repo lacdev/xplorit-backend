@@ -1,4 +1,5 @@
 import { postLikeToRoute } from '../../usecases/likeUsecases/postLikeToRoute.js'
+import { updateSingleRoute } from '../../usecases/routeUsecases/updateSingleRoute.js'
 import { ApiError } from '../../errors/ApiError.js'
 
 const saveLikeInRoute = async (req, res, next) => {
@@ -12,11 +13,17 @@ const saveLikeInRoute = async (req, res, next) => {
     })
 
     if (savedLike) {
-      res.json({
-        message: 'success',
-        statusCode: 200,
-        data: 'Like saved in route successfully',
+      const updatedRoute = await updateSingleRoute(routeId, {
+        $inc: { likes: 1 },
       })
+
+      if (updatedRoute) {
+        res.json({
+          message: 'Like saved in route successfully',
+          statusCode: 200,
+          data: updatedRoute,
+        })
+      }
     }
   } catch (err) {
     if (err.name === 'ValidationError') {

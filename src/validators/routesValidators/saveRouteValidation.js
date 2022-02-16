@@ -9,6 +9,8 @@ const validateRouteCreation = async (req, res, next) => {
 
     const { ownerId } = newRoute
 
+    // const { id } = req.user
+
     const ownerIdChain = body('ownerId')
       .exists({ checkNull: true, checkFalsy: true })
       .withMessage('Please provide a valid ID.')
@@ -102,6 +104,8 @@ const validateRouteCreation = async (req, res, next) => {
       )
       return
     }
+
+    // const foundUser = await getSingleUser({ _id: id })
 
     const userNameExists = await getSingleUser({
       _id: ownerId,

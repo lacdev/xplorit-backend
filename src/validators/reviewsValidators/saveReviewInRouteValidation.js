@@ -12,6 +12,8 @@ const validateSaveReviewInRoute = async (req, res, next) => {
     const review = req.body
     const { userId } = review
 
+    // const { id } = req.user
+
     const routeIdChain = param('routeId')
       .exists()
       .withMessage('Please provide a route ID.')
@@ -62,9 +64,11 @@ const validateSaveReviewInRoute = async (req, res, next) => {
       return
     }
 
-    const userExists = await getSingleUser(userId)
+    // const foundUser = await getSingleUser({ _id: id })
 
-    if (isEmptyArray(userExists)) {
+    const userExists = await getSingleUser({ _id: userId })
+
+    if (!userExists) {
       next(ApiError.badRequest('User not found.'))
       return
     }
@@ -74,7 +78,9 @@ const validateSaveReviewInRoute = async (req, res, next) => {
       routeId: routeId,
     })
 
-    if (!isEmptyArray(reviewExists)) {
+    console.log('What is all reviews returning?', reviewExists)
+
+    if (!isEmptyArray(reviewExists.reviews)) {
       next(ApiError.badRequest('You can only post one review per route.'))
       return
     }

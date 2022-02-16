@@ -12,6 +12,8 @@ const validateLikeInRoute = async (req, res, next) => {
     const { routeId } = req.params
     const { userId } = req.body
 
+    // const { id } = req.user
+
     const routeIdChain = param('routeId')
       .exists()
       .withMessage('Please provide a route ID.')
@@ -39,14 +41,16 @@ const validateLikeInRoute = async (req, res, next) => {
 
     const routeExists = await getSingleRoute({ _id: routeId })
 
-    if (isEmptyArray(routeExists)) {
-      next(ApiError.badRequest('route not found.'))
+    if (!routeExists) {
+      next(ApiError.badRequest('Route not found.'))
       return
     }
 
-    const userExists = await getSingleUser(userId)
+    // const foundUser = await getSingleUser({ _id: id })
 
-    if (isEmptyArray(userExists)) {
+    const userExists = await getSingleUser({ _id: userId })
+
+    if (!userExists) {
       next(ApiError.badRequest('User not found.'))
       return
     }

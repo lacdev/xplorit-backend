@@ -1,3 +1,5 @@
 node_modules/
 .env
-   
+requests.rest
+notes.js
+gcp_keys.js
