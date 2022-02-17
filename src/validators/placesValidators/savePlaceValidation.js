@@ -30,7 +30,6 @@ const validatePlaceCreation = async (req, res, next) => {
       .withMessage('Name must be a string.')
       .isLength({ max: 300 })
       .trim()
-      .escape()
       .run(req)
 
     const descriptionChain = body('description')
@@ -41,9 +40,8 @@ const validatePlaceCreation = async (req, res, next) => {
       .isString()
       .withMessage('Name must be a string.')
       .isLength({ max: 3000 })
-      .trim() //Modificar manana
-      .escape() //Modificar manana
-      .run(req) //Pendiente revisar esto.
+      .trim()
+      .run(req)
 
     const addressChain = check('address')
       .exists({ checkNull: true, checkFalsy: true })

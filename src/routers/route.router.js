@@ -25,6 +25,16 @@ import { getLikesFromRouteValidation } from '../validators/likesValidators/getLi
 import { validateLikeInRoute } from '../validators/likesValidators/saveLikeInRouteValidation.js'
 import { validateLikeDeletionInRoute } from '../validators/likesValidators/deleteLikeInRouteValidation.js'
 import { validateRouteImages } from '../validators/routesValidators/routeImagesValidation.js'
+import { postReviewLimiter } from '../middlewares/rate-limiter.js'
+import { updateReviewLimiter } from '../middlewares/rate-limiter.js'
+import { getReviewsLimiter } from '../middlewares/rate-limiter.js'
+import { postLikeLimiter } from '../middlewares/rate-limiter.js'
+import { deleteLikeLimiter } from '../middlewares/rate-limiter.js'
+import { getLikesLimiter } from '../middlewares/rate-limiter.js'
+import { postPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
+import { getPlacesOrRoutesLimiter } from '../middlewares/rate-limiter.js'
+import { getPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
+import { updatePlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
 // import { verifyToken } from '../middlewares/authentication.js'
 // import { validateGetRouteQuery } from '../validators/routesValidators/getRouteQueryValidator.js'
 
@@ -40,13 +50,14 @@ const upload = multer({
 })
 
 //Routes controller
-router.get('/', getRoutes)
-router.get('/:routeId', validateGetRoute, getRoute)
+router.get('/', getPlacesOrRoutesLimiter, getRoutes)
+router.get('/:routeId', getPlaceOrRouteLimiter, validateGetRoute, getRoute)
 
 //Pending authentication middleware
 
 router.post(
   '/',
+  postPlaceOrRouteLimiter,
   upload.array('images', 6),
   validateRouteImages,
   validateRouteCreation,
@@ -55,23 +66,39 @@ router.post(
 
 //Pending authentication middleware
 
-router.patch('/:routeId', validateRouteUpdate, updateRoute)
+router.patch(
+  '/:routeId',
+  updatePlaceOrRouteLimiter,
+  validateRouteUpdate,
+  updateRoute
+)
 
 //Pending authentication middleware
 
 router.delete('/:routeId', validateRouteDeletion, deleteRoute)
 
 //Reviews in Routes Controllers
-router.get('/:routeId/reviews', validateGetReviewsFromRoute, getReviewsInRoute)
+router.get(
+  '/:routeId/reviews',
+  getReviewsLimiter,
+  validateGetReviewsFromRoute,
+  getReviewsInRoute
+)
 
 //Pending authentication middleware
 
-router.post('/:routeId/reviews', validateSaveReviewInRoute, saveReviewInRoute)
+router.post(
+  '/:routeId/reviews',
+  postReviewLimiter,
+  validateSaveReviewInRoute,
+  saveReviewInRoute
+)
 
 //Pending authentication middleware
 
 router.patch(
   '/:routeId/reviews/:reviewId',
+  updateReviewLimiter,
   validateReviewUpdateInRoute,
   updateReviewInRoute
 )
@@ -85,16 +112,27 @@ router.delete(
 )
 
 //Likes in routes controllers
-router.get('/:routeId/likes', getLikesFromRouteValidation, getLikesInRoute)
+router.get(
+  '/:routeId/likes',
+  getLikesLimiter,
+  getLikesFromRouteValidation,
+  getLikesInRoute
+)
 
 //Pending authentication middleware
 
-router.post('/:routeId/likes', validateLikeInRoute, saveLikeInRoute)
+router.post(
+  '/:routeId/likes',
+  postLikeLimiter,
+  validateLikeInRoute,
+  saveLikeInRoute
+)
 
 //Pending authentication middleware
 
 router.delete(
   '/:routeId/likes/',
+  deleteLikeLimiter,
   validateLikeDeletionInRoute,
   deleteLikeInRoute
 )

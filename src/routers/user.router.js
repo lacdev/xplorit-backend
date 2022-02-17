@@ -24,6 +24,11 @@ import { validateAvatarUpdate } from '../validators/usersValidators/updateAvatar
 import { updateAvatar } from '../controllers/usersControllers/updateAvatar.js'
 import { validateCoverUpdate } from '../validators/usersValidators/updateCoverValidation.js'
 import { updateCover } from '../controllers/usersControllers/updateCover.js'
+import { getUsersLimiter } from '../middlewares/rate-limiter.js'
+import { userSignupLimiter } from '../middlewares/rate-limiter.js'
+import { getUserLimiter } from '../middlewares/rate-limiter.js'
+import { updateUserLimiter } from '../middlewares/rate-limiter.js'
+import { getUserOpsLimiter } from '../middlewares/rate-limiter.js'
 // import { verifyToken } from '../middlewares/authentication.js'
 
 const router = express.Router()
@@ -34,18 +39,14 @@ const upload = multer({
   limits: { fileSize: maxSize },
 })
 
-//Pending Rate Limiter
-
-//User controllers
-
 //To be deprecated (Not public information about users will be provided.)
-router.get('/', getUsers)
+router.get('/', getUsersLimiter, getUsers)
 
 //Pending authentication middleware
 
-router.get('/:userId', validateGetUser, getUser)
+router.get('/:userId', getUserLimiter, validateGetUser, getUser)
 
-router.post('/', validateUserSignup, saveUser)
+router.post('/', userSignupLimiter, validateUserSignup, saveUser)
 
 //Pending authentication middleware (Pending deprecation or soft delete.)
 
@@ -55,16 +56,27 @@ router.delete('/:userId', validateUserDeletion, deleteUser)
 
 //Pending authentication middleware
 
-router.patch('/:userId/password', validatePasswordUpdate, updatePassword)
+router.patch(
+  '/:userId/password',
+  updateUserLimiter,
+  validatePasswordUpdate,
+  updatePassword
+)
 
 //Pending authentication middleware
 
-router.patch('/:userId/username', validateUsernameUpdate, updateUsername)
+router.patch(
+  '/:userId/username',
+  updateUserLimiter,
+  validateUsernameUpdate,
+  updateUsername
+)
 
 //Pending authentication middleware
 
 router.patch(
   '/:userId/avatar',
+  updateUserLimiter,
   upload.single('avatar'),
   validateAvatarUpdate,
   updateAvatar
@@ -74,6 +86,7 @@ router.patch(
 
 router.patch(
   '/:userId/cover',
+  updateUserLimiter,
   upload.single('cover'),
   validateCoverUpdate,
   updateCover
@@ -83,18 +96,38 @@ router.patch(
 
 //Pending authentication middleware
 
-router.get('/:userId/likes', validateUserLikes, getLikesByUser)
+router.get(
+  '/:userId/likes',
+  getUserOpsLimiter,
+  validateUserLikes,
+  getLikesByUser
+)
 
 //Pending authentication middleware
 
-router.get('/:userId/reviews', validateUserReviews, getReviewsByUser)
+router.get(
+  '/:userId/reviews',
+  getUserOpsLimiter,
+  validateUserReviews,
+  getReviewsByUser
+)
 
 //Pending authentication middleware
 
-router.get('/:userId/places', validateUserPlaces, getPlacesByUser)
+router.get(
+  '/:userId/places',
+  getUserOpsLimiter,
+  validateUserPlaces,
+  getPlacesByUser
+)
 
 //Pending authentication middleware
 
-router.get('/:userId/routes', validateUserRoutes, getRoutesByUser)
+router.get(
+  '/:userId/routes',
+  getUserOpsLimiter,
+  validateUserRoutes,
+  getRoutesByUser
+)
 
 export { router as usersRouter }
