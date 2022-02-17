@@ -6,6 +6,13 @@ const updateRoute = async (req, res, next) => {
     const { routeId } = req.params
     const { updatedContentForRoute } = req.body
 
+    // const { id } = req.user
+
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    // const foundUser = await getSingleUser({ _id: id })
+
     const updatedRoute = await updateSingleRoute(
       routeId,
       updatedContentForRoute

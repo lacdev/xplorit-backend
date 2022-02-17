@@ -11,6 +11,11 @@ const getLikesFromPlaceValidation = async (req, res, next) => {
 
     // const { id } = req.user
 
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    // const foundUser = await getSingleUser({ _id: id })
+
     const placeIdChain = param('placeId')
       .exists()
       .withMessage('Please provide a place ID.')

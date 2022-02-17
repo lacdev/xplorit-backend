@@ -3,8 +3,16 @@ import { ApiError } from '../../errors/ApiError.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getLikesInRoute = async (req, res, next) => {
-  const { routeId } = req.params
   try {
+    const { routeId } = req.params
+
+    // const { id } = req.user
+
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    // const foundUser = await getSingleUser({ _id: id })
+
     const allLikesInRoute = await getLikesFromRoute({ routeId: routeId })
 
     if (isEmptyArray(allLikesInRoute)) {
