@@ -54,8 +54,10 @@ const validateRouteCreation = async (req, res, next) => {
       .run(req)
 
     const locationChain = body('location')
-      .isArray()
-      .withMessage('location must be an array.')
+      .exists({ checkNull: true, checkFalsy: true })
+      .not()
+      .isEmpty()
+      .withMessage('Location must be an object.')
       .run(req)
 
     // const pointChain = check('location.*.type')
