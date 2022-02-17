@@ -12,7 +12,7 @@ const getRoute = async (req, res, next) => {
   // const foundUser = await getSingleUser({ _id: id })
 
   try {
-    const singleRoute = await getSingleRoute(routeId)
+    const singleRoute = await getSingleRoute({ _id: routeId })
 
     if (singleRoute) {
       res.json({
