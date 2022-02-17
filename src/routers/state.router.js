@@ -1,10 +1,9 @@
 import express from 'express'
 import { getStates } from '../controllers/statesControllers/getStates.js'
-
-//Pending Rate Limiter
+import { getStatesLimiter } from '../middlewares/rate-limiter.js'
 
 const router = express.Router()
 
-router.get('/', getStates)
+router.get('/', getStatesLimiter, getStates)
 
 export { router as statesRouter }
