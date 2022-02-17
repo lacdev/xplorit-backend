@@ -6,6 +6,13 @@ const updateUsername = async (req, res, next) => {
     const { userId } = req.params
     const { username } = req.body
 
+    // const { id } = req.user
+
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    // const foundUser = await getSingleUser({ _id: id })
+
     const updatedUser = await updateSingleUser(userId, {
       username,
     })

@@ -2,9 +2,17 @@ import { updateReviewFromRoute } from '../../usecases/reviewUsecases/updateRevie
 import { ApiError } from '../../errors/ApiError.js'
 
 const updateReviewInRoute = async (req, res, next) => {
-  const { reviewId } = req.params
-  const updatedContent = req.body
   try {
+    const { reviewId } = req.params
+    const updatedContent = req.body
+
+    // const { id } = req.user
+
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    // const foundUser = await getSingleUser({ _id: id })
+
     const updatedReview = await updateReviewFromRoute(reviewId, updatedContent)
 
     if (updatedReview) {
