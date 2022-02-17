@@ -66,19 +66,9 @@ const RouteSchema = new mongoose.Schema(
         required: true,
       },
       coordinates: {
-        type: [
-          [
-            {
-              type: Number,
-              required: [
-                true,
-                'You must provide an array of valid coordinates.',
-              ],
-            },
-          ],
-        ],
+        type: Array,
         // index: '2dsphere',
-        // required: true,
+        required: true,
       },
     },
     // fullRoute: {
