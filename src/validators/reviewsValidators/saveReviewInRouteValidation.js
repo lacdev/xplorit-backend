@@ -64,7 +64,7 @@ const validateSaveReviewInRoute = async (req, res, next) => {
 
     const routeExists = await getSingleRoute({ _id: routeId })
 
-    if (isEmptyArray(routeExists)) {
+    if (!routeExists) {
       next(ApiError.badRequest('Route not found.'))
       return
     }

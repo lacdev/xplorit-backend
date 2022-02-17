@@ -1,5 +1,8 @@
 import { postReviewToRoute } from '../../usecases/reviewUsecases/postReviewToRoute.js'
 import { ApiError } from '../../errors/ApiError.js'
+import { updateSingleRoute } from '../../usecases/routeUsecases/updateSingleRoute.js'
+import { getReviewsInRouteBeforeCalculation } from '../../usecases/../usecases/reviewUsecases/getReviewsInRoute.js'
+import { averageReducer } from '../../utils/averageReducer.js'
 
 const saveReviewInRoute = async (req, res, next) => {
   try {
@@ -18,6 +21,22 @@ const saveReviewInRoute = async (req, res, next) => {
     const savedReview = await postReviewToRoute(newReview)
 
     if (savedReview) {
+      const reviews = await getReviewsInRouteBeforeCalculation({
+        routeId: routeId,
+      })
+
+      const starsArray = reviews.map((review) => review.stars)
+
+      const weightedAverage = starsArray.reduce(averageReducer, 0).toFixed(1)
+
+      const filter = { _id: routeId }
+
+      const update = { average: weightedAverage }
+
+      const routeFound = await updateSingleRoute(filter, update)
+
+      console.log('Route average updated:', routeFound)
+
       res.json({
         description: 'Review created in the route successfully',
         statusCode: 200,
