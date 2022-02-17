@@ -6,13 +6,14 @@ const getAllPlaces = async (requestQuery = {}) => {
     docs: 'places',
   }
 
-  // let user = { path: 'userId', select: 'username avatar' }
+  let sorted = requestQuery.sort || 'average'
 
   let user = { path: 'ownerId', select: 'username avatar' }
+
   const options = {
     page: parseInt(requestQuery.page) || 1,
     limit: parseInt(requestQuery.limit) || 9,
-    //   sort: requestQuery.sort || likes || average || createdAt
+    sort: { [sorted]: -1 },
     populate: user,
     customLabels: myCustomLabels,
     projection: {
@@ -82,7 +83,7 @@ const getAllPlaces = async (requestQuery = {}) => {
     query['$and'] = $and
   }
 
-  // console.log('Query found??', JSON.stringify(query, '\n', 2))
+  console.log('Query found??', JSON.stringify(query, '\n', 2))
 
   return await Place.paginate(query, options)
 }

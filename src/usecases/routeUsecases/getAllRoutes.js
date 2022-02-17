@@ -6,11 +6,16 @@ const getAllRoutes = async (requestQuery = {}) => {
     docs: 'routes',
   }
 
+  let sorted = requestQuery.sort || 'average'
+
+  let user = { path: 'ownerId', select: 'username avatar' }
+
   const options = {
     page: requestQuery.page || 1,
     limit: requestQuery.limit || 9,
-    //   sort: requestQuery.sort || likes || average || createdAt
+    sort: { [sorted]: -1 },
     customLabels: myCustomLabels,
+    populate: user,
     projection: {
       _id: 1,
       ownerId: 1,
