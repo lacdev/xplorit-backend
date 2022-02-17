@@ -53,12 +53,12 @@ const validateRouteCreation = async (req, res, next) => {
       .withMessage('tags inside tags array must be strings.')
       .run(req)
 
-    const fullRouteChain = body('fullRoute')
+    const locationChain = body('location')
       .isArray()
-      .withMessage('fullRoute must be an array.')
+      .withMessage('location must be an array.')
       .run(req)
 
-    // const pointChain = check('fullRoute.*.type')
+    // const pointChain = check('location.*.type')
     //   .not()
     //   .isEmpty()
     //   .withMessage('please provide a latitude')
@@ -66,7 +66,7 @@ const validateRouteCreation = async (req, res, next) => {
     //   .withMessage('type must be a valid string named Point.')
     //   .run(req)
 
-    // const coordinatesChain = check('fullRoute.*.coordinates')
+    // const coordinatesChain = check('location.*.coordinates')
     //   .isArray()
     //   .withMessage('Coordinates must be a valid GeoJSON Array')
     //   .not()
@@ -94,7 +94,7 @@ const validateRouteCreation = async (req, res, next) => {
       descriptionChain,
       tagsChain,
       tagsStringsChain,
-      fullRouteChain,
+      locationChain,
       // pointChain,
       // coordinatesChain,
       imagesChain,

@@ -59,7 +59,7 @@ const RouteSchema = new mongoose.Schema(
         'Tags array must have a maximum of 4 String items.',
       ],
     },
-    fullRoute: {
+    location: {
       type: {
         type: String, // Don't do `{ location: { type: String } }`
         enum: ['MultiPoint'], // 'location.type' must be 'MultiPoint'
