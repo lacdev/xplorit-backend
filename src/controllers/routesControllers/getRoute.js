@@ -2,8 +2,6 @@ import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { ApiError } from '../../errors/ApiError.js'
 
 const getRoute = async (req, res, next) => {
-  const { routeId } = req.params
-
   // const { id } = req.user
 
   //Validate payload equals to the user in the database they need to match.
@@ -12,6 +10,8 @@ const getRoute = async (req, res, next) => {
   // const foundUser = await getSingleUser({ _id: id })
 
   try {
+    const { routeId } = req.params
+
     const singleRoute = await getSingleRoute({ _id: routeId })
 
     if (singleRoute) {
