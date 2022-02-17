@@ -6,6 +6,13 @@ const getUsers = async (req, res, next) => {
   try {
     const allUsers = await getAllUsers(req.query)
 
+    // const { id } = req.user
+
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    // const foundUser = await getSingleUser({ _id: id })
+
     if (isEmptyArray(allUsers)) {
       next(ApiError.notFound('No users were found.'))
     }

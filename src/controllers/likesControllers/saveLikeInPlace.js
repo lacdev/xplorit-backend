@@ -3,10 +3,17 @@ import { updateSinglePlace } from '../../usecases/placeUsecases/updateSinglePlac
 import { ApiError } from '../../errors/ApiError.js'
 
 const saveLikeInPlace = async (req, res, next) => {
-  const { placeId } = req.params
-  const { userId } = req.body
-
   try {
+    const { placeId } = req.params
+    const { userId } = req.body
+
+    // const { id } = req.user
+
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    // const foundUser = await getSingleUser({ _id: id })
+
     const savedLike = await postLikeToPlace({
       placeId: placeId,
       userId: userId,
