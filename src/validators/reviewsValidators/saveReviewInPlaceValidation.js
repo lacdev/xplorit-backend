@@ -5,6 +5,7 @@ import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getAllReviewsFromPlace } from '../../usecases/reviewUsecases/getAllReviewsFromPlace.js'
+// import { getReviewsInPlaceBeforeCalculation } from '../../usecases/reviewUsecases/getReviewsInPlace.js'
 
 const validateSaveReviewInPlace = async (req, res, next) => {
   try {
@@ -77,6 +78,36 @@ const validateSaveReviewInPlace = async (req, res, next) => {
       next(ApiError.badRequest('User not found.'))
       return
     }
+
+    // //DEMO
+
+    // const reviews = await getReviewsInPlaceBeforeCalculation({
+    //   placeId: placeId,
+    // })
+
+    // const sumOfReviews = reviews.map((review) => review.stars)
+    // // const average = sumOfReviews.reduce((number) => number)
+
+    // // const arr = [129, 139, 155, 176]
+
+    // const reducer = (acc, value, index, array) => {
+    //   var calculatedValue = acc + value
+
+    //   if (index === array.length - 1) {
+    //     return calculatedValue / array.length
+    //   }
+
+    //   return calculatedValue
+    // }
+
+    // const weightedAverage = sumOfReviews.reduce(reducer, 0)
+
+    // console.log('Weighted result?', weightedAverage)
+
+    // // console.log(result)
+
+    // // console.log('Are these my reviews>', reviews)
+    // console.log('Are these my sum', sumOfReviews)
 
     const reviewExists = await getAllReviewsFromPlace({
       userId: userId,
