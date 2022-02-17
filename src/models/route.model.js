@@ -60,9 +60,31 @@ const RouteSchema = new mongoose.Schema(
       ],
     },
     fullRoute: {
-      type: Array,
-      required: true,
+      type: {
+        type: String, // Don't do `{ location: { type: String } }`
+        enum: ['MultiPoint'], // 'location.type' must be 'MultiPoint'
+        required: true,
+      },
+      coordinates: {
+        type: [
+          [
+            {
+              type: Number,
+              required: [
+                true,
+                'You must provide an array of valid coordinates.',
+              ],
+            },
+          ],
+        ],
+        // index: '2dsphere',
+        // required: true,
+      },
     },
+    // fullRoute: {
+    //   type: Array,
+    //   required: true,
+    // },
     images: {
       type: [
         {

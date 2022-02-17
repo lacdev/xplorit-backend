@@ -1,8 +1,8 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
-const { body, check, validationResult } = validator
-
+const { body, validationResult } = validator
+// check,
 const validateRouteCreation = async (req, res, next) => {
   try {
     const newRoute = req.body
@@ -58,21 +58,21 @@ const validateRouteCreation = async (req, res, next) => {
       .withMessage('fullRoute must be an array.')
       .run(req)
 
-    const pointChain = check('fullRoute.*.type')
-      .not()
-      .isEmpty()
-      .withMessage('please provide a latitude')
-      .isString()
-      .withMessage('type must be a valid string named Point.')
-      .run(req)
+    // const pointChain = check('fullRoute.*.type')
+    //   .not()
+    //   .isEmpty()
+    //   .withMessage('please provide a latitude')
+    //   .isString()
+    //   .withMessage('type must be a valid string named Point.')
+    //   .run(req)
 
-    const coordinatesChain = check('fullRoute.*.coordinates')
-      .isArray()
-      .withMessage('Coordinates must be a valid GeoJSON Array')
-      .not()
-      .isEmpty()
-      .withMessage('please provide a valid coordinates array.')
-      .run(req)
+    // const coordinatesChain = check('fullRoute.*.coordinates')
+    //   .isArray()
+    //   .withMessage('Coordinates must be a valid GeoJSON Array')
+    //   .not()
+    //   .isEmpty()
+    //   .withMessage('please provide a valid coordinates array.')
+    //   .run(req)
 
     const imagesChain = body('images')
       .exists({ checkNull: true, checkFalsy: true })
@@ -95,8 +95,8 @@ const validateRouteCreation = async (req, res, next) => {
       tagsChain,
       tagsStringsChain,
       fullRouteChain,
-      pointChain,
-      coordinatesChain,
+      // pointChain,
+      // coordinatesChain,
       imagesChain,
       imagesUrlsChain,
     ])
