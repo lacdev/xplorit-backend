@@ -73,7 +73,8 @@ const getAllRoutes = async (requestQuery = {}) => {
       parseInt(requestQuery.distance) > 1 ? parseInt(requestQuery.distance) : 1
 
     //console.log('whats the distance bro?', distance)
-    //Convertir km a radianes
+
+    //Convert km to radians PENDING.
 
     const radians = 3963.2
     const distanceInRadians = distance / radians

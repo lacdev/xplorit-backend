@@ -8,6 +8,7 @@ const router = express.Router()
 
 //Test route for protected routes.
 
+//Crear el lugar
 router.get('/', verifyToken, (req, res) => {
   res.send('Welcome to the protected test route bro.')
 })

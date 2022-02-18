@@ -1,6 +1,7 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { sanitizeInput } from '../../utils/inputSanitizer.js'
 const { body, validationResult } = validator
 // check,
 const validateRouteCreation = async (req, res, next) => {
@@ -41,6 +42,7 @@ const validateRouteCreation = async (req, res, next) => {
       .isString()
       .withMessage('Name must be a string.')
       .isLength({ max: 3000 })
+      .trim()
       .run(req)
 
     const tagsChain = body('tags')
@@ -104,6 +106,10 @@ const validateRouteCreation = async (req, res, next) => {
       next(ApiError.badRequest('User not found.'))
       return
     }
+
+    const sanitizedDescription = sanitizeInput(req.body?.description)
+
+    req.body.description = sanitizedDescription
 
     next()
   } catch (error) {

@@ -56,20 +56,6 @@ const getAllPlaces = async (requestQuery = {}) => {
     query['$or'] = qFilters
   }
 
-  // query = {
-  //   $or: [
-  //     { 'address.state': { $regex: `${requestQuery.q}`, $options: 'i' } },
-  //     { 'address.city': { $regex: `${requestQuery.q}`, $options: 'i' } },
-  //     { name: { $regex: `${requestQuery.q}`, $options: 'i' } },
-  //     { description: { $regex: `${requestQuery.q}`, $options: 'i' } },
-  //   ],
-  //   $and: [{ tags: { $all: tagsToLowerCase } }],
-  //   $and: [
-  //     { 'address.state': requestQuery.state }, //'Guanajuato'
-  //     { 'address.city': requestQuery.city }, //Leon
-  //   ],
-  // }
-
   //User sent tags with the checkboxes?
 
   if (requestQuery.tags) {
@@ -88,7 +74,8 @@ const getAllPlaces = async (requestQuery = {}) => {
       parseInt(requestQuery.distance) > 1 ? parseInt(requestQuery.distance) : 1
 
     //console.log('whats the distance bro?', distance)
-    //Convertir km a radianes
+
+    //Convert km to radians PENDING.
 
     const radians = 3963.2
     const distanceInRadians = distance / radians

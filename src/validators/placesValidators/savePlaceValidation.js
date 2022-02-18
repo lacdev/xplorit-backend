@@ -1,6 +1,7 @@
 import validator from 'express-validator'
 import { ApiError } from '../../errors/ApiError.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { sanitizeInput } from '../../utils/inputSanitizer.js'
 const { body, check, validationResult } = validator
 
 const validatePlaceCreation = async (req, res, next) => {
@@ -179,6 +180,10 @@ const validatePlaceCreation = async (req, res, next) => {
       next(ApiError.badRequest('User not found.'))
       return
     }
+
+    const sanitizedDescription = sanitizeInput(req.body?.description)
+
+    req.body.description = sanitizedDescription
 
     next()
   } catch (error) {
