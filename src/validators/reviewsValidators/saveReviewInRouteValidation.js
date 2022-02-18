@@ -5,6 +5,7 @@ import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getAllReviewsFromRoute } from '../../usecases/reviewUsecases/getAllReviewsFromRoute.js'
+import { sanitizeInput } from '../../utils/inputSanitizer.js'
 
 const validateSaveReviewInRoute = async (req, res, next) => {
   try {
@@ -32,7 +33,6 @@ const validateSaveReviewInRoute = async (req, res, next) => {
       .not()
       .isEmpty()
       .trim()
-      .escape()
       .withMessage("Comment in the review can't be empty.")
       .run(req)
 
@@ -89,6 +89,10 @@ const validateSaveReviewInRoute = async (req, res, next) => {
       next(ApiError.badRequest('You can only post one review per route.'))
       return
     }
+
+    const sanitizedComment = sanitizeInput(req.body?.comment)
+
+    req.body.comment = sanitizedComment
 
     next()
   } catch (e) {
