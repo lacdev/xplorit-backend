@@ -22,6 +22,12 @@ const verifyToken = async (req, res, next) => {
 
     req.user = decoded
 
+    /* Request User is going to be equal to the decoded identity object from the user.
+     user = { 
+      id: mongoId, 
+      username: exampleUserName 
+    } */
+
     next()
   } catch (err) {
     if (err.name === 'JsonWebTokenError') {

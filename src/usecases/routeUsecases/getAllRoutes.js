@@ -1,4 +1,5 @@
 import { Route } from '../../models/route.model.js'
+import { isSafeRegex } from '../../utils/regexCheck.js'
 
 const getAllRoutes = async (requestQuery = {}) => {
   const myCustomLabels = {
@@ -43,15 +44,14 @@ const getAllRoutes = async (requestQuery = {}) => {
 
   //Filters for the q parameter, searches globally for keywords in the selected fields.
 
-  const qFilters = [
-    { name: { $regex: `${requestQuery.q}`, $options: 'i' } },
-    { description: { $regex: `${requestQuery.q}`, $options: 'i' } },
-  ]
+  const qFilters = [{ name: { $regex: `${requestQuery.q}`, $options: 'i' } }]
 
   //User searched for a keyword in the search bar ?
 
   if (requestQuery.q) {
-    console.log('my query?', requestQuery.q)
+    if (!isSafeRegex(requestQuery.q)) {
+      throw new Error('No valid query')
+    }
     query['$or'] = qFilters
   }
 
@@ -72,12 +72,17 @@ const getAllRoutes = async (requestQuery = {}) => {
     let distance =
       parseInt(requestQuery.distance) > 1 ? parseInt(requestQuery.distance) : 1
 
-    console.log('whats the distance bro?', distance)
+    //console.log('whats the distance bro?', distance)
+    //Convertir km a radianes
+
+    const radians = 3963.2
+    const distanceInRadians = distance / radians
 
     $and.push({
       'location.coordinates': {
         $geoWithin: {
-          $centerSphere: [[longitude, latitude], distance / 3963.2],
+          // $centerSphere: [[longitude, latitude], distance / 3963.2],
+          $centerSphere: [[longitude, latitude], distanceInRadians],
         },
       },
     })
