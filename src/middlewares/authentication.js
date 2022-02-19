@@ -8,11 +8,21 @@ const verifyToken = async (req, res, next) => {
 
     const token = req.header('authorization')
 
+    // const tokenExtracted = token.split(' ')[1]
+
+    // console.log('token extracted', tokenExtracted)
+
+    // if (!tokenExtracted) {
+    //   next(ApiError.unauthorized('Unathorized Access. Token not provided.'))
+    // }
+
     if (!token) {
       next(ApiError.unauthorized('Unathorized Access. Token not provided.'))
     }
 
     const decoded = jwt.verify(token, SECRET)
+
+    console.log('token decoded object', decoded)
 
     if (!decoded) {
       next(
