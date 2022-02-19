@@ -137,6 +137,8 @@ router.delete(
   deleteLikeInRoute
 )
 
+//To be deprecated?
+
 // router.delete(
 //   '/:routeId/likes/:likeId',
 //   validateLikeDeletionInRoute,
