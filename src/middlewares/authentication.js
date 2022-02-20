@@ -6,7 +6,26 @@ const verifyToken = async (req, res, next) => {
   try {
     const SECRET = variables.JWT_SECRET
 
-    const token = req.header('authorization')
+    const tokenHeaders = req.header('authorization')
+
+    if (!(tokenHeaders && tokenHeaders.split(' ')[0] === 'Bearer')) {
+      next(ApiError.unauthorized('Not a valid token was provided.'))
+      return
+    }
+
+    const tokenArray = tokenHeaders.split(' ')
+
+    console.log('This is the token array splitted', tokenArray)
+
+    const token = tokenArray[1]
+
+    console.log('This is my token array 1 index', token)
+
+    // if (token.startsWith('Bearer ')) {
+    //   token = authHeader.substring(7, authHeader.length)
+    // } else {
+    //   //Error
+    // }
 
     // const tokenExtracted = token.split(' ')[1]
 
