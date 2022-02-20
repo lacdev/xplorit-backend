@@ -8,8 +8,6 @@ const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body
 
-    const SECRET = variables.JWT_SECRET
-
     const user = await searchUserBeforeLogin({ email: email })
 
     if (!user) {
@@ -23,6 +21,8 @@ const loginUser = async (req, res, next) => {
       next(ApiError.badRequest('The email or password is incorrect.'))
       return
     }
+
+    const SECRET = variables.JWT_SECRET
 
     const payload = {
       user: user.username,

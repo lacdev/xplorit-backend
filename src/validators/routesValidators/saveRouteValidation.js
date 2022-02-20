@@ -1,8 +1,9 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
-const { body, check, validationResult } = validator
-
+import { sanitizeInput } from '../../utils/inputSanitizer.js'
+const { body, validationResult } = validator
+// check,
 const validateRouteCreation = async (req, res, next) => {
   try {
     const newRoute = req.body
@@ -40,7 +41,8 @@ const validateRouteCreation = async (req, res, next) => {
       .withMessage('Please provide a description for the place.')
       .isString()
       .withMessage('Name must be a string.')
-      .isLength({ max: 1000 })
+      .isLength({ max: 3000 })
+      .trim()
       .run(req)
 
     const tagsChain = body('tags')
@@ -53,25 +55,11 @@ const validateRouteCreation = async (req, res, next) => {
       .withMessage('tags inside tags array must be strings.')
       .run(req)
 
-    const fullRouteChain = body('fullRoute')
-      .isArray()
-      .withMessage('fullRoute must be an array.')
-      .run(req)
-
-    const pointChain = check('fullRoute.*.type')
+    const locationChain = body('location')
+      .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
-      .withMessage('please provide a latitude')
-      .isString()
-      .withMessage('type must be a valid string named Point.')
-      .run(req)
-
-    const coordinatesChain = check('fullRoute.*.coordinates')
-      .isArray()
-      .withMessage('Coordinates must be a valid GeoJSON Array')
-      .not()
-      .isEmpty()
-      .withMessage('please provide a valid coordinates array.')
+      .withMessage('Location must be an object.')
       .run(req)
 
     const imagesChain = body('images')
@@ -94,9 +82,7 @@ const validateRouteCreation = async (req, res, next) => {
       descriptionChain,
       tagsChain,
       tagsStringsChain,
-      fullRouteChain,
-      pointChain,
-      coordinatesChain,
+      locationChain,
       imagesChain,
       imagesUrlsChain,
     ])
@@ -120,6 +106,10 @@ const validateRouteCreation = async (req, res, next) => {
       next(ApiError.badRequest('User not found.'))
       return
     }
+
+    const sanitizedDescription = sanitizeInput(req.body?.description)
+
+    req.body.description = sanitizedDescription
 
     next()
   } catch (error) {

@@ -25,10 +25,18 @@ import { getLikesFromPlaceValidation } from '../validators/likesValidators/getLi
 import { validateLikeInPlace } from '../validators/likesValidators/saveLikeInPlaceValidation.js'
 import { validateLikeDeletionInPlace } from '../validators/likesValidators/deleteLikeInPlaceValidation.js'
 import { validatePlaceImages } from '../validators/placesValidators/placeImagesValidation.js'
+import { postReviewLimiter } from '../middlewares/rate-limiter.js'
+import { updateReviewLimiter } from '../middlewares/rate-limiter.js'
+import { getReviewsLimiter } from '../middlewares/rate-limiter.js'
+import { postLikeLimiter } from '../middlewares/rate-limiter.js'
+import { deleteLikeLimiter } from '../middlewares/rate-limiter.js'
+import { getLikesLimiter } from '../middlewares/rate-limiter.js'
+import { postPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
+import { getPlacesOrRoutesLimiter } from '../middlewares/rate-limiter.js'
+import { getPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
+import { updatePlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
 // import { verifyToken } from '../middlewares/authentication.js'
 // import { validateGetPlaceQuery } from '../validators/placesValidators/getPlaceQueryValidator.js'
-
-//Pending Rate Limiter
 
 const router = express.Router()
 
@@ -40,13 +48,14 @@ const upload = multer({
 })
 
 //Places controllers
-router.get('/', getPlaces)
-router.get('/:placeId', validateGetPlace, getPlace)
+router.get('/', getPlacesOrRoutesLimiter, getPlaces)
+router.get('/:placeId', getPlaceOrRouteLimiter, validateGetPlace, getPlace)
 
 //Pending authentication middleware
 
 router.post(
   '/',
+  postPlaceOrRouteLimiter,
   upload.array('images', 6),
   validatePlaceImages,
   validatePlaceCreation,
@@ -55,23 +64,40 @@ router.post(
 
 //Pending authentication middleware
 
-router.patch('/:placeId', validatePlaceUpdate, updatePlace)
+router.patch(
+  '/:placeId',
+  updatePlaceOrRouteLimiter,
+  validatePlaceUpdate,
+  updatePlace
+)
 
 //Pending authentication middleware
 
 router.delete('/:placeId', validatePlaceDeletion, deletePlace)
 
 //Reviews in places controllers
-router.get('/:placeId/reviews', validateGetReviewsFromPlace, getReviewsInPlace)
+
+router.get(
+  '/:placeId/reviews',
+  getReviewsLimiter,
+  validateGetReviewsFromPlace,
+  getReviewsInPlace
+)
 
 //Pending authentication middleware
 
-router.post('/:placeId/reviews', validateSaveReviewInPlace, saveReviewInPlace)
+router.post(
+  '/:placeId/reviews',
+  postReviewLimiter,
+  validateSaveReviewInPlace,
+  saveReviewInPlace
+)
 
 //Pending authentication middleware
 
 router.patch(
   '/:placeId/reviews/:reviewId',
+  updateReviewLimiter,
   validateReviewUpdateInPlace,
   updateReviewInPlace
 )
@@ -85,19 +111,33 @@ router.delete(
 )
 
 //Likes in places controllers
-router.get('/:placeId/likes', getLikesFromPlaceValidation, getLikesInPlace)
+
+router.get(
+  '/:placeId/likes',
+  getLikesLimiter,
+  getLikesFromPlaceValidation,
+  getLikesInPlace
+)
 
 //Pending authentication middleware
 
-router.post('/:placeId/likes', validateLikeInPlace, saveLikeInPlace)
+router.post(
+  '/:placeId/likes',
+  postLikeLimiter,
+  validateLikeInPlace,
+  saveLikeInPlace
+)
 
 //Pending authentication middleware
 
 router.delete(
   '/:placeId/likes/',
+  deleteLikeLimiter,
   validateLikeDeletionInPlace,
   deleteLikeInPlace
 )
+
+//To be deprecated?
 
 // router.delete(
 //   '/:placeId/likes/:likeId',

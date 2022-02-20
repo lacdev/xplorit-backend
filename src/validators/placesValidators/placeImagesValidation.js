@@ -6,6 +6,7 @@ const validatePlaceImages = async (req, res, next) => {
   try {
     if (!req.files || req.files.length === 0) {
       next(ApiError.badRequest('No images to upload were found.'))
+      return
     }
 
     const typesAllowed = ['image/jpeg', 'image/png', 'image/webp']
