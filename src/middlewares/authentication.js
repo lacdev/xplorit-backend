@@ -8,7 +8,7 @@ const verifyToken = async (req, res, next) => {
 
     const tokenHeaders = req.header('authorization')
 
-    if (!(tokenHeaders && tokenHeaders.split(' ')[0] === 'Bearer')) {
+    if (!tokenHeaders && !(tokenHeaders.split(' ')[0] === 'Bearer')) {
       next(ApiError.unauthorized('Not a valid token was provided.'))
       return
     }
