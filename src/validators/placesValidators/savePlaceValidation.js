@@ -15,6 +15,8 @@ const validatePlaceCreation = async (req, res, next) => {
 
     // const foundUser = await getSingleUser({ _id: id })
 
+    // req.body.ownerId = id
+
     const ownerIdChain = body('ownerId')
       .exists({ checkNull: true, checkFalsy: true })
       .withMessage('Please provide a valid ID.')
