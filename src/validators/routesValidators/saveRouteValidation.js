@@ -1,27 +1,39 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { sanitizeInput } from '../../utils/inputSanitizer.js'
 const { body, validationResult } = validator
-// check,
+
 const validateRouteCreation = async (req, res, next) => {
   try {
-    const newRoute = req.body
+    const { id } = req.user
 
-    const { ownerId } = newRoute
+    const foundUser = await getSingleUser({ _id: id })
 
-    // const { id } = req.user
+    if (!foundUser) {
+      next(ApiError.badRequest('User not found.'))
+      return
+    }
 
     //Validate payload equals to the user in the database they need to match.
     //Otherwise throw an error.
 
     // const foundUser = await getSingleUser({ _id: id })
 
-    const ownerIdChain = body('ownerId')
-      .exists({ checkNull: true, checkFalsy: true })
-      .withMessage('Please provide a valid ID.')
-      .isMongoId()
-      .withMessage('Please provide a valid ID.')
-      .run(req)
+    // const userNameExists = await getSingleUser({
+    //   _id: ownerId,
+    // })
+
+    // const newRoute = req.body
+
+    // const { ownerId } = newRoute
+
+    // const ownerIdChain = body('ownerId')
+    //   .exists({ checkNull: true, checkFalsy: true })
+    //   .withMessage('Please provide a valid ID.')
+    //   .isMongoId()
+    //   .withMessage('Please provide a valid ID.')
+    //   .run(req)
 
     const nameChain = body('name')
       .exists({ checkNull: true, checkFalsy: true })
@@ -39,8 +51,9 @@ const validateRouteCreation = async (req, res, next) => {
       .isEmpty()
       .withMessage('Please provide a description for the place.')
       .isString()
-      .withMessage('Name must be a string.')
+      .withMessage('Description must be a string.')
       .isLength({ max: 3000 })
+      .trim()
       .run(req)
 
     const tagsChain = body('tags')
@@ -75,7 +88,6 @@ const validateRouteCreation = async (req, res, next) => {
       .run(req)
 
     await Promise.all([
-      ownerIdChain,
       nameChain,
       descriptionChain,
       tagsChain,
@@ -94,16 +106,13 @@ const validateRouteCreation = async (req, res, next) => {
       return
     }
 
-    // const foundUser = await getSingleUser({ _id: id })
+    const sanitizedDescription = sanitizeInput(req.body?.description)
 
-    const userNameExists = await getSingleUser({
-      _id: ownerId,
-    })
+    req.body.description = sanitizedDescription
 
-    if (!userNameExists) {
-      next(ApiError.badRequest('User not found.'))
-      return
-    }
+    const owner = id //equals to the decoded token user identity's id.
+
+    req.body.ownerId = owner
 
     next()
   } catch (error) {

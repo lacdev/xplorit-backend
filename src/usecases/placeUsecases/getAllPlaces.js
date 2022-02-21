@@ -1,4 +1,5 @@
 import { Place } from '../../models/place.model.js'
+import { isSafeRegex } from '../../utils/regexCheck.js'
 
 const getAllPlaces = async (requestQuery = {}) => {
   const myCustomLabels = {
@@ -6,13 +7,14 @@ const getAllPlaces = async (requestQuery = {}) => {
     docs: 'places',
   }
 
-  // let user = { path: 'userId', select: 'username avatar' }
+  let sorted = requestQuery.sort || 'average'
 
   let user = { path: 'ownerId', select: 'username avatar' }
+
   const options = {
     page: parseInt(requestQuery.page) || 1,
     limit: parseInt(requestQuery.limit) || 9,
-    //   sort: requestQuery.sort || likes || average || createdAt
+    sort: { [sorted]: -1 },
     populate: user,
     customLabels: myCustomLabels,
     projection: {
@@ -43,12 +45,14 @@ const getAllPlaces = async (requestQuery = {}) => {
     { 'address.state': { $regex: `${requestQuery.q}`, $options: 'i' } },
     { 'address.city': { $regex: `${requestQuery.q}`, $options: 'i' } },
     { name: { $regex: `${requestQuery.q}`, $options: 'i' } },
-    { description: { $regex: `${requestQuery.q}`, $options: 'i' } },
   ]
 
   //User searched for a keyword in the search bar ?
 
   if (requestQuery.q) {
+    if (!isSafeRegex(requestQuery.q)) {
+      throw new Error('No valid query')
+    }
     query['$or'] = qFilters
   }
 
@@ -69,12 +73,18 @@ const getAllPlaces = async (requestQuery = {}) => {
     let distance =
       parseInt(requestQuery.distance) > 1 ? parseInt(requestQuery.distance) : 1
 
-    // console.log('whats the distance bro?', distance)
+    //console.log('whats the distance bro?', distance)
+
+    //Convert km to radians PENDING.
+
+    const radians = 3963.2
+    const distanceInRadians = distance / radians
 
     $and.push({
       'location.coordinates': {
         $geoWithin: {
-          $centerSphere: [[longitude, latitude], distance / 3963.2],
+          // $centerSphere: [[longitude, latitude], distance / radians],
+          $centerSphere: [[longitude, latitude], distanceInRadians],
         },
       },
     })
@@ -82,7 +92,7 @@ const getAllPlaces = async (requestQuery = {}) => {
     query['$and'] = $and
   }
 
-  // console.log('Query found??', JSON.stringify(query, '\n', 2))
+  console.log('Query found??', JSON.stringify(query, '\n', 2))
 
   return await Place.paginate(query, options)
 }

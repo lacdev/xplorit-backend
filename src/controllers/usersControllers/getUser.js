@@ -3,7 +3,7 @@ import { ApiError } from '../../errors/ApiError.js'
 
 const getUser = async (req, res, next) => {
   try {
-    const { userId } = req.params
+    // const { userId } = req.params
 
     // const { id } = req.user
 
@@ -12,9 +12,13 @@ const getUser = async (req, res, next) => {
 
     // const foundUser = await getSingleUser({ _id: id })
 
-    const foundUser = await getSingleUser({
-      _id: userId,
-    })
+    // const foundUser = await getSingleUser({
+    //   _id: userId,
+    // })
+
+    const { id } = req.user
+
+    const foundUser = await getSingleUser({ _id: id })
 
     if (!foundUser) {
       next(ApiError.notFound('User not found.'))

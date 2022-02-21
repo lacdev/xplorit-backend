@@ -5,19 +5,20 @@ import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getAllReviewsFromPlace } from '../../usecases/reviewUsecases/getAllReviewsFromPlace.js'
+import { sanitizeInput } from '../../utils/inputSanitizer.js'
 
 const validateSaveReviewInPlace = async (req, res, next) => {
   try {
     const { placeId } = req.params
-    const review = req.body
-    const { userId } = review
 
-    // const { id } = req.user
+    const { id } = req.user
 
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
+    const userExists = await getSingleUser({ _id: id })
 
-    // const foundUser = await getSingleUser({ _id: id })
+    if (!userExists) {
+      next(ApiError.badRequest('User not found.'))
+      return
+    }
 
     const placeIdChain = param('placeId')
       .exists()
@@ -32,7 +33,6 @@ const validateSaveReviewInPlace = async (req, res, next) => {
       .not()
       .isEmpty()
       .trim()
-      .escape()
       .withMessage("Comment in the review can't be empty.")
       .run(req)
 
@@ -44,14 +44,14 @@ const validateSaveReviewInPlace = async (req, res, next) => {
       .withMessage('Stars must be a valid number between 1 and 5.')
       .run(req)
 
-    const userIdChain = body('userId')
-      .exists()
-      .withMessage('Please provide a user ID.')
-      .isMongoId()
-      .withMessage('Please provide a valid user ID.')
-      .run(req)
+    // const userIdChain = body('userId')
+    //   .exists()
+    //   .withMessage('Please provide a user ID.')
+    //   .isMongoId()
+    //   .withMessage('Please provide a valid user ID.')
+    //   .run(req)
 
-    await Promise.all([placeIdChain, commentChain, starsChain, userIdChain])
+    await Promise.all([placeIdChain, commentChain, starsChain])
 
     const result = validationResult(req)
 
@@ -69,26 +69,21 @@ const validateSaveReviewInPlace = async (req, res, next) => {
       return
     }
 
-    // const foundUser = await getSingleUser({ _id: id })
-
-    const userExists = await getSingleUser({ _id: userId })
-
-    if (!userExists) {
-      next(ApiError.badRequest('User not found.'))
-      return
-    }
-
     const reviewExists = await getAllReviewsFromPlace({
-      userId: userId,
+      userId: id,
       placeId: placeId,
     })
-
-    console.log('What is all reviews returning?', reviewExists)
 
     if (!isEmptyArray(reviewExists.reviews)) {
       next(ApiError.badRequest('You can only post one review per place.'))
       return
     }
+
+    const sanitizedComment = sanitizeInput(req.body?.comment)
+
+    req.body.comment = sanitizedComment
+    req.body.userId = id
+    req.body.placeId = placeId
 
     next()
   } catch (e) {

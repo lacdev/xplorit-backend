@@ -6,7 +6,16 @@ const verifyToken = async (req, res, next) => {
   try {
     const SECRET = variables.JWT_SECRET
 
-    const token = req.header('authorization')
+    const tokenHeaders = req.header('authorization')
+
+    if (!tokenHeaders) {
+      next(ApiError.unauthorized('Not a valid token was provided.'))
+      return
+    }
+
+    const tokenArray = tokenHeaders.split(' ')
+
+    const token = tokenArray[1]
 
     if (!token) {
       next(ApiError.unauthorized('Unathorized Access. Token not provided.'))
@@ -21,6 +30,12 @@ const verifyToken = async (req, res, next) => {
     }
 
     req.user = decoded
+
+    /* Request User Property is going to be equal to the decoded identity object from the user.
+     req.user = { 
+      id: mongoId, 
+      username: exampleUserName 
+    } */
 
     next()
   } catch (err) {

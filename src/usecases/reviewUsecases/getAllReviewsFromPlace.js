@@ -11,6 +11,7 @@ const getAllReviewsFromPlace = async (query) => {
   const options = {
     page: 1,
     limit: 10,
+    sort: { createdAt: -1 },
     populate: user,
     projection: {
       createdAt: 1,
