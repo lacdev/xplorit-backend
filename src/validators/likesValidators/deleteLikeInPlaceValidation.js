@@ -5,7 +5,7 @@ import { getLikesFromPlace } from '../../usecases/likeUsecases/getLikesFromPlace
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 
-const { body, param, validationResult } = validator
+const { param, validationResult } = validator
 
 const validateLikeDeletionInPlace = async (req, res, next) => {
   try {
@@ -31,14 +31,14 @@ const validateLikeDeletionInPlace = async (req, res, next) => {
       .withMessage('Please provide a valid place ID.')
       .run(req)
 
-    const userIdChain = body('userId')
-      .exists()
-      .withMessage('Please provide a user ID.')
-      .isMongoId()
-      .withMessage('Please provide a valid user ID.')
-      .run(req)
+    // const userIdChain = body('userId')
+    //   .exists()
+    //   .withMessage('Please provide a user ID.')
+    //   .isMongoId()
+    //   .withMessage('Please provide a valid user ID.')
+    //   .run(req)
 
-    await Promise.all([placeIdChain, userIdChain])
+    await Promise.all([placeIdChain])
 
     const result = validationResult(req)
 
