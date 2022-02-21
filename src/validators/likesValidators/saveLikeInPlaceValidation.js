@@ -5,19 +5,24 @@ import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { getLikesFromPlace } from '../../usecases/likeUsecases/getLikesFromPlace.js'
 
-const { param, body, validationResult } = validator
+const { param, validationResult } = validator
 
 const validateLikeInPlace = async (req, res, next) => {
   try {
     const { placeId } = req.params
-    const { userId } = req.body
+    // const { userId } = req.body
 
-    // const { id } = req.user
+    const { id } = req.user
 
     //Validate payload equals to the user in the database they need to match.
     //Otherwise throw an error.
 
-    // const foundUser = await getSingleUser({ _id: id })
+    const foundUser = await getSingleUser({ _id: id })
+
+    if (!foundUser) {
+      next(ApiError.badRequest('User not found.'))
+      return
+    }
 
     const placeIdChain = param('placeId')
       .exists()
@@ -26,14 +31,14 @@ const validateLikeInPlace = async (req, res, next) => {
       .withMessage('Please provide a valid place ID.')
       .run(req)
 
-    const userIdChain = body('userId')
-      .exists()
-      .withMessage('Please provide a user ID.')
-      .isMongoId()
-      .withMessage('Please provide a valid user ID.')
-      .run(req)
+    // const userIdChain = body('userId')
+    //   .exists()
+    //   .withMessage('Please provide a user ID.')
+    //   .isMongoId()
+    //   .withMessage('Please provide a valid user ID.')
+    //   .run(req)
 
-    await Promise.all([placeIdChain, userIdChain])
+    await Promise.all([placeIdChain])
 
     const result = validationResult(req)
 
@@ -51,18 +56,9 @@ const validateLikeInPlace = async (req, res, next) => {
       return
     }
 
-    // const foundUser = await getSingleUser({ _id: id })
-
-    const userExists = await getSingleUser({ _id: userId })
-
-    if (!userExists) {
-      next(ApiError.badRequest('User not found.'))
-      return
-    }
-
     const totalLikesInPlace = await getLikesFromPlace({
       placeId: placeId,
-      userId: userId,
+      userId: id,
     })
 
     if (!isEmptyArray(totalLikesInPlace)) {

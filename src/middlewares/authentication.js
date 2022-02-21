@@ -23,8 +23,6 @@ const verifyToken = async (req, res, next) => {
 
     const decoded = jwt.verify(token, SECRET)
 
-    console.log('token decoded object', decoded)
-
     if (!decoded) {
       next(
         ApiError.unauthorized('Unathorized Access. A valid token is required.')
@@ -33,8 +31,8 @@ const verifyToken = async (req, res, next) => {
 
     req.user = decoded
 
-    /* Request User is going to be equal to the decoded identity object from the user.
-     user = { 
+    /* Request User Property is going to be equal to the decoded identity object from the user.
+     req.user = { 
       id: mongoId, 
       username: exampleUserName 
     } */

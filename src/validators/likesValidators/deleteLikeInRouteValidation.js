@@ -10,14 +10,20 @@ const { body, param, validationResult } = validator
 const validateLikeDeletionInRoute = async (req, res, next) => {
   try {
     const { routeId } = req.params
-    const { userId } = req.body
-
-    // const { id } = req.user
+    const { id } = req.user
 
     //Validate payload equals to the user in the database they need to match.
     //Otherwise throw an error.
 
-    // const foundUser = await getSingleUser({ _id: id })
+    //Validate payload equals to the user in the database they need to match.
+    //Otherwise throw an error.
+
+    const foundUser = await getSingleUser({ _id: id })
+
+    if (!foundUser) {
+      next(ApiError.badRequest('User not found.'))
+      return
+    }
 
     const routeIdChain = param('routeId')
       .exists()
@@ -44,8 +50,6 @@ const validateLikeDeletionInRoute = async (req, res, next) => {
       return
     }
 
-    // const foundUser = await getSingleUser({ _id: id })
-
     const routeExists = await getSingleRoute({ _id: routeId })
 
     if (!routeExists) {
@@ -53,20 +57,9 @@ const validateLikeDeletionInRoute = async (req, res, next) => {
       return
     }
 
-    const userExists = await getSingleUser({
-      _id: userId,
-    })
-
-    // const userExists = await getSingleUser(userId)
-
-    if (!userExists) {
-      next(ApiError.badRequest('User not found.'))
-      return
-    }
-
     const totalLikesInRoute = await getLikesFromRoute({
       routeId: routeId,
-      userId: userId,
+      userId: id,
     })
 
     if (isEmptyArray(totalLikesInRoute)) {

@@ -35,7 +35,7 @@ import { postPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
 import { getPlacesOrRoutesLimiter } from '../middlewares/rate-limiter.js'
 import { getPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
 import { updatePlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
-// import { verifyToken } from '../middlewares/authentication.js'
+import { verifyToken } from '../middlewares/authentication.js'
 // import { validateGetRouteQuery } from '../validators/routesValidators/getRouteQueryValidator.js'
 
 //Pending Rate Limiter
@@ -53,22 +53,20 @@ const upload = multer({
 router.get('/', getPlacesOrRoutesLimiter, getRoutes)
 router.get('/:routeId', getPlaceOrRouteLimiter, validateGetRoute, getRoute)
 
-//Pending authentication middleware
-
 router.post(
   '/',
   postPlaceOrRouteLimiter,
+  verifyToken,
   upload.array('images', 6),
   validateRouteImages,
   validateRouteCreation,
   saveRoute
 )
 
-//Pending authentication middleware
-
 router.patch(
   '/:routeId',
   updatePlaceOrRouteLimiter,
+  verifyToken,
   validateRouteUpdate,
   updateRoute
 )
@@ -124,6 +122,7 @@ router.get(
 router.post(
   '/:routeId/likes',
   postLikeLimiter,
+  verifyToken,
   validateLikeInRoute,
   saveLikeInRoute
 )
@@ -133,6 +132,7 @@ router.post(
 router.delete(
   '/:routeId/likes/',
   deleteLikeLimiter,
+  verifyToken,
   validateLikeDeletionInRoute,
   deleteLikeInRoute
 )

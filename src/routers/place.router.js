@@ -40,7 +40,7 @@ import { verifyToken } from '../middlewares/authentication.js'
 
 const router = express.Router()
 
-const maxSize = 2 * 1024 * 1024
+const maxSize = 2 * 1024 * 1024 //2mb limit size
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -49,9 +49,8 @@ const upload = multer({
 
 //Places controllers
 router.get('/', getPlacesOrRoutesLimiter, getPlaces)
-router.get('/:placeId', getPlaceOrRouteLimiter, validateGetPlace, getPlace)
 
-//Pending authentication middleware
+router.get('/:placeId', getPlaceOrRouteLimiter, validateGetPlace, getPlace)
 
 router.post(
   '/',
@@ -63,11 +62,10 @@ router.post(
   savePlace
 )
 
-//Pending authentication middleware
-
 router.patch(
   '/:placeId',
   updatePlaceOrRouteLimiter,
+  verifyToken,
   validatePlaceUpdate,
   updatePlace
 )
@@ -125,6 +123,7 @@ router.get(
 router.post(
   '/:placeId/likes',
   postLikeLimiter,
+  verifyToken,
   validateLikeInPlace,
   saveLikeInPlace
 )
@@ -134,6 +133,7 @@ router.post(
 router.delete(
   '/:placeId/likes/',
   deleteLikeLimiter,
+  verifyToken,
   validateLikeDeletionInPlace,
   deleteLikeInPlace
 )

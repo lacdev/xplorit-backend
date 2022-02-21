@@ -2,17 +2,40 @@ import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 const { param, body, validationResult } = validator
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { sanitizeInput } from '../../utils/inputSanitizer.js'
 
 const validateRouteUpdate = async (req, res, next) => {
   try {
     const { routeId } = req.params
 
-    // const { id } = req.user
+    const foundRoute = await getSingleRoute({ _id: routeId })
 
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
+    if (!foundRoute) {
+      next(ApiError.notFound('Route not found.'))
+      return
+    }
 
-    // const foundUser = await getSingleUser({ _id: id })
+    const { ownerId } = foundRoute
+
+    const { id } = req.user
+
+    const foundUser = await getSingleUser({ _id: id })
+
+    if (!foundUser) {
+      next(ApiError.badRequest('User not found.'))
+      return
+    }
+
+    const routeOwner = ownerId._id.toString()
+
+    if (routeOwner !== id) {
+      next(
+        ApiError.unauthorized(
+          'Only the owner is authorized to edit this route.'
+        )
+      )
+    }
 
     const routeIdChain = param('routeId')
       .exists()
@@ -44,7 +67,6 @@ const validateRouteUpdate = async (req, res, next) => {
       .withMessage('Name must be a string.')
       .isLength({ max: 2000 })
       .trim()
-      .escape()
       .run(req)
 
     await Promise.all([routeIdChain, nameChain, descriptionChain])
@@ -58,17 +80,13 @@ const validateRouteUpdate = async (req, res, next) => {
       return
     }
 
-    const foundRoute = await getSingleRoute(routeId)
+    const sanitizedDescription = sanitizeInput(req.body?.description)
 
-    if (!foundRoute) {
-      next(ApiError.notFound('Route not found.'))
-      return
-    }
+    req.body.description = sanitizedDescription
 
     next()
   } catch (err) {
     console.error(err)
-
     next(ApiError.badRequest('No valid request to query a specific route.'))
   }
 }
