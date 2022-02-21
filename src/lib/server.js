@@ -30,7 +30,7 @@ app.use('/v1/login', loginRouter)
 // Health endpoint
 app.get('/_health', (req, res) => res.end('Server is up and running.'))
 
-//test endpoint to get the client IP
+//test endpoint to get the client IP for trust proxy middleware.
 app.get('/ip', (request, response) => response.send(request.ip))
 
 //Errors Middleware

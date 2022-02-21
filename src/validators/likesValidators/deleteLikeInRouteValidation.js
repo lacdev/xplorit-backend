@@ -5,7 +5,7 @@ import { getLikesFromRoute } from '../../usecases/likeUsecases/getLikesFromRoute
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 
-const { body, param, validationResult } = validator
+const { param, validationResult } = validator
 
 const validateLikeDeletionInRoute = async (req, res, next) => {
   try {
@@ -32,14 +32,14 @@ const validateLikeDeletionInRoute = async (req, res, next) => {
       .withMessage('Please provide a valid route ID.')
       .run(req)
 
-    const userIdChain = body('userId')
-      .exists()
-      .withMessage('Please provide a user ID.')
-      .isMongoId()
-      .withMessage('Please provide a valid user ID.')
-      .run(req)
+    // const userIdChain = body('userId')
+    //   .exists()
+    //   .withMessage('Please provide a user ID.')
+    //   .isMongoId()
+    //   .withMessage('Please provide a valid user ID.')
+    //   .run(req)
 
-    await Promise.all([routeIdChain, userIdChain])
+    await Promise.all([routeIdChain])
 
     const result = validationResult(req)
 
