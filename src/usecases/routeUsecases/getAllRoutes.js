@@ -28,7 +28,7 @@ const getAllRoutes = async (requestQuery = {}) => {
       images: 1,
       createdAt: 1,
       updatedAt: 1,
-      fullRoute: 1,
+      location: 1,
     },
   }
 
