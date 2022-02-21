@@ -15,14 +15,14 @@ const validatePlaceCreation = async (req, res, next) => {
 
     const foundUser = await getSingleUser({ _id: id })
 
-    // const userNameExists = await getSingleUser({
-    //   _id: id,
-    // })
-
     if (!foundUser) {
       next(ApiError.badRequest('User not found.'))
       return
     }
+
+    // const userNameExists = await getSingleUser({
+    //   _id: id,
+    // })
 
     // const userNameExists = await getSingleUser({
     //   _id: id,
@@ -162,7 +162,6 @@ const validatePlaceCreation = async (req, res, next) => {
       .run(req)
 
     await Promise.all([
-      // ownerIdChain,
       nameChain,
       descriptionChain,
       addressChain,
@@ -190,12 +189,11 @@ const validatePlaceCreation = async (req, res, next) => {
       return
     }
 
-    // const foundUser = await getSingleUser({ _id: id })
-
     const sanitizedDescription = sanitizeInput(req.body?.description)
+
     req.body.description = sanitizedDescription
 
-    const owner = id //el id del usuario en string
+    const owner = id //equals to the decoded token user identity's id.
 
     req.body.ownerId = owner
 

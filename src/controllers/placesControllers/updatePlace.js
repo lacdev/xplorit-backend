@@ -4,6 +4,7 @@ import { ApiError } from '../../errors/ApiError.js'
 const updatePlace = async (req, res, next) => {
   try {
     const { placeId } = req.params
+
     const body = req.body
 
     // const { id } = req.user

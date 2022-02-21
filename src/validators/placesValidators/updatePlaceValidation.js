@@ -2,17 +2,40 @@ import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
 const { param, body, check, validationResult } = validator
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
+import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
+import { sanitizeInput } from '../../utils/inputSanitizer.js'
 
 const validatePlaceUpdate = async (req, res, next) => {
   try {
     const { placeId } = req.params
 
-    // const { id } = req.user
+    const { id } = req.user
 
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
+    const placeExists = await getSinglePlace({ _id: placeId })
 
-    // const foundUser = await getSingleUser({ _id: id })
+    if (!placeExists) {
+      next(ApiError.badRequest('Place not found.'))
+      return
+    }
+
+    const { ownerId } = placeExists
+
+    const placeOwner = ownerId._id.toString()
+
+    if (placeOwner !== id) {
+      next(
+        ApiError.unauthorized(
+          'Only the owner is authorized to edit this place.'
+        )
+      )
+    }
+
+    const foundUser = await getSingleUser({ _id: id })
+
+    if (!foundUser) {
+      next(ApiError.badRequest('User not found.'))
+      return
+    }
 
     const placeIdChain = param('placeId')
       .exists()
@@ -42,9 +65,8 @@ const validatePlaceUpdate = async (req, res, next) => {
       .withMessage('Please provide a description for the place.')
       .isString()
       .withMessage('Name must be a string.')
-      .isLength({ max: 2000 })
+      .isLength({ max: 3000 })
       .trim()
-      .escape()
       .run(req)
 
     const addressChain = check('address')
@@ -151,12 +173,9 @@ const validatePlaceUpdate = async (req, res, next) => {
       return
     }
 
-    const placeExists = await getSinglePlace({ _id: placeId })
+    const sanitizedDescription = sanitizeInput(req.body?.description)
 
-    if (!placeExists) {
-      next(ApiError.badRequest('Place not found.'))
-      return
-    }
+    req.body.description = sanitizedDescription
 
     next()
   } catch (e) {

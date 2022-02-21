@@ -35,6 +35,7 @@ import { postPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
 import { getPlacesOrRoutesLimiter } from '../middlewares/rate-limiter.js'
 import { getPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
 import { updatePlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
+import { verifyToken } from '../middlewares/authentication.js'
 // import { verifyToken } from '../middlewares/authentication.js'
 // import { validateGetRouteQuery } from '../validators/routesValidators/getRouteQueryValidator.js'
 
@@ -58,6 +59,7 @@ router.get('/:routeId', getPlaceOrRouteLimiter, validateGetRoute, getRoute)
 router.post(
   '/',
   postPlaceOrRouteLimiter,
+  verifyToken,
   upload.array('images', 6),
   validateRouteImages,
   validateRouteCreation,
