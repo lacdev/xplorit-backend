@@ -16,14 +16,14 @@ const validateCoverUpdate = async (req, res, next) => {
 
     const foundUser = await getSingleUser({ _id: id })
 
-    // const userExists = await getSingleUser({
-    //   _id: userId,
-    // })
-
     if (!foundUser) {
       next(ApiError.notFound('User not found.'))
       return
     }
+
+    // const userExists = await getSingleUser({
+    //   _id: userId,
+    // })
 
     // const userIDChain = param('userId')
     //   .exists()
