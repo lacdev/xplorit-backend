@@ -4,6 +4,8 @@ import { getStatesLimiter } from '../middlewares/rate-limiter.js'
 
 const router = express.Router()
 
+//Get States endpoint.
+
 router.get('/', getStatesLimiter, getStates)
 
 export { router as statesRouter }
