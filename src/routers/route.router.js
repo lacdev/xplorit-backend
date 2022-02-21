@@ -6,14 +6,14 @@ import { getRoutes } from '../controllers/routesControllers/getRoutes.js'
 import { getRoute } from '../controllers/routesControllers/getRoute.js'
 import { saveRoute } from '../controllers/routesControllers/saveRoute.js'
 import { updateRoute } from '../controllers/routesControllers/updateRoute.js'
-import { deleteRoute } from '../controllers/routesControllers/deleteRoute.js'
+// import { deleteRoute } from '../controllers/routesControllers/deleteRoute.js'
 
 //Routes crud validation imports.
 import { validateRouteCreation } from '../validators/routesValidators/saveRouteValidation.js'
 import { validateRouteUpdate } from '../validators/routesValidators/updateRouteValidation.js'
 import { validateGetRoute } from '../validators/routesValidators/getRouteValidation.js'
-import { validateRouteDeletion } from '../validators/routesValidators/deleteRouteValidation.js'
 import { validateRouteImages } from '../validators/routesValidators/routeImagesValidation.js'
+// import { validateRouteDeletion } from '../validators/routesValidators/deleteRouteValidation.js'
 
 //Reviews in route crud imports.
 import { getReviewsInRoute } from '../controllers/reviewsControllers/getReviewsInRoute.js'
@@ -87,7 +87,7 @@ router.patch(
 
 //Pending authentication middleware //To be deprecated ?
 
-router.delete('/:routeId', validateRouteDeletion, deleteRoute)
+// router.delete('/:routeId', validateRouteDeletion, deleteRoute)
 
 //Reviews in Routes Controllers
 
@@ -103,6 +103,7 @@ router.get(
 router.post(
   '/:routeId/reviews',
   postReviewLimiter,
+  verifyToken,
   validateSaveReviewInRoute,
   saveReviewInRoute
 )
@@ -112,6 +113,7 @@ router.post(
 router.patch(
   '/:routeId/reviews/:reviewId',
   updateReviewLimiter,
+  verifyToken,
   validateReviewUpdateInRoute,
   updateReviewInRoute
 )

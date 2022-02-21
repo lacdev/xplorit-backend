@@ -6,14 +6,14 @@ import { getPlaces } from '../controllers/placesControllers/getPlaces.js'
 import { getPlace } from '../controllers/placesControllers/getPlace.js'
 import { savePlace } from '../controllers/placesControllers/savePlace.js'
 import { updatePlace } from '../controllers/placesControllers/updatePlace.js'
-import { deletePlace } from '../controllers/placesControllers/deletePlace.js'
+// import { deletePlace } from '../controllers/placesControllers/deletePlace.js'
 
 //Place crud validations imports.
 import { validatePlaceCreation } from '../validators/placesValidators/savePlaceValidation.js'
 import { validateGetPlace } from '../validators/placesValidators/getPlaceValidation.js'
-import { validatePlaceDeletion } from '../validators/placesValidators/deletePlaceValidation.js'
 import { validatePlaceUpdate } from '../validators/placesValidators/updatePlaceValidation.js'
 import { validatePlaceImages } from '../validators/placesValidators/placeImagesValidation.js'
+// import { validatePlaceDeletion } from '../validators/placesValidators/deletePlaceValidation.js'
 
 //Reviews crud imports.
 import { getReviewsInPlace } from '../controllers/reviewsControllers/getReviewsInPlace.js'
@@ -87,7 +87,7 @@ router.patch(
 
 //Pending authentication middleware //Not to be used for now.
 
-router.delete('/:placeId', validatePlaceDeletion, deletePlace)
+// router.delete('/:placeId', validatePlaceDeletion, deletePlace)
 
 //Reviews in places controllers
 
@@ -103,6 +103,7 @@ router.get(
 router.post(
   '/:placeId/reviews',
   postReviewLimiter,
+  verifyToken,
   validateSaveReviewInPlace,
   saveReviewInPlace
 )
@@ -112,6 +113,7 @@ router.post(
 router.patch(
   '/:placeId/reviews/:reviewId',
   updateReviewLimiter,
+  verifyToken,
   validateReviewUpdateInPlace,
   updateReviewInPlace
 )
