@@ -6,6 +6,6 @@ const router = express.Router()
 
 //Get States endpoint.
 
-router.get('/', getStatesLimiter, getStates)
-
+router.get('/', getStates)
+// getStatesLimiter,
 export { router as statesRouter }

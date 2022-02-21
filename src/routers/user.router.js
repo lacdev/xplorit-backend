@@ -57,12 +57,12 @@ const upload = multer({
 
 //To be deprecated (Not public information about users will be provided.)
 
-router.get('/', getUsersLimiter, getUsers)
-
-router.get('/me', getUserLimiter, verifyToken, validateGetUser, getUser)
-
-router.post('/', userSignupLimiter, validateUserSignup, saveUser)
-
+router.get('/', getUsers)
+// getUsersLimiter,
+router.get('/me', verifyToken, validateGetUser, getUser)
+// getUserLimiter,
+router.post('/', validateUserSignup, saveUser)
+// userSignupLimiter,
 // router.delete('/me', validateUserDeletion, deleteUser)
 
 //User information update endpoints.
