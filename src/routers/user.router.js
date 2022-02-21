@@ -29,6 +29,7 @@ import { userSignupLimiter } from '../middlewares/rate-limiter.js'
 import { getUserLimiter } from '../middlewares/rate-limiter.js'
 import { updateUserLimiter } from '../middlewares/rate-limiter.js'
 import { getUserOpsLimiter } from '../middlewares/rate-limiter.js'
+import { verifyToken } from '../middlewares/authentication.js'
 // import { verifyToken } from '../middlewares/authentication.js'
 
 const router = express.Router()
@@ -44,7 +45,9 @@ router.get('/', getUsersLimiter, getUsers)
 
 //Pending authentication middleware
 
-router.get('/:userId', getUserLimiter, validateGetUser, getUser)
+router.get('/me', getUserLimiter, verifyToken, validateGetUser, getUser)
+
+// router.get('/:userId', getUserLimiter, validateGetUser, getUser)
 
 router.post('/', userSignupLimiter, validateUserSignup, saveUser)
 

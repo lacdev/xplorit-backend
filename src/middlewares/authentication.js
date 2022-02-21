@@ -6,15 +6,16 @@ const verifyToken = async (req, res, next) => {
   try {
     const SECRET = variables.JWT_SECRET
 
-    const token = req.header('authorization')
+    const tokenHeaders = req.header('authorization')
 
-    // const tokenExtracted = token.split(' ')[1]
+    if (!tokenHeaders && !(tokenHeaders.split(' ')[0] === 'Bearer')) {
+      next(ApiError.unauthorized('Not a valid token was provided.'))
+      return
+    }
 
-    // console.log('token extracted', tokenExtracted)
+    const tokenArray = tokenHeaders.split(' ')
 
-    // if (!tokenExtracted) {
-    //   next(ApiError.unauthorized('Unathorized Access. Token not provided.'))
-    // }
+    const token = tokenArray[1]
 
     if (!token) {
       next(ApiError.unauthorized('Unathorized Access. Token not provided.'))
