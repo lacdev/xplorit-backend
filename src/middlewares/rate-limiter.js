@@ -23,7 +23,7 @@ const message = 'Too many requests, please try again later'
 
 export const getStatesLimiter = rateLimit({
   windowMs: 30 * 60 * 1000, // 30 minutes
-  max: 300,
+  max: 500,
   statusCode: 429,
   message: message,
   standardHeaders: true,
@@ -55,7 +55,7 @@ export const updateReviewLimiter = rateLimit({
 
 export const getReviewsLimiter = rateLimit({
   windowMs: 30 * 60 * 1000, // 30 minutes
-  max: 300,
+  max: 500,
   statusCode: 429,
   message: message,
   standardHeaders: true,
@@ -87,7 +87,7 @@ export const deleteLikeLimiter = rateLimit({
 
 export const getLikesLimiter = rateLimit({
   windowMs: 30 * 60 * 1000, // 30 minutes
-  max: 300,
+  max: 500,
   statusCode: 429,
   message: message,
   standardHeaders: true,
@@ -109,7 +109,7 @@ export const postPlaceOrRouteLimiter = rateLimit({
 
 export const getPlacesOrRoutesLimiter = rateLimit({
   windowMs: 30 * 60 * 1000, // 30 minutes
-  max: 300,
+  max: 500,
   message: message,
   statusCode: 429,
   standardHeaders: true,
@@ -119,7 +119,7 @@ export const getPlacesOrRoutesLimiter = rateLimit({
 
 export const getPlaceOrRouteLimiter = rateLimit({
   windowMs: 30 * 60 * 1000, // 30 minutes
-  max: 300,
+  max: 500,
   message: message,
   statusCode: 429,
   standardHeaders: true,
@@ -171,7 +171,7 @@ export const userLoginLimiter = rateLimit({
 
 export const getUserLimiter = rateLimit({
   windowMs: 30 * 60 * 1000, // 30 minutes
-  max: 50,
+  max: 200,
   message: message,
   statusCode: 429,
   standardHeaders: true,

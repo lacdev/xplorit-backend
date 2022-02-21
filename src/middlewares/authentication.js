@@ -31,7 +31,7 @@ const verifyToken = async (req, res, next) => {
 
     req.user = decoded
 
-    /* Request User Property is going to be equal to the decoded identity object from the user.
+    /* Req.user is going to be equal to the decoded identity object from the user.
      req.user = { 
       id: mongoId, 
       username: exampleUserName 
