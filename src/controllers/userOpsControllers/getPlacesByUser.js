@@ -3,9 +3,7 @@ import { ApiError } from '../../errors/ApiError.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 
 const getPlacesByUser = async (req, res, next) => {
-  const { userId } = req.params
-
-  // const { id } = req.user
+  // const { userId } = req.params
 
   //Validate payload equals to the user in the database they need to match.
   //Otherwise throw an error.
@@ -13,7 +11,9 @@ const getPlacesByUser = async (req, res, next) => {
   // const foundUser = await getSingleUser({ _id: id })
 
   try {
-    const placesByUser = await getPlacesCreatedByUser(userId)
+    const { id } = req.user
+
+    const placesByUser = await getPlacesCreatedByUser(id)
 
     if (isEmptyArray(placesByUser)) {
       next(ApiError.notFound('No places created by this user were found.'))

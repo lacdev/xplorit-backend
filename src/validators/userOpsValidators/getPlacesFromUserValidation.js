@@ -1,47 +1,47 @@
 import { ApiError } from '../../errors/ApiError.js'
-import validator from 'express-validator'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
-const { param, validationResult } = validator
+// import validator from 'express-validator'
+// const { param, validationResult } = validator
 
 const validateUserPlaces = async (req, res, next) => {
   try {
-    const { userId } = req.params
+    // const { userId } = req.params
 
-    // const { id } = req.user
+    const { id } = req.user
+
+    const foundUser = await getSingleUser({ _id: id })
+
+    // const userExists = await getSingleUser({
+    //   _id: userId,
+    // })
+
+    if (!foundUser) {
+      next(ApiError.notFound('User not found.'))
+      return
+    }
 
     //Validate payload equals to the user in the database they need to match.
     //Otherwise throw an error.
 
-    // const foundUser = await getSingleUser({ _id: id })
+    // const userIDChain = param('userId')
+    //   .exists()
+    //   .withMessage('Please provide a user ID.')
+    //   .isMongoId()
+    //   .withMessage('Please provide a valid ID.')
+    //   .run(req)
 
-    const userIDChain = param('userId')
-      .exists()
-      .withMessage('Please provide a user ID.')
-      .isMongoId()
-      .withMessage('Please provide a valid ID.')
-      .run(req)
+    // await userIDChain
 
-    await userIDChain
+    // const result = validationResult(req)
 
-    const result = validationResult(req)
-
-    if (!result.isEmpty()) {
-      next(
-        ApiError.badRequest({ message: 'Bad Request', errors: result.array() })
-      )
-      return
-    }
+    // if (!result.isEmpty()) {
+    //   next(
+    //     ApiError.badRequest({ message: 'Bad Request', errors: result.array() })
+    //   )
+    //   return
+    // }
 
     // const foundUser = await getSingleUser({ _id: id })
-
-    const userExists = await getSingleUser({
-      _id: userId,
-    })
-
-    if (!userExists) {
-      next(ApiError.notFound('User not found.'))
-      return
-    }
 
     next()
   } catch (err) {
