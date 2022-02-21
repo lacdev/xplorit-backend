@@ -4,10 +4,10 @@ import { ApiError } from '../../errors/ApiError.js'
 
 const updatePassword = async (req, res, next) => {
   try {
-    const { userId } = req.params
+    // const { userId } = req.params
     const { password } = req.body
 
-    // const { id } = req.user
+    const { id } = req.user
 
     //Validate payload equals to the user in the database they need to match.
     //Otherwise throw an error.
@@ -16,7 +16,7 @@ const updatePassword = async (req, res, next) => {
 
     const hashedPass = await hashPassword(password)
 
-    const updatedUser = await updateSingleUser(userId, {
+    const updatedUser = await updateSingleUser(id, {
       password: hashedPass,
     })
 
