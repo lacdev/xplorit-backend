@@ -12,8 +12,6 @@ const saveLikeInPlace = async (req, res, next) => {
     //Validate payload equals to the user in the database they need to match.
     //Otherwise throw an error.
 
-    // const foundUser = await getSingleUser({ _id: id })
-
     const savedLike = await postLikeToPlace({
       placeId: placeId,
       userId: id,

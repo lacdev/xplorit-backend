@@ -122,6 +122,7 @@ router.get(
 router.post(
   '/:routeId/likes',
   postLikeLimiter,
+  verifyToken,
   validateLikeInRoute,
   saveLikeInRoute
 )
@@ -131,6 +132,7 @@ router.post(
 router.delete(
   '/:routeId/likes/',
   deleteLikeLimiter,
+  verifyToken,
   validateLikeDeletionInRoute,
   deleteLikeInRoute
 )

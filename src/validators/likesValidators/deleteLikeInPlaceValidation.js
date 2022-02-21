@@ -17,12 +17,6 @@ const validateLikeDeletionInPlace = async (req, res, next) => {
     //Validate payload equals to the user in the database they need to match.
     //Otherwise throw an error.
 
-    // const foundUser = await getSingleUser({ _id: id })
-
-    // const userExists = await getSingleUser({
-    //   _id: userId,
-    // })
-
     const foundUser = await getSingleUser({ _id: id })
 
     if (!foundUser) {
@@ -66,8 +60,6 @@ const validateLikeDeletionInPlace = async (req, res, next) => {
       placeId: placeId,
       userId: id,
     })
-
-    console.log('What is this returning likes?', totalLikesInPlace)
 
     if (isEmptyArray(totalLikesInPlace)) {
       next(ApiError.badRequest('No like found to delete.'))
