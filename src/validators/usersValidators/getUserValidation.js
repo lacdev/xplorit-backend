@@ -1,7 +1,7 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { ApiError } from '../../errors/ApiError.js'
-import validator from 'express-validator'
-const { param, validationResult } = validator
+// import validator from 'express-validator'
+// const { parvalidationResultam,  } = validator
 
 const validateGetUser = async (req, res, next) => {
   try {

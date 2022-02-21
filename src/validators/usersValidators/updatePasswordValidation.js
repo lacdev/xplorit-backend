@@ -1,25 +1,36 @@
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
-const { param, body, validationResult } = validator
+const { body, validationResult } = validator
 
 const validatePasswordUpdate = async (req, res, next) => {
   try {
-    const { userId } = req.params
+    // const { userId } = req.params
 
-    // const { id } = req.user
+    const { id } = req.user
 
     //Validate payload equals to the user in the database they need to match.
     //Otherwise throw an error.
 
+    const foundUser = await getSingleUser({ _id: id })
+
     // const foundUser = await getSingleUser({ _id: id })
 
-    const userIDChain = param('userId')
-      .exists()
-      .withMessage('Please provide a user ID.')
-      .isMongoId()
-      .withMessage('Please provide a valid ID.')
-      .run(req)
+    //  const userExists = await getSingleUser({
+    //   _id: userId,
+    // })
+
+    if (!foundUser) {
+      next(ApiError.notFound('User not found.'))
+      return
+    }
+
+    // const userIDChain = param('userId')
+    //   .exists()
+    //   .withMessage('Please provide a user ID.')
+    //   .isMongoId()
+    //   .withMessage('Please provide a valid ID.')
+    //   .run(req)
 
     const passwordChain = body('password')
       .exists({ checkFalsy: true, checkNull: true })
@@ -36,7 +47,7 @@ const validatePasswordUpdate = async (req, res, next) => {
       .withMessage('must contain a number')
       .run(req)
 
-    await Promise.all([passwordChain, userIDChain])
+    await Promise.all([passwordChain])
 
     const result = validationResult(req)
 
@@ -44,17 +55,6 @@ const validatePasswordUpdate = async (req, res, next) => {
       next(
         ApiError.badRequest({ message: 'Bad Request', errors: result.array() })
       )
-      return
-    }
-
-    // const foundUser = await getSingleUser({ _id: id })
-
-    const userExists = await getSingleUser({
-      _id: userId,
-    })
-
-    if (!userExists) {
-      next(ApiError.notFound('User not found.'))
       return
     }
 

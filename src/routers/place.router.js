@@ -35,7 +35,7 @@ import { postPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
 import { getPlacesOrRoutesLimiter } from '../middlewares/rate-limiter.js'
 import { getPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
 import { updatePlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
-// import { verifyToken } from '../middlewares/authentication.js'
+import { verifyToken } from '../middlewares/authentication.js'
 // import { validateGetPlaceQuery } from '../validators/placesValidators/getPlaceQueryValidator.js'
 
 const router = express.Router()
@@ -56,6 +56,7 @@ router.get('/:placeId', getPlaceOrRouteLimiter, validateGetPlace, getPlace)
 router.post(
   '/',
   postPlaceOrRouteLimiter,
+  verifyToken,
   upload.array('images', 6),
   validatePlaceImages,
   validatePlaceCreation,

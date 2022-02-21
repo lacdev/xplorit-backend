@@ -4,14 +4,14 @@ import multer from 'multer'
 import { getUsers } from '../controllers/usersControllers/getUsers.js'
 import { getUser } from '../controllers/usersControllers/getUser.js'
 import { saveUser } from '../controllers/usersControllers/saveUser.js'
-import { deleteUser } from '../controllers/usersControllers/deleteUser.js'
+// import { deleteUser } from '../controllers/usersControllers/deleteUser.js'
 import { getLikesByUser } from '../controllers/userOpsControllers/getLikesByUser.js'
 import { getReviewsByUser } from '../controllers/userOpsControllers/getReviewsByUser.js'
 import { getPlacesByUser } from '../controllers/userOpsControllers/getPlacesByUser.js'
 import { getRoutesByUser } from '../controllers/userOpsControllers/getRoutesByUser.js'
 import { validateUserSignup } from '../validators/usersValidators/saveUserValidation.js'
 import { validateGetUser } from '../validators/usersValidators/getUserValidation.js'
-import { validateUserDeletion } from '../validators/usersValidators/deleteUserValidation.js'
+// import { validateUserDeletion } from '../validators/usersValidators/deleteUserValidation.js'
 import { validateUserLikes } from '../validators/userOpsValidators/getLikesFromUserValidation.js'
 import { validateUserReviews } from '../validators/userOpsValidators/getReviewsFromUserValidation.js'
 import { validateUserPlaces } from '../validators/userOpsValidators/getPlacesFromUserValidation.js'
@@ -43,53 +43,76 @@ const upload = multer({
 //To be deprecated (Not public information about users will be provided.)
 router.get('/', getUsersLimiter, getUsers)
 
-//Pending authentication middleware
-
 router.get('/me', getUserLimiter, verifyToken, validateGetUser, getUser)
 
 // router.get('/:userId', getUserLimiter, validateGetUser, getUser)
 
 router.post('/', userSignupLimiter, validateUserSignup, saveUser)
 
-//Pending authentication middleware (Pending deprecation or soft delete.)
-
-router.delete('/:userId', validateUserDeletion, deleteUser)
+// router.delete('/:userId', validateUserDeletion, deleteUser)
 
 //User information update endpoints.
 
-//Pending authentication middleware
+// router.patch(
+//   '/:userId/password',
+//   updateUserLimiter,
+//   validatePasswordUpdate,
+//   updatePassword
+// )
 
 router.patch(
-  '/:userId/password',
+  '/me/password',
   updateUserLimiter,
+  verifyToken,
   validatePasswordUpdate,
   updatePassword
 )
 
-//Pending authentication middleware
+// router.patch(
+//   '/:userId/username',
+//   updateUserLimiter,
+//   verifyToken,
+//   validateUsernameUpdate,
+//   updateUsername
+// )
 
 router.patch(
-  '/:userId/username',
+  '/me/username',
   updateUserLimiter,
+  verifyToken,
   validateUsernameUpdate,
   updateUsername
 )
 
-//Pending authentication middleware
+// router.patch(
+//   '/:userId/avatar',
+//   updateUserLimiter,
+//   upload.single('avatar'),
+//   validateAvatarUpdate,
+//   updateAvatar
+// )
 
 router.patch(
-  '/:userId/avatar',
+  '/me/avatar',
   updateUserLimiter,
+  verifyToken,
   upload.single('avatar'),
   validateAvatarUpdate,
   updateAvatar
 )
 
-//Pending authentication middleware
+// router.patch(
+//   '/:userId/cover',
+//   updateUserLimiter,
+//   upload.single('cover'),
+//   validateCoverUpdate,
+//   updateCover
+// )
 
 router.patch(
-  '/:userId/cover',
+  '/me/cover',
   updateUserLimiter,
+  verifyToken,
   upload.single('cover'),
   validateCoverUpdate,
   updateCover
@@ -97,38 +120,62 @@ router.patch(
 
 //User Ops controllers
 
-//Pending authentication middleware
+// router.get(
+//   '/:userId/likes',
+//   getUserOpsLimiter,
+//   validateUserLikes,
+//   getLikesByUser
+// )
 
 router.get(
-  '/:userId/likes',
+  '/me/likes',
   getUserOpsLimiter,
+  verifyToken,
   validateUserLikes,
   getLikesByUser
 )
 
-//Pending authentication middleware
+// router.get(
+//   '/:userId/reviews',
+//   getUserOpsLimiter,
+//   validateUserReviews,
+//   getReviewsByUser
+// )
 
 router.get(
-  '/:userId/reviews',
+  '/me/reviews',
   getUserOpsLimiter,
+  verifyToken,
   validateUserReviews,
   getReviewsByUser
 )
 
-//Pending authentication middleware
+// router.get(
+//   '/:userId/places',
+//   getUserOpsLimiter,
+//   validateUserPlaces,
+//   getPlacesByUser
+// )
 
 router.get(
-  '/:userId/places',
+  '/me/places',
   getUserOpsLimiter,
+  verifyToken,
   validateUserPlaces,
   getPlacesByUser
 )
 
-//Pending authentication middleware
+// router.get(
+//   '/:userId/routes',
+//   getUserOpsLimiter,
+//   validateUserRoutes,
+//   getRoutesByUser
+// )
 
 router.get(
-  '/:userId/routes',
+  '/me/routes',
   getUserOpsLimiter,
+  verifyToken,
   validateUserRoutes,
   getRoutesByUser
 )
