@@ -123,6 +123,7 @@ router.get(
 router.post(
   '/:placeId/likes',
   postLikeLimiter,
+  verifyToken,
   validateLikeInPlace,
   saveLikeInPlace
 )

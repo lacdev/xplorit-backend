@@ -5,9 +5,9 @@ import { ApiError } from '../../errors/ApiError.js'
 const saveLikeInPlace = async (req, res, next) => {
   try {
     const { placeId } = req.params
-    const { userId } = req.body
+    // const { userId } = req.body
 
-    // const { id } = req.user
+    const { id } = req.user
 
     //Validate payload equals to the user in the database they need to match.
     //Otherwise throw an error.
@@ -16,7 +16,7 @@ const saveLikeInPlace = async (req, res, next) => {
 
     const savedLike = await postLikeToPlace({
       placeId: placeId,
-      userId: userId,
+      userId: id,
     })
 
     if (savedLike) {
