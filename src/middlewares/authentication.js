@@ -15,25 +15,7 @@ const verifyToken = async (req, res, next) => {
 
     const tokenArray = tokenHeaders.split(' ')
 
-    console.log('This is the token array splitted', tokenArray)
-
     const token = tokenArray[1]
-
-    console.log('This is my token array 1 index', token)
-
-    // if (token.startsWith('Bearer ')) {
-    //   token = authHeader.substring(7, authHeader.length)
-    // } else {
-    //   //Error
-    // }
-
-    // const tokenExtracted = token.split(' ')[1]
-
-    // console.log('token extracted', tokenExtracted)
-
-    // if (!tokenExtracted) {
-    //   next(ApiError.unauthorized('Unathorized Access. Token not provided.'))
-    // }
 
     if (!token) {
       next(ApiError.unauthorized('Unathorized Access. Token not provided.'))
