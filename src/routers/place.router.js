@@ -123,6 +123,7 @@ router.get(
 router.post(
   '/:placeId/likes',
   postLikeLimiter,
+  verifyToken,
   validateLikeInPlace,
   saveLikeInPlace
 )
@@ -132,6 +133,7 @@ router.post(
 router.delete(
   '/:placeId/likes/',
   deleteLikeLimiter,
+  verifyToken,
   validateLikeDeletionInPlace,
   deleteLikeInPlace
 )
