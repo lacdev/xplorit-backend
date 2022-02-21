@@ -7,18 +7,8 @@ import { averageReducer } from '../../utils/averageReducer.js'
 const saveReviewInPlace = async (req, res, next) => {
   try {
     const { placeId } = req.params
+
     const newReview = req.body
-
-    // const { id } = req.user
-
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
-
-    // const foundUser = await getSingleUser({ _id: id })
-
-    // console.log('Are these my reviews?', reviews)
-
-    newReview.placeId = placeId
 
     const savedReview = await postReviewToPlace(newReview)
 
@@ -35,15 +25,15 @@ const saveReviewInPlace = async (req, res, next) => {
 
       const update = { average: weightedAverage }
 
-      const placeFound = await updateSinglePlace(filter, update)
+      const placeUpdated = await updateSinglePlace(filter, update)
 
-      console.log('Place average updated:', placeFound)
-
-      res.json({
-        description: 'Review created in the place successfully',
-        statusCode: 200,
-        data: savedReview,
-      })
+      if (placeUpdated) {
+        res.json({
+          description: 'Review created in the place successfully',
+          statusCode: 200,
+          data: savedReview,
+        })
+      }
     }
   } catch (err) {
     if (err.name === 'ValidationError') {
