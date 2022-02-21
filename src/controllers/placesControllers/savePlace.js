@@ -5,6 +5,9 @@ const savePlace = async (req, res, next) => {
   try {
     const newPlace = req.body
 
+    //New place ya tendra su propieda ownerId creada desde el backend a partir
+    //del token mandado y validado.
+
     // const { id } = req.user
 
     //Validate payload equals to the user in the database they need to match.

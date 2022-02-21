@@ -6,23 +6,41 @@ const { body, check, validationResult } = validator
 
 const validatePlaceCreation = async (req, res, next) => {
   try {
-    const { ownerId } = req.body
+    // const { ownerId } = req.body
 
-    // const { id } = req.user
+    const { id } = req.user
 
     //Validate payload equals to the user in the database they need to match.
     //Otherwise throw an error.
 
-    // const foundUser = await getSingleUser({ _id: id })
+    const foundUser = await getSingleUser({ _id: id })
+
+    // const userNameExists = await getSingleUser({
+    //   _id: id,
+    // })
+
+    if (!foundUser) {
+      next(ApiError.badRequest('User not found.'))
+      return
+    }
+
+    // const userNameExists = await getSingleUser({
+    //   _id: id,
+    // })
+
+    // if (!userNameExists) {
+    //   next(ApiError.badRequest('User not found.'))
+    //   return
+    // }
 
     // req.body.ownerId = id
 
-    const ownerIdChain = body('ownerId')
-      .exists({ checkNull: true, checkFalsy: true })
-      .withMessage('Please provide a valid ID.')
-      .isMongoId()
-      .withMessage('Please provide a valid ID.')
-      .run(req)
+    // const ownerIdChain = body('ownerId')
+    //   .exists({ checkNull: true, checkFalsy: true })
+    //   .withMessage('Please provide a valid ID.')
+    //   .isMongoId()
+    //   .withMessage('Please provide a valid ID.')
+    //   .run(req)
 
     const nameChain = body('name')
       .exists({ checkNull: true, checkFalsy: true })
@@ -144,7 +162,7 @@ const validatePlaceCreation = async (req, res, next) => {
       .run(req)
 
     await Promise.all([
-      ownerIdChain,
+      // ownerIdChain,
       nameChain,
       descriptionChain,
       addressChain,
@@ -174,18 +192,12 @@ const validatePlaceCreation = async (req, res, next) => {
 
     // const foundUser = await getSingleUser({ _id: id })
 
-    const userNameExists = await getSingleUser({
-      _id: ownerId,
-    })
-
-    if (!userNameExists) {
-      next(ApiError.badRequest('User not found.'))
-      return
-    }
-
     const sanitizedDescription = sanitizeInput(req.body?.description)
-
     req.body.description = sanitizedDescription
+
+    const owner = id //el id del usuario en string
+
+    req.body.ownerId = owner
 
     next()
   } catch (error) {
