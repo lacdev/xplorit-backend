@@ -10,8 +10,6 @@ const validatePlacesQuery = async (req, res, next) => {
 
     if (!valid) next(ApiError.badRequest(ajv.errors))
 
-    // req.query = mi validacion
-
     next()
   } catch (e) {
     next({})

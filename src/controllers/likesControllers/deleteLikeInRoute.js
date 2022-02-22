@@ -8,9 +8,6 @@ const deleteLikeInRoute = async (req, res, next) => {
 
     const { id } = req.user
 
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
-
     const deletedLike = await deleteLikeFromRoute({
       routeId: routeId,
       userId: id,

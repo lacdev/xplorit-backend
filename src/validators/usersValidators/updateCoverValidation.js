@@ -2,17 +2,10 @@ import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { ApiError } from '../../errors/ApiError.js'
 import { compressImage } from '../../utils/compressImage.js'
 import { uploadImage } from '../../utils/uploadImage.js'
-// import validator from 'express-validator'
-// const { param, validationResult } = validator
 
 const validateCoverUpdate = async (req, res, next) => {
   try {
-    // const { userId } = req.params
-
     const { id } = req.user
-
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
 
     const foundUser = await getSingleUser({ _id: id })
 
@@ -20,30 +13,6 @@ const validateCoverUpdate = async (req, res, next) => {
       next(ApiError.notFound('User not found.'))
       return
     }
-
-    // const userExists = await getSingleUser({
-    //   _id: userId,
-    // })
-
-    // const userIDChain = param('userId')
-    //   .exists()
-    //   .withMessage('Please provide a user ID.')
-    //   .isMongoId()
-    //   .withMessage('Please provide a valid ID.')
-    //   .run(req)
-
-    // await userIDChain
-
-    // const result = validationResult(req)
-
-    // if (!result.isEmpty()) {
-    //   next(
-    //     ApiError.badRequest({ message: 'Bad Request', errors: result.array() })
-    //   )
-    //   return
-    // }
-
-    // const foundUser = await getSingleUser({ _id: id })
 
     if (!req.file) {
       next(ApiError.badRequest('No file found for upload.'))
