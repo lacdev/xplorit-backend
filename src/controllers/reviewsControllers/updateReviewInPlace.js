@@ -6,8 +6,7 @@ import { ApiError } from '../../errors/ApiError.js'
 
 const updateReviewInPlace = async (req, res, next) => {
   try {
-    const { placeId } = req.params
-    const { reviewId } = req.params
+    const { placeId, reviewId } = req.params
 
     const newReview = req.body
 

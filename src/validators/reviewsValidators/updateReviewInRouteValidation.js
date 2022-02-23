@@ -3,19 +3,21 @@ import { getAllReviewsFromRoute } from '../../usecases/reviewUsecases/getAllRevi
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
+import { sanitizeInput } from '../../utils/inputSanitizer.js'
 import validator from 'express-validator'
 const { param, body, validationResult } = validator
 
 const validateReviewUpdateInRoute = async (req, res, next) => {
   const { routeId, reviewId } = req.params
-  const { userId } = req.body
 
-  // const { id } = req.user
+  const { id } = req.user
 
-  //Validate payload equals to the user in the database they need to match.
-  //Otherwise throw an error.
+  const userExists = await getSingleUser({ _id: id })
 
-  // const foundUser = await getSingleUser({ _id: id })
+  if (!userExists) {
+    next(ApiError.badRequest('User not found.'))
+    return
+  }
 
   try {
     const routeIdChain = param('routeId')
@@ -39,7 +41,6 @@ const validateReviewUpdateInRoute = async (req, res, next) => {
       .not()
       .isEmpty()
       .trim()
-      .escape()
       .withMessage("Comment in your review can't be empty.")
       .run(req)
 
@@ -52,20 +53,14 @@ const validateReviewUpdateInRoute = async (req, res, next) => {
       .withMessage('Stars must be a valid number between 1 and 5.')
       .run(req)
 
-    const userIdChain = body('userId')
-      .exists()
-      .withMessage('Please provide a user ID.')
-      .isMongoId()
-      .withMessage('Please provide a valid user ID.')
-      .run(req)
+    // const userIdChain = body('userId')
+    //   .exists()
+    //   .withMessage('Please provide a user ID.')
+    //   .isMongoId()
+    //   .withMessage('Please provide a valid user ID.')
+    //   .run(req)
 
-    await Promise.all([
-      routeIdChain,
-      reviewIdChain,
-      commentChain,
-      starsChain,
-      userIdChain,
-    ])
+    await Promise.all([routeIdChain, reviewIdChain, commentChain, starsChain])
 
     const result = validationResult(req)
 
@@ -83,15 +78,6 @@ const validateReviewUpdateInRoute = async (req, res, next) => {
       return
     }
 
-    // const foundUser = await getSingleUser({ _id: id })
-
-    const userExists = await getSingleUser({ _id: userId })
-
-    if (!userExists) {
-      next(ApiError.badRequest('User not found.'))
-      return
-    }
-
     const reviewExists = await getAllReviewsFromRoute({
       _id: reviewId,
     })
@@ -100,6 +86,12 @@ const validateReviewUpdateInRoute = async (req, res, next) => {
       next(ApiError.badRequest('Review not found'))
       return
     }
+
+    const sanitizedComment = sanitizeInput(req.body?.comment)
+
+    req.body.comment = sanitizedComment
+    req.body.userId = id
+    req.body.routeId = routeId
 
     next()
   } catch (e) {
