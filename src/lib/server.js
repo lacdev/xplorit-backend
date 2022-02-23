@@ -13,11 +13,14 @@ import { ApiErrorHandler } from '../middlewares/api-error-handler.js'
 const app = express()
 
 //Middlewares
-app.set('trust proxy', 1)
+app.use(express.urlencoded({ limit: '10mb', extended: true }))
+app.use(express.json({ limit: '10mb', extended: true }))
+
 app.use(cors())
 app.use(helmet())
-app.use(express.json({ limit: '10mb', extended: true }))
-app.use(express.urlencoded({ limit: '10mb', extended: true }))
+
+app.set('trust proxy', 1)
+
 app.use(morgan('combined'))
 
 //Routers
