@@ -15,26 +15,6 @@ const validateRouteCreation = async (req, res, next) => {
       return
     }
 
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
-
-    // const foundUser = await getSingleUser({ _id: id })
-
-    // const userNameExists = await getSingleUser({
-    //   _id: ownerId,
-    // })
-
-    // const newRoute = req.body
-
-    // const { ownerId } = newRoute
-
-    // const ownerIdChain = body('ownerId')
-    //   .exists({ checkNull: true, checkFalsy: true })
-    //   .withMessage('Please provide a valid ID.')
-    //   .isMongoId()
-    //   .withMessage('Please provide a valid ID.')
-    //   .run(req)
-
     const nameChain = body('name')
       .exists({ checkNull: true, checkFalsy: true })
       .not()

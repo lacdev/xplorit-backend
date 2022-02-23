@@ -10,13 +10,8 @@ const { param, validationResult } = validator
 const validateLikeDeletionInRoute = async (req, res, next) => {
   try {
     const { routeId } = req.params
+
     const { id } = req.user
-
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
-
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
 
     const foundUser = await getSingleUser({ _id: id })
 

@@ -13,11 +13,14 @@ import { ApiErrorHandler } from '../middlewares/api-error-handler.js'
 const app = express()
 
 //Middlewares
-app.set('trust proxy', 1)
+app.use(express.urlencoded({ limit: '10mb', extended: true }))
+app.use(express.json({ limit: '10mb', extended: true }))
+
 app.use(cors())
 app.use(helmet())
-app.use(express.json({ limit: '10mb', extended: true }))
-app.use(express.urlencoded({ limit: '10mb', extended: true }))
+
+app.set('trust proxy', 1) //Required for NGINX
+
 app.use(morgan('combined'))
 
 //Routers
@@ -30,7 +33,7 @@ app.use('/v1/login', loginRouter)
 // Health endpoint
 app.get('/_health', (req, res) => res.end('Server is up and running.'))
 
-//test endpoint to get the client IP for trust proxy middleware.
+//test endpoint to get the client IP for trust proxy middleware. Test made for NGINX.
 app.get('/ip', (request, response) => response.send(request.ip))
 
 //Errors Middleware

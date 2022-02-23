@@ -19,9 +19,6 @@ const tagsArrayLimit = (val) => val.length <= 4
 //   },
 // })
 
-// fullroute = [[123, -123], [456, -456]]
-//
-
 const RouteSchema = new mongoose.Schema(
   {
     ownerId: {
