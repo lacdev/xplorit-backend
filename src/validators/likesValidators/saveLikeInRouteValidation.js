@@ -10,11 +10,8 @@ const { param, body, validationResult } = validator
 const validateLikeInRoute = async (req, res, next) => {
   try {
     const { routeId } = req.params
-    // const { userId } = req.body
-    const { id } = req.user
 
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
+    const { id } = req.user
 
     const foundUser = await getSingleUser({ _id: id })
 
@@ -22,9 +19,6 @@ const validateLikeInRoute = async (req, res, next) => {
       next(ApiError.badRequest('User not found.'))
       return
     }
-
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
 
     const routeIdChain = param('routeId')
       .exists()

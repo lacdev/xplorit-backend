@@ -5,13 +5,6 @@ import gravatar from 'gravatar'
 
 const saveUser = async (req, res, next) => {
   try {
-    // const { id } = req.user
-
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
-
-    // const foundUser = await getSingleUser({ _id: id })
-
     const { username, password, email } = req.body
 
     const secureUrl = gravatar.url(

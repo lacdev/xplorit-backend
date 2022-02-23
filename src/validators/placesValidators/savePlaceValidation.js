@@ -6,12 +6,7 @@ const { body, check, validationResult } = validator
 
 const validatePlaceCreation = async (req, res, next) => {
   try {
-    // const { ownerId } = req.body
-
     const { id } = req.user
-
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
 
     const foundUser = await getSingleUser({ _id: id })
 
@@ -19,28 +14,6 @@ const validatePlaceCreation = async (req, res, next) => {
       next(ApiError.badRequest('User not found.'))
       return
     }
-
-    // const userNameExists = await getSingleUser({
-    //   _id: id,
-    // })
-
-    // const userNameExists = await getSingleUser({
-    //   _id: id,
-    // })
-
-    // if (!userNameExists) {
-    //   next(ApiError.badRequest('User not found.'))
-    //   return
-    // }
-
-    // req.body.ownerId = id
-
-    // const ownerIdChain = body('ownerId')
-    //   .exists({ checkNull: true, checkFalsy: true })
-    //   .withMessage('Please provide a valid ID.')
-    //   .isMongoId()
-    //   .withMessage('Please provide a valid ID.')
-    //   .run(req)
 
     const nameChain = body('name')
       .exists({ checkNull: true, checkFalsy: true })

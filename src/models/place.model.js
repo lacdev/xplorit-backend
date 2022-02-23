@@ -3,45 +3,7 @@ import paginate from 'mongoose-paginate-v2'
 
 const imagesArrayLimit = (val) => val.length <= 6
 
-// const locationArrayLimit = (val) => val.length === 2
-
 const tagsArrayLimit = (val) => val.length <= 4
-
-// const statesArray = [
-//   'Aguascalientes',
-//   'Baja California',
-//   'Baja California Sur',
-//   'Campeche',
-//   'Chiapas',
-//   'Chihuaha',
-//   'Coahuila',
-//   'Colima',
-//   'CDMX',
-//   'Ciudad de Mexico',
-//   'Durango',
-//   'Estado de Mexico',
-//   'Guanajuato',
-//   'Guerrero',
-//   'Hidalgo',
-//   'Jalisco',
-//   'Michoacan',
-//   'Morelos',
-//   'Nayarit',
-//   'Nuevo Leon',
-//   'Oaxaca',
-//   'Puebla',
-//   'Queretaro',
-//   'Quintana Roo',
-//   'San Luis Potosi',
-//   'Sinaloa',
-//   'Sonora',
-//   'Tabasco',
-//   'Tamaulipas',
-//   'Tlaxcala',
-//   'Veracruz',
-//   'Yucatan',
-//   'Zacatecas',
-// ]
 
 const PlaceSchema = new mongoose.Schema(
   {

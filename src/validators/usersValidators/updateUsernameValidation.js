@@ -5,13 +5,9 @@ const { body, validationResult } = validator
 
 const validateUsernameUpdate = async (req, res, next) => {
   try {
-    // const { userId } = req.params
     const { username } = req.body
 
     const { id } = req.user
-
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
 
     const foundUser = await getSingleUser({ _id: id })
 
@@ -19,19 +15,6 @@ const validateUsernameUpdate = async (req, res, next) => {
       next(ApiError.notFound('User not found.'))
       return
     }
-
-    // const foundUser = await getSingleUser({ _id: id })
-
-    //  const userExists = await getSingleUser({
-    //   _id: userId,
-    // })
-
-    // const userIDChain = param('userId')
-    //   .exists()
-    //   .withMessage('Please provide a user ID.')
-    //   .isMongoId()
-    //   .withMessage('Please provide a valid ID.')
-    //   .run(req)
 
     const usernameChain = body('username')
       .exists({ checkFalsy: true, checkNull: true })

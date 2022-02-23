@@ -6,13 +6,6 @@ const getLikesInPlace = async (req, res, next) => {
   try {
     const { placeId } = req.params
 
-    // const { id } = req.user
-
-    //Validate payload equals to the user in the database they need to match.
-    //Otherwise throw an error.
-
-    // const foundUser = await getSingleUser({ _id: id })
-
     const allLikesInPlace = await getLikesFromPlace({ placeId: placeId })
 
     if (isEmptyArray(allLikesInPlace)) {
