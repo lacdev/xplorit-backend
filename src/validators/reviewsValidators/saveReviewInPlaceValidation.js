@@ -4,7 +4,8 @@ const { param, body, validationResult } = validator
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
-import { getAllReviewsFromPlace } from '../../usecases/reviewUsecases/getAllReviewsFromPlace.js'
+// import { getAllReviewsFromPlace } from '../../usecases/reviewUsecases/getAllReviewsFromPlace.js'
+import { getReviewsInPlaceBeforeCalculation } from '../../usecases/reviewUsecases/getReviewsInPlace.js'
 import { sanitizeInput } from '../../utils/inputSanitizer.js'
 
 const validateSaveReviewInPlace = async (req, res, next) => {
@@ -44,13 +45,6 @@ const validateSaveReviewInPlace = async (req, res, next) => {
       .withMessage('Stars must be a valid number between 1 and 5.')
       .run(req)
 
-    // const userIdChain = body('userId')
-    //   .exists()
-    //   .withMessage('Please provide a user ID.')
-    //   .isMongoId()
-    //   .withMessage('Please provide a valid user ID.')
-    //   .run(req)
-
     await Promise.all([placeIdChain, commentChain, starsChain])
 
     const result = validationResult(req)
@@ -69,13 +63,13 @@ const validateSaveReviewInPlace = async (req, res, next) => {
       return
     }
 
-    const reviewExists = await getAllReviewsFromPlace({
-      userId: id,
+    const reviewFound = await getReviewsInPlaceBeforeCalculation({
       placeId: placeId,
+      userId: id,
     })
 
-    if (!isEmptyArray(reviewExists.reviews)) {
-      next(ApiError.badRequest('You can only post one review per place.'))
+    if (!isEmptyArray(reviewFound)) {
+      next(ApiError.badRequest('You can only post one review per route.'))
       return
     }
 

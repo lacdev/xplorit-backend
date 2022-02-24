@@ -1,6 +1,5 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
-// import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { getSinglePlace } from '../../usecases/placeUsecases/getSinglePlace.js'
 
 const { param, validationResult } = validator
@@ -26,8 +25,6 @@ const getLikesFromPlaceValidation = async (req, res, next) => {
       )
       return
     }
-
-    // const foundUser = await getSingleUser({ _id: id })
 
     const placeExists = await getSinglePlace({ _id: placeId })
 
