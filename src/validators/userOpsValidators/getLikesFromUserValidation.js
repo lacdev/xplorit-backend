@@ -1,7 +1,5 @@
 import { ApiError } from '../../errors/ApiError.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
-// import validator from 'express-validator'
-// const { param, validationResult } = validator
 
 const validateUserLikes = async (req, res, next) => {
   try {

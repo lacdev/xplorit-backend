@@ -18,14 +18,3 @@
 // radius: { type: 'string', to: Number }, //amount in km to search around a particular point.
 
 // export { placeQuerySchema }
-
-// // query state
-// // y si state existe en el query
-// // se agrega al query find
-// // find({ address.state: state })
-
-//   data : [{
-//     estado: 'Aguascalientes',
-//     municipios: ['municipios']
-//   }
-// ]

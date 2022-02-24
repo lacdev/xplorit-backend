@@ -4,8 +4,8 @@ const { param, body, validationResult } = validator
 import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 import { getSingleUser } from '../../usecases/userUsecases/getSingleUser.js'
-import { getAllReviewsFromRoute } from '../../usecases/reviewUsecases/getAllReviewsFromRoute.js'
 import { sanitizeInput } from '../../utils/inputSanitizer.js'
+import { getReviewsInRouteBeforeCalculation } from '../../usecases/reviewUsecases/getReviewsInRoute.js'
 
 const validateSaveReviewInRoute = async (req, res, next) => {
   try {
@@ -14,6 +14,8 @@ const validateSaveReviewInRoute = async (req, res, next) => {
     const { id } = req.user
 
     const userExists = await getSingleUser({ _id: id })
+
+    console.log('User exists?', userExists)
 
     if (!userExists) {
       next(ApiError.badRequest('User not found.'))
@@ -44,13 +46,6 @@ const validateSaveReviewInRoute = async (req, res, next) => {
       .withMessage('Stars must be a valid number between 1 and 5.')
       .run(req)
 
-    // const userIdChain = body('userId')
-    //   .exists()
-    //   .withMessage('Please provide a user ID.')
-    //   .isMongoId()
-    //   .withMessage('Please provide a valid user ID.')
-    //   .run(req)
-
     await Promise.all([routeIdChain, commentChain, starsChain])
 
     const result = validationResult(req)
@@ -69,12 +64,12 @@ const validateSaveReviewInRoute = async (req, res, next) => {
       return
     }
 
-    const reviewExists = await getAllReviewsFromRoute({
-      userId: id,
+    const reviewFound = await getReviewsInRouteBeforeCalculation({
       routeId: routeId,
+      userId: id,
     })
 
-    if (!isEmptyArray(reviewExists.reviews)) {
+    if (!isEmptyArray(reviewFound)) {
       next(ApiError.badRequest('You can only post one review per route.'))
       return
     }

@@ -18,7 +18,7 @@ const getAllReviewsFromRoute = async (query) => {
       _id: 1,
       comment: 1,
       stars: 1,
-      placeId: 1,
+      routeId: 1,
     },
     customLabels: myCustomLabels,
   }

@@ -1,6 +1,5 @@
 import { ApiError } from '../../errors/ApiError.js'
 import validator from 'express-validator'
-// import { isEmptyArray } from '../../utils/checkForEmptyArray.js'
 import { getSingleRoute } from '../../usecases/routeUsecases/getSingleRoute.js'
 
 const { param, validationResult } = validator

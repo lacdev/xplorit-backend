@@ -53,13 +53,6 @@ const validateReviewUpdateInRoute = async (req, res, next) => {
       .withMessage('Stars must be a valid number between 1 and 5.')
       .run(req)
 
-    // const userIdChain = body('userId')
-    //   .exists()
-    //   .withMessage('Please provide a user ID.')
-    //   .isMongoId()
-    //   .withMessage('Please provide a valid user ID.')
-    //   .run(req)
-
     await Promise.all([routeIdChain, reviewIdChain, commentChain, starsChain])
 
     const result = validationResult(req)
