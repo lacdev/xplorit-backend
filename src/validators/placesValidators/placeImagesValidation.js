@@ -26,7 +26,10 @@ const validatePlaceImages = async (req, res, next) => {
 
     const imagesUrls = await uploadImages('place', imagesCompressed)
 
+    console.log('My images urls: ', imagesUrls)
+
     const newBody = JSON.parse(req.body.data)
+
     newBody.images = imagesUrls
     req.body = newBody
 
