@@ -20,7 +20,7 @@ const PlaceSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
-      maxlength: 1000,
+      maxlength: 5000,
     },
     average: {
       type: Number,
@@ -33,19 +33,15 @@ const PlaceSchema = new mongoose.Schema(
     address: {
       street: {
         type: String,
-        required: true,
       },
       city: {
         type: String,
-        required: true,
       },
       state: {
         type: String,
-        required: true,
       },
       zipcode: {
         type: Number,
-        required: true,
       },
     },
     tags: {

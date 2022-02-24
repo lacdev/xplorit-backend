@@ -33,7 +33,7 @@ const validatePlaceCreation = async (req, res, next) => {
       .withMessage('Please provide a description for the place.')
       .isString()
       .withMessage('Name must be a string.')
-      .isLength({ max: 3000 })
+      .isLength({ max: 5000 })
       .trim()
       .run(req)
 
