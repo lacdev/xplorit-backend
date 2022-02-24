@@ -74,8 +74,8 @@ const validatePlaceCreation = async (req, res, next) => {
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
-      .isNumeric()
-      .withMessage('Zipcode must be a valid number.')
+      // .isNumeric()
+      // .withMessage('Zipcode must be a valid number.')
       .run(req)
 
     const tagsChain = body('tags')
