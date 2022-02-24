@@ -98,8 +98,6 @@ router.get(
   getReviewsInRoute
 )
 
-//Pending authentication middleware
-
 router.post(
   '/:routeId/reviews',
   // postReviewLimiter,
@@ -107,8 +105,6 @@ router.post(
   validateSaveReviewInRoute,
   saveReviewInRoute
 )
-
-//Pending authentication middleware
 
 router.patch(
   '/:routeId/reviews/:reviewId',
@@ -118,13 +114,11 @@ router.patch(
   updateReviewInRoute
 )
 
-//Pending authentication middleware
-
-router.delete(
-  '/:routeId/reviews/:reviewId',
-  validateReviewDeleteInRoute,
-  deleteReviewInRoute
-)
+// router.delete(
+//   '/:routeId/reviews/:reviewId',
+//   validateReviewDeleteInRoute,
+//   deleteReviewInRoute
+// )
 
 //Likes in routes controllers
 

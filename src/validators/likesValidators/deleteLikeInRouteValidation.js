@@ -27,13 +27,6 @@ const validateLikeDeletionInRoute = async (req, res, next) => {
       .withMessage('Please provide a valid route ID.')
       .run(req)
 
-    // const userIdChain = body('userId')
-    //   .exists()
-    //   .withMessage('Please provide a user ID.')
-    //   .isMongoId()
-    //   .withMessage('Please provide a valid user ID.')
-    //   .run(req)
-
     await Promise.all([routeIdChain])
 
     const result = validationResult(req)

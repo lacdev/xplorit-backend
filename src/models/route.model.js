@@ -3,8 +3,6 @@ import paginate from 'mongoose-paginate-v2'
 
 const imagesArrayLimit = (val) => val.length <= 6
 
-// const locationArrayLimit = (val) => val.length === 2
-
 const tagsArrayLimit = (val) => val.length <= 4
 
 // const pointSchema = new mongoose.Schema({
@@ -68,10 +66,6 @@ const RouteSchema = new mongoose.Schema(
         required: true,
       },
     },
-    // fullRoute: {
-    //   type: Array,
-    //   required: true,
-    // },
     images: {
       type: [
         {

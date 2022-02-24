@@ -9,8 +9,10 @@ const router = express.Router()
 
 //Main Login endpoint.
 
-router.post('/', validateUserLogin, loginUser)
 // userLoginLimiter,
+
+router.post('/', validateUserLogin, loginUser)
+
 //Test route for protected routes.
 
 router.get('/', verifyToken, (req, res) => {

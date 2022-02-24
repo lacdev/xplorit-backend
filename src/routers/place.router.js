@@ -87,7 +87,7 @@ router.patch(
 
 //Pending authentication middleware //Not to be used for now.
 
-// router.delete('/:placeId', validatePlaceDeletion, deletePlace)
+//router.delete('/:placeId', validatePlaceDeletion, deletePlace)
 
 //Reviews in places controllers
 

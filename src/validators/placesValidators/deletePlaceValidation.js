@@ -25,19 +25,6 @@ const validatePlaceDeletion = async (req, res, next) => {
       return
     }
 
-    // const foundUser = await getSingleUser({ _id: id })
-
-    // const userExists = await getSingleUser({
-    //   _id: userId,
-    // })
-
-    // // const userExists = await getSingleUser(userId)
-
-    // if (!userExists) {
-    //   next(ApiError.badRequest('User not found.'))
-    //   return
-    // }
-
     const foundPlace = await getSinglePlace({ _id: placeId })
 
     if (!foundPlace) {

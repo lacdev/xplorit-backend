@@ -98,8 +98,6 @@ const PlaceSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-// PlaceSchema.path('tags').set((value) => value.map((tag) => tag.toLowerCase()))
-
 PlaceSchema.plugin(paginate)
 
 const Place = mongoose.model('place', PlaceSchema)
