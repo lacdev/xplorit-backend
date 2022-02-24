@@ -41,7 +41,8 @@ const PlaceSchema = new mongoose.Schema(
         type: String,
       },
       zipcode: {
-        type: Number,
+        // type: Number,
+        type: String,
       },
     },
     tags: {
