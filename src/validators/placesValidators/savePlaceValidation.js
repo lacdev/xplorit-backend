@@ -38,6 +38,7 @@ const validatePlaceCreation = async (req, res, next) => {
       .run(req)
 
     const addressChain = check('address')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -45,6 +46,7 @@ const validatePlaceCreation = async (req, res, next) => {
       .run(req)
 
     const streetChain = check('address.street')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -52,6 +54,7 @@ const validatePlaceCreation = async (req, res, next) => {
       .run(req)
 
     const cityChain = check('address.city')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -59,6 +62,7 @@ const validatePlaceCreation = async (req, res, next) => {
       .run(req)
 
     const stateChain = check('address.state')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -66,6 +70,7 @@ const validatePlaceCreation = async (req, res, next) => {
       .run(req)
 
     const zipCodeChain = check('address.zipcode')
+      .optional()
       .exists({ checkNull: true, checkFalsy: true })
       .not()
       .isEmpty()
@@ -74,6 +79,7 @@ const validatePlaceCreation = async (req, res, next) => {
       .run(req)
 
     const tagsChain = body('tags')
+      .exists()
       .isArray()
       .withMessage('Tags must be an array.')
       .run(req)
