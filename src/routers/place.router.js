@@ -38,16 +38,16 @@ import { validateLikeInPlace } from '../validators/likesValidators/saveLikeInPla
 import { validateLikeDeletionInPlace } from '../validators/likesValidators/deleteLikeInPlaceValidation.js'
 
 //Rate Limiter imports
-// import { postReviewLimiter } from '../middlewares/rate-limiter.js'
-// import { updateReviewLimiter } from '../middlewares/rate-limiter.js'
-// import { getReviewsLimiter } from '../middlewares/rate-limiter.js'
-// import { postLikeLimiter } from '../middlewares/rate-limiter.js'
-// import { deleteLikeLimiter } from '../middlewares/rate-limiter.js'
-// import { getLikesLimiter } from '../middlewares/rate-limiter.js'
-// import { postPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
-// import { getPlacesOrRoutesLimiter } from '../middlewares/rate-limiter.js'
-// import { getPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
-// import { updatePlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
+import { postReviewLimiter } from '../middlewares/rate-limiter.js'
+import { updateReviewLimiter } from '../middlewares/rate-limiter.js'
+import { getReviewsLimiter } from '../middlewares/rate-limiter.js'
+import { postLikeLimiter } from '../middlewares/rate-limiter.js'
+import { deleteLikeLimiter } from '../middlewares/rate-limiter.js'
+import { getLikesLimiter } from '../middlewares/rate-limiter.js'
+import { postPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
+import { getPlacesOrRoutesLimiter } from '../middlewares/rate-limiter.js'
+import { getPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
+import { updatePlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
 
 //Authentication import
 import { verifyToken } from '../middlewares/authentication.js'
@@ -63,13 +63,13 @@ const upload = multer({
 
 //Places controllers
 
-router.get('/', getPlaces)
-// getPlacesOrRoutesLimiter,
-router.get('/:placeId', validateGetPlace, getPlace)
-// getPlaceOrRouteLimiter,
+router.get('/', getPlacesOrRoutesLimiter, getPlaces)
+
+router.get('/:placeId', getPlaceOrRouteLimiter, validateGetPlace, getPlace)
+
 router.post(
   '/',
-  // postPlaceOrRouteLimiter,
+  postPlaceOrRouteLimiter,
   verifyToken,
   upload.array('images', 6),
   validatePlaceImages,
@@ -79,7 +79,7 @@ router.post(
 
 router.patch(
   '/:placeId',
-  // updatePlaceOrRouteLimiter,
+  updatePlaceOrRouteLimiter,
   verifyToken,
   validatePlaceUpdate,
   updatePlace
@@ -93,7 +93,7 @@ router.patch(
 
 router.get(
   '/:placeId/reviews',
-  // getReviewsLimiter,
+  getReviewsLimiter,
   validateGetReviewsFromPlace,
   getReviewsInPlace
 )
@@ -102,7 +102,7 @@ router.get(
 
 router.post(
   '/:placeId/reviews',
-  // postReviewLimiter,
+  postReviewLimiter,
   verifyToken,
   validateSaveReviewInPlace,
   saveReviewInPlace
@@ -112,7 +112,7 @@ router.post(
 
 router.patch(
   '/:placeId/reviews/:reviewId',
-  // updateReviewLimiter,
+  updateReviewLimiter,
   verifyToken,
   validateReviewUpdateInPlace,
   updateReviewInPlace
@@ -130,14 +130,14 @@ router.delete(
 
 router.get(
   '/:placeId/likes',
-  // getLikesLimiter,
+  getLikesLimiter,
   getLikesFromPlaceValidation,
   getLikesInPlace
 )
 
 router.post(
   '/:placeId/likes',
-  // postLikeLimiter,
+  postLikeLimiter,
   verifyToken,
   validateLikeInPlace,
   saveLikeInPlace
@@ -145,7 +145,7 @@ router.post(
 
 router.delete(
   '/:placeId/likes/',
-  // deleteLikeLimiter,
+  deleteLikeLimiter,
   verifyToken,
   validateLikeDeletionInPlace,
   deleteLikeInPlace
