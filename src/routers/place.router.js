@@ -98,8 +98,6 @@ router.get(
   getReviewsInPlace
 )
 
-//Pending authentication middleware
-
 router.post(
   '/:placeId/reviews',
   postReviewLimiter,
@@ -107,8 +105,6 @@ router.post(
   validateSaveReviewInPlace,
   saveReviewInPlace
 )
-
-//Pending authentication middleware
 
 router.patch(
   '/:placeId/reviews/:reviewId',
@@ -118,10 +114,9 @@ router.patch(
   updateReviewInPlace
 )
 
-//Pending authentication middleware
-
 router.delete(
   '/:placeId/reviews/:reviewId',
+  verifyToken,
   validateReviewDeleteInPlace,
   deleteReviewInPlace
 )
