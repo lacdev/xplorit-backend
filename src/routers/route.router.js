@@ -19,13 +19,13 @@ import { validateRouteImages } from '../validators/routesValidators/routeImagesV
 import { getReviewsInRoute } from '../controllers/reviewsControllers/getReviewsInRoute.js'
 import { saveReviewInRoute } from '../controllers/reviewsControllers/saveReviewInRoute.js'
 import { updateReviewInRoute } from '../controllers/reviewsControllers/updateReviewInRoute.js'
-import { deleteReviewInRoute } from '../controllers/reviewsControllers/deleteReviewInRoute.js'
+// import { deleteReviewInRoute } from '../controllers/reviewsControllers/deleteReviewInRoute.js'
 
 //Reviews crud validation imports.
 import { validateGetReviewsFromRoute } from '../validators/reviewsValidators/getReviewsInRouteValidation.js'
 import { validateSaveReviewInRoute } from '../validators/reviewsValidators/saveReviewInRouteValidation.js'
 import { validateReviewUpdateInRoute } from '../validators/reviewsValidators/updateReviewInRouteValidation.js'
-import { validateReviewDeleteInRoute } from '../validators/reviewsValidators/deleteReviewInRouteValidation.js'
+// import { validateReviewDeleteInRoute } from '../validators/reviewsValidators/deleteReviewInRouteValidation.js'
 
 //Likes in routes crud imports.
 import { getLikesInRoute } from '../controllers/likesControllers/getLikesInRoute.js'
@@ -38,16 +38,16 @@ import { validateLikeInRoute } from '../validators/likesValidators/saveLikeInRou
 import { validateLikeDeletionInRoute } from '../validators/likesValidators/deleteLikeInRouteValidation.js'
 
 //Rate limiter Imports.
-// import { postReviewLimiter } from '../middlewares/rate-limiter.js'
-// import { updateReviewLimiter } from '../middlewares/rate-limiter.js'
-// import { getReviewsLimiter } from '../middlewares/rate-limiter.js'
-// import { postLikeLimiter } from '../middlewares/rate-limiter.js'
-// import { deleteLikeLimiter } from '../middlewares/rate-limiter.js'
-// import { getLikesLimiter } from '../middlewares/rate-limiter.js'
-// import { postPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
-// import { getPlacesOrRoutesLimiter } from '../middlewares/rate-limiter.js'
-// import { getPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
-// import { updatePlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
+import { postReviewLimiter } from '../middlewares/rate-limiter.js'
+import { updateReviewLimiter } from '../middlewares/rate-limiter.js'
+import { getReviewsLimiter } from '../middlewares/rate-limiter.js'
+import { postLikeLimiter } from '../middlewares/rate-limiter.js'
+import { deleteLikeLimiter } from '../middlewares/rate-limiter.js'
+import { getLikesLimiter } from '../middlewares/rate-limiter.js'
+import { postPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
+import { getPlacesOrRoutesLimiter } from '../middlewares/rate-limiter.js'
+import { getPlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
+import { updatePlaceOrRouteLimiter } from '../middlewares/rate-limiter.js'
 
 //Authentication imports.
 import { verifyToken } from '../middlewares/authentication.js'
@@ -63,13 +63,13 @@ const upload = multer({
 
 //Routes controller
 
-router.get('/', getRoutes)
-// getPlacesOrRoutesLimiter,
-router.get('/:routeId', validateGetRoute, getRoute)
-// getPlaceOrRouteLimiter,
+router.get('/', getPlacesOrRoutesLimiter, getRoutes)
+
+router.get('/:routeId', getPlaceOrRouteLimiter, validateGetRoute, getRoute)
+
 router.post(
   '/',
-  // postPlaceOrRouteLimiter,
+  postPlaceOrRouteLimiter,
   verifyToken,
   upload.array('images', 6),
   validateRouteImages,
@@ -79,7 +79,7 @@ router.post(
 
 router.patch(
   '/:routeId',
-  // updatePlaceOrRouteLimiter,
+  updatePlaceOrRouteLimiter,
   verifyToken,
   validateRouteUpdate,
   updateRoute
@@ -93,14 +93,14 @@ router.patch(
 
 router.get(
   '/:routeId/reviews',
-  // getReviewsLimiter,
+  getReviewsLimiter,
   validateGetReviewsFromRoute,
   getReviewsInRoute
 )
 
 router.post(
   '/:routeId/reviews',
-  // postReviewLimiter,
+  postReviewLimiter,
   verifyToken,
   validateSaveReviewInRoute,
   saveReviewInRoute
@@ -108,7 +108,7 @@ router.post(
 
 router.patch(
   '/:routeId/reviews/:reviewId',
-  // updateReviewLimiter,
+  updateReviewLimiter,
   verifyToken,
   validateReviewUpdateInRoute,
   updateReviewInRoute
@@ -124,14 +124,14 @@ router.patch(
 
 router.get(
   '/:routeId/likes',
-  // getLikesLimiter,
+  getLikesLimiter,
   getLikesFromRouteValidation,
   getLikesInRoute
 )
 
 router.post(
   '/:routeId/likes',
-  // postLikeLimiter,
+  postLikeLimiter,
   verifyToken,
   validateLikeInRoute,
   saveLikeInRoute
@@ -139,7 +139,7 @@ router.post(
 
 router.delete(
   '/:routeId/likes/',
-  // deleteLikeLimiter,
+  deleteLikeLimiter,
   verifyToken,
   validateLikeDeletionInRoute,
   deleteLikeInRoute
