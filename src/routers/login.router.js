@@ -3,15 +3,13 @@ import express from 'express'
 import { loginUser } from '../controllers/loginControllers/userLogin.js'
 import { validateUserLogin } from '../validators/loginValidators/loginValidation.js'
 import { verifyToken } from '../middlewares/authentication.js'
-// import { userLoginLimiter } from '../middlewares/rate-limiter.js'
+import { userLoginLimiter } from '../middlewares/rate-limiter.js'
 
 const router = express.Router()
 
 //Main Login endpoint.
 
-// userLoginLimiter,
-
-router.post('/', validateUserLogin, loginUser)
+router.post('/', userLoginLimiter, validateUserLogin, loginUser)
 
 //Test route for protected routes.
 

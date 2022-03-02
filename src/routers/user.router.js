@@ -2,7 +2,7 @@ import express from 'express'
 import multer from 'multer'
 
 //User crud imports
-import { getUsers } from '../controllers/usersControllers/getUsers.js'
+// import { getUsers } from '../controllers/usersControllers/getUsers.js'
 import { getUser } from '../controllers/usersControllers/getUser.js'
 import { saveUser } from '../controllers/usersControllers/saveUser.js'
 // import { deleteUser } from '../controllers/usersControllers/deleteUser.js'
@@ -37,7 +37,7 @@ import { validateAvatarUpdate } from '../validators/usersValidators/updateAvatar
 import { validateCoverUpdate } from '../validators/usersValidators/updateCoverValidation.js'
 
 //Rate limiter imports
-import { getUsersLimiter } from '../middlewares/rate-limiter.js'
+// import { getUsersLimiter } from '../middlewares/rate-limiter.js'
 import { userSignupLimiter } from '../middlewares/rate-limiter.js'
 import { getUserLimiter } from '../middlewares/rate-limiter.js'
 import { updateUserLimiter } from '../middlewares/rate-limiter.js'
@@ -61,13 +61,9 @@ const upload = multer({
 
 // getUsersLimiter,
 
-router.get('/me', verifyToken, validateGetUser, getUser)
+router.get('/me', getUserLimiter, verifyToken, validateGetUser, getUser)
 
-// getUserLimiter,
-
-router.post('/', validateUserSignup, saveUser)
-
-// userSignupLimiter,
+router.post('/', userSignupLimiter, validateUserSignup, saveUser)
 
 // router.delete('/me', validateUserDeletion, deleteUser)
 
