@@ -201,4 +201,147 @@ Update a place by Id
 PATCH v1/places/:placeId BEARER
 ```
 
+***
 
+## Routes Endpoints
+
+Get all routes
+
+```js
+GET v1/routes
+```
+
+Users can filter routes by specific query strings.
+
+```js
+lng = "Required valid geolocation longitude float number in order to construct the geolocation search."
+lat = "Required valid geolocation latitude float number in order to construct the geolocation search."
+distance = "Returns places inside a radius distance, requires a valid latitude and longitude."
+q = "Returns places that includes the given keyword searches through objects description, name, state and city."
+tags = "Returns places that strictly contains the selected tags." 
+page = "Optional query to search through a particular page in the paginated results."
+limit = "Optional query to limit the number of items returned per page."
+sort = "Sort the results. By default average sorting is given. Options are: likes, average, createdAt"
+```
+
+Example of a filtered route query:
+
+```js
+GET v1/routes?q=queretaro&distance=5&lat=41.40338&lng=2.17403&tags=familiar,aventura&page=2&limit=2&sort=average
+```
+
+Get a particular route by Id
+
+```js
+GET v1/routes/:routeId 
+```
+
+Create a new route
+
+```js
+POST v1/routes/ BEARER
+```
+
+Update a route by Id
+
+```js
+PATCH v1/routes/:routeId BEARER
+```
+
+*** 
+
+## Places Likes and reviews endpoints
+
+### Likes endpoints
+
+Get all likes from a particular place
+
+```js
+GET v1/places/:placeId/likes 
+```
+
+Post a new like in a particular place
+
+```js
+POST v1/places/:placeId/likes BEARER
+```
+
+Delete a new like in a particular place
+
+```js
+DELETE v1/places/:placeId/likes BEARER
+```
+
+### Reviews endpoints
+
+Get all reviews from a particular place
+
+```js
+GET v1/places/:placeId/reviews
+```
+
+Post a new review in a particular place
+
+```js
+POST v1/places/:placeId/reviews BEARER
+```
+
+Update a review in a particular place
+
+```js
+PATCH v1/places/:placeId/reviews/:reviewId BEARER
+```
+
+*** 
+
+## Routes Likes and reviews endpoints
+
+### Likes endpoints
+
+Get all likes from a particular route
+
+```js
+GET v1/routes/:routeId/likes 
+```
+
+Post a new like in a particular route
+
+```js
+POST v1/routes/:routeId/likes BEARER
+```
+
+Delete a new like in a particular route
+
+```js
+DELETE v1/routes/:routeId/likes BEARER
+```
+
+### Reviews endpoints
+
+Get all reviews from a particular route
+
+```js
+GET v1/routes/:routeId/reviews
+```
+
+Post a new review in a particular route
+
+```js
+POST v1/routes/:routeId/reviews BEARER
+```
+
+Update a review in a particular route
+
+```js
+PATCH v1/routes/:routeId/reviews/:reviewId BEARER
+```
+
+*** 
+
+## States Endpoint
+
+Get all states in order to use the filters
+
+```js
+GET v1/states
+```
