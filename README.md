@@ -66,7 +66,7 @@ Here we can see a detailed explanation of each endpoint on the system and what a
 
 Protected routes will have the **Bearer** word on it in order to explain that we need a valid JWT Token in order to access that resource.
 
-### Users
+## Users Endpoints
 
 Create a new user account 
 
@@ -77,11 +77,71 @@ POST v1/users/
 Login with your account details
 
 ```js
-POST v1/login/
+POST v1/login/ 
 ```
 
-Get user account details ***protected***
+JSON Object that should be sent in in the previous endpoints:
+
+```json
+{
+"email": "example@example.com",
+"password": "testpass123"
+}
+```
+
+Get user account details 
 
 ```js
-GET v1/users/me
+GET v1/users/me BEARER
 ```
+
+Update User's Password 
+
+```js
+PATCH v1/users/me/password BEARER
+```
+
+Update User's Username 
+
+```js
+PATCH v1/users/me/username BEARER
+```
+Update User's Avatar
+
+```js
+PATCH v1/users/me/avatar BEARER
+```
+
+Update User's Cover
+
+```js
+PATCH v1/users/me/cover BEARER
+```
+
+Get User likes given on places or routes.
+
+```js
+PATCH v1/users/me/likes BEARER
+```
+
+Get User reviews given to places or routes
+
+```js
+PATCH v1/users/me/reviews BEARER
+```
+
+Get places created by User
+
+```js
+PATCH v1/users/me/places BEARER
+```
+
+Get routes created by User
+
+```js
+PATCH v1/users/me/routes BEARER
+```
+
+***
+
+## Places Endpoints
