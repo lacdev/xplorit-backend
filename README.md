@@ -345,3 +345,11 @@ Get all states in order to use the filters
 ```js
 GET v1/states
 ```
+
+*** 
+
+## Conclusion
+
+Hopefully this project can lead to any clue or where I am at this particular point in time. I'm always studying, practicing and creating new projects to keep growing my skills and experience.
+
+Any comments, feedback and contributions are always welcomed.
