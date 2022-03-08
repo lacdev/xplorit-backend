@@ -66,6 +66,18 @@ Here we can see a detailed explanation of each endpoint on the system and what a
 
 Protected routes will have the **Bearer** word on it in order to explain that we need a valid JWT Token in order to access that resource.
 
+Verbs 
+
+```js
+GET, POST, PATCH, DELETE
+```
+
+Nouns/Resources
+
+```js
+users, places, routes, reviews, likes, states
+```
+
 ## Users Endpoints
 
 Create a new user account 
@@ -80,7 +92,7 @@ Login with your account details
 POST v1/login/ 
 ```
 
-JSON Object that should be sent in in the previous endpoints:
+JSON String that should be sent in in the previous endpoints:
 
 ```json
 {
@@ -145,3 +157,48 @@ PATCH v1/users/me/routes BEARER
 ***
 
 ## Places Endpoints
+
+Get all places
+
+```js
+GET v1/places 
+```
+
+Users can filter places by specific query strings.
+
+```js
+lng = "Required valid geolocation longitude float number in order to construct the geolocation search."
+lat = "Required valid geolocation latitude float number in order to construct the geolocation search."
+distance = "Returns places inside a radius distance, requires a valid latitude and longitude."
+q = "Returns places that includes the given keyword searches through objects description, name, state and city."
+tags = "Returns places that strictly contains the selected tags." 
+page = "Optional query to search through a particular page in the paginated results."
+limit = "Optional query to limit the number of items returned per page."
+sort = "Sort the results. By default average sorting is given. Options are: likes, average, createdAt"
+```
+
+Example of a filtered place query:
+
+```js
+GET v1/places?q=queretaro&distance=5&lat=41.40338&lng=2.17403&tags=familiar,aventura&page=2&limit=2&sort=average
+```
+
+Get a particular place by Id
+
+```js
+GET v1/places/:placeId 
+```
+
+Create a new place 
+
+```js
+POST v1/places/ BEARER
+```
+
+Update a place by Id
+
+```js
+PATCH v1/places/:placeId BEARER
+```
+
+
