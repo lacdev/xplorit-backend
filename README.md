@@ -60,7 +60,7 @@ In roughly particular order:
 
 ***
 
-## REST API Endopoints Documentation
+## REST API Endpoints Documentation
 
 Here we can see a detailed explanation of each endpoint on the system and what are the parameters and query strings needed for each one of them.
 
